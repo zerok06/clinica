@@ -1,15 +1,16 @@
-'use client'
 import React from 'react'
-import { authentication, getSession } from '@/lib/actions/auth/signin'
+import { authentication } from '@/lib/actions/auth/signin'
+import Prueba from '@/components/Prueba'
 
 const Login = async () => {
   return (
     <div>
-      <form action={data => authentication(data).then(res => console.log(res))}>
+      <form action={authentication}>
         <input type="text" name="username" />
         <input type="password" name="password" />
         <button>login</button>
       </form>
+      <Prueba />
     </div>
   )
 }

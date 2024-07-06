@@ -1,18 +1,19 @@
 'use server'
 import { encrypt } from '@/lib/helpers/encrypt'
 import { getSession } from '@/lib/helpers/getSession'
-import { SignJWT, jwtVerify } from 'jose'
 
 import { cookies } from 'next/headers'
-const key = new TextEncoder().encode(process.env.SECRET_KEY)
 export const authentication = async (formData: FormData) => {
   try {
     const { username, password } = Object.fromEntries(formData.entries())
     if (username && password) {
-      const token = await encrypt({ username, password })
+      const token = encrypt({ username, password })
+      if (typeof token != 'string') {
+        return new Error('No se puedo generar token')
+      }
       cookies().set('auth-cli', token)
-      const vari = await getSession()
-      return { success: true, vari }
+      const session = await getSession()
+      return { success: true, session }
     }
     return { success: false }
   } catch (error) {
