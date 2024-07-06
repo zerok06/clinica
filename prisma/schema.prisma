@@ -9,6 +9,47 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+model usuario {
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  nombres        String
+  apellidos      String
+  email          String
+  dni            String
+  telefono       String
+  createAt       DateTime       @default(now())
+  updateAt       DateTime       @updatedAt
+  credenciales   credenciales   @relation(fields: [credencialesId], references: [id])
+  credencialesId String         @unique @db.ObjectId
+  administrador  administrador?
+  secretaria     secretaria?
+  doctor         doctor?
+}
+
+model credenciales {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  username String
+  password String
+  usuario  usuario?
+}
+
+model administrador {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  usuario   usuario @relation(fields: [usuarioId], references: [id])
+  usuarioId String  @unique @db.ObjectId
+}
+
+model secretaria {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  usuario   usuario @relation(fields: [usuarioId], references: [id])
+  usuarioId String  @unique @db.ObjectId
+}
+
+model doctor {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  usuario   usuario @relation(fields: [usuarioId], references: [id])
+  usuarioId String  @unique @db.ObjectId
 }
