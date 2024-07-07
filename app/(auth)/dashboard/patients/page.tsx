@@ -7,7 +7,7 @@ import { DataTable } from '@/components/data-table'
 import DATA from '@/lib/config/labels.json'
 import { fetchUsers } from '@/lib/actions/users'
 
-const { usuarios } = DATA
+const { pacientes } = DATA
 
 const Page = async () => {
   const { users } = await fetchUsers()
@@ -16,8 +16,8 @@ const Page = async () => {
     <div className="py-3 px-4 rounded-xl bg-white">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="font-medium text-lg">{usuarios.title}</h2>
-          <p className="text-black/70 text-sm">{usuarios.desc}</p>
+          <h2 className="font-medium text-lg">{pacientes.title}</h2>
+          <p className="text-black/70 text-sm">{pacientes.desc}</p>
         </div>
         <ButtonNewUser />
       </div>

@@ -1,5 +1,6 @@
 import AsideBar from '@/components/AsideBar'
 import NavBar from '@/components/NavBar'
+import { Toaster } from '@/components/ui/toaster'
 import React from 'react'
 
 interface RootLayoutProps {
@@ -14,6 +15,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         <NavBar />
         <section>{children}</section>
       </section>
+      <Toaster />
     </section>
   )
 }

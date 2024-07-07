@@ -1,12 +1,20 @@
 import OptionBar from './OptionBar'
 import { DashboardSquare02Icon } from './icons/DashboardSquare02Icon'
-import { UserMultipleIcon } from './icons/UserMultipleIcon'
+import { UserGroupIcon } from './icons/UserGroupIcon'
+import { UserLock01Icon } from './icons/UserLock01Icon'
 
 const itemsBar = [
   {
+    id: '641f77f8-141f-4292-8727-f92f6859bfd6',
     href: '/dashboard/users',
     label: 'Usuarios',
-    icon: <UserMultipleIcon />,
+    icon: <UserLock01Icon />,
+  },
+  {
+    id: '1d6f9bc0-8712-4f38-ba3a-e622c6b4ed7c',
+    href: '/dashboard/patients',
+    label: 'Pacientes',
+    icon: <UserGroupIcon />,
   },
 ]
 
@@ -22,9 +30,9 @@ const AsideBar = () => {
               icon={<DashboardSquare02Icon />}
             />
           </div>
-          <div>
+          <div className="flex flex-col gap-1">
             {itemsBar.map(item => (
-              <OptionBar {...item} />
+              <OptionBar key={item.id} {...item} />
             ))}
           </div>
         </div>

@@ -22,7 +22,7 @@ model usuario {
   telefono       String
   createAt       DateTime       @default(now())
   updateAt       DateTime       @updatedAt
-  credenciales   credenciales   @relation(fields: [credencialesId], references: [id])
+  credenciales   credenciales   @relation(fields: [credencialesId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   credencialesId String         @unique @db.ObjectId
   administrador  administrador?
   secretaria     secretaria?
@@ -31,25 +31,25 @@ model usuario {
 
 model credenciales {
   id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  username String
+  username String   @unique
   password String
   usuario  usuario?
 }
 
 model administrador {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  usuario   usuario @relation(fields: [usuarioId], references: [id])
+  usuario   usuario @relation(fields: [usuarioId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   usuarioId String  @unique @db.ObjectId
 }
 
 model secretaria {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  usuario   usuario @relation(fields: [usuarioId], references: [id])
+  usuario   usuario @relation(fields: [usuarioId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   usuarioId String  @unique @db.ObjectId
 }
 
 model doctor {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  usuario   usuario @relation(fields: [usuarioId], references: [id])
+  usuario   usuario @relation(fields: [usuarioId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   usuarioId String  @unique @db.ObjectId
 }

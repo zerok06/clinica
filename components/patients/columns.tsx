@@ -1,15 +1,5 @@
 'use client'
 import { ColumnDef } from '@tanstack/react-table'
-import { Button } from '../ui/button'
-import { MoreVerticalCircle01Icon } from '../icons/MoreVerticalCircle01Icon'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import ButtonDelete from '../ButtonOption'
 import { deleteUser } from '@/lib/actions/users'
 

@@ -1,0 +1,10 @@
+{
+    "usuarios": {
+        "title": "Usuarios",
+        "desc": "lorem10"
+    },
+    "pacientes": {
+        "title": "Pacientes",
+        "desc": "lorem10"
+    }
+}
