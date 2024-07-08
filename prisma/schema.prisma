@@ -53,3 +53,18 @@ model doctor {
   usuario   usuario @relation(fields: [usuarioId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   usuarioId String  @unique @db.ObjectId
 }
+
+model tratamiento {
+  id                     String               @id @default(auto()) @map("_id") @db.ObjectId
+  nombres                String
+  descripcion            String
+  categoriaTratamiento   categoriaTratamiento @relation(fields: [categoriaTratamientoId], references: [id])
+  categoriaTratamientoId String               @db.ObjectId
+}
+
+model categoriaTratamiento {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  nombre      String
+  descripcion String
+  tratamiento tratamiento[]
+}
