@@ -6,5 +6,9 @@
     "pacientes": {
         "title": "Pacientes",
         "desc": "lorem10"
+    },
+    "tratamientos": {
+        "title": "Tratamientos",
+        "desc": "lorem10"
     }
 }
