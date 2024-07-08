@@ -14,21 +14,13 @@ export const fetchTreatments = async () => {
 interface CreateTreatmentProps {
   nombre: string
   descripcion: string
-  categoryId: string
+  categoriaTratamientoId: string
 }
 
-export const createTreatment = async ({
-  categoryId,
-  descripcion,
-  nombre,
-}: CreateTreatmentProps) => {
+export const createTreatment = async (params: CreateTreatmentProps) => {
   try {
     await prisma.tratamiento.create({
-      data: {
-        nombre,
-        descripcion,
-        categoriaTratamientoId: categoryId,
-      },
+      data: params,
     })
 
     return { success: true }
