@@ -14,35 +14,20 @@ export const fetchTreatments = async () => {
 interface CreateTreatmentProps {
   nombre: string
   descripcion: string
-  categoryId?: string
-  categoryName?: string
-  categoryDesc?: string
+  categoryId: string
 }
 
 export const createTreatment = async ({
   categoryId,
   descripcion,
   nombre,
-  categoryDesc,
-  categoryName,
 }: CreateTreatmentProps) => {
   try {
-    if (!categoryId && categoryDesc && categoryName) {
-      categoryId = (
-        await prisma.categoriaTratamiento.create({
-          data: {
-            nombre: categoryName,
-            descripcion: categoryDesc,
-          },
-        })
-      ).id
-    }
-
     await prisma.tratamiento.create({
       data: {
         nombre,
         descripcion,
-        categoriaTratamientoId: categoryId!,
+        categoriaTratamientoId: categoryId,
       },
     })
 
