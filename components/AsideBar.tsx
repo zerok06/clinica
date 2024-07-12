@@ -1,4 +1,5 @@
 import OptionBar from './OptionBar'
+import { ArrangeIcon } from './icons/ArrangeIcon'
 import { DashboardSquare02Icon } from './icons/DashboardSquare02Icon'
 import { UserGroupIcon } from './icons/UserGroupIcon'
 import { UserLock01Icon } from './icons/UserLock01Icon'
@@ -15,6 +16,12 @@ const itemsBar = [
     href: '/dashboard/patients',
     label: 'Pacientes',
     icon: <UserGroupIcon />,
+  },
+  {
+    id: '11af85ec-285b-4ce6-9252-d3048c936348',
+    href: '/dashboard/treatments',
+    label: 'Tratamientos',
+    icon: <ArrangeIcon />,
   },
 ]
 

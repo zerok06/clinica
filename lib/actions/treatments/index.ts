@@ -11,6 +11,16 @@ export const fetchTreatments = async () => {
   }
 }
 
+export const categoriesTreatments = async () => {
+  try {
+    const all = await prisma.categoriaTratamiento.findMany()
+
+    return { success: true, categories: all }
+  } catch (error) {
+    return { success: false }
+  }
+}
+
 interface CreateTreatmentProps {
   nombre: string
   descripcion: string
