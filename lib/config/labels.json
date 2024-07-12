@@ -10,5 +10,9 @@
     "tratamientos": {
         "title": "Tratamientos",
         "desc": "lorem10"
+    },
+    "diagnostico": {
+        "title": "Diagnósticos",
+        "desc": "lorem10"
     }
 }

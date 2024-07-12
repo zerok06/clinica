@@ -55,11 +55,12 @@ model doctor {
 }
 
 model tratamiento {
-  id                     String                @id @default(auto()) @map("_id") @db.ObjectId
-  nombre                 String
-  descripcion            String
-  categoriaTratamiento   categoriaTratamiento? @relation(fields: [categoriaTratamientoId], references: [id], onUpdate: Cascade, onDelete: SetNull)
-  categoriaTratamientoId String?               @db.ObjectId
+  id                            String                          @id @default(auto()) @map("_id") @db.ObjectId
+  nombre                        String
+  descripcion                   String
+  categoriaTratamiento          categoriaTratamiento?           @relation(fields: [categoriaTratamientoId], references: [id], onUpdate: Cascade, onDelete: SetNull)
+  categoriaTratamientoId        String?                         @db.ObjectId
+  detalleDiagnosticoTratamiento detalleDiagnosticoTratamiento[]
 }
 
 model categoriaTratamiento {
@@ -67,4 +68,19 @@ model categoriaTratamiento {
   nombre      String
   descripcion String
   tratamiento tratamiento[]
+}
+
+model diagnostico {
+  id                            String                          @id @default(auto()) @map("_id") @db.ObjectId
+  nombre                        String
+  descripcion                   String
+  detalleDiagnosticoTratamiento detalleDiagnosticoTratamiento[]
+}
+
+model detalleDiagnosticoTratamiento {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  diagnostico   diagnostico @relation(fields: [diagnosticoId], references: [id])
+  diagnosticoId String      @db.ObjectId
+  tratamiento   tratamiento @relation(fields: [tratamientoId], references: [id])
+  tratamientoId String      @db.ObjectId
 }
