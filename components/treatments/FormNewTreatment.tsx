@@ -25,6 +25,7 @@ import { toast } from '../ui/use-toast'
 import { createTreatment } from '@/lib/actions/treatments'
 import type { categoriaTratamiento } from '@prisma/client'
 import Link from 'next/link'
+import { Textarea } from '../ui/textarea'
 
 const formSchema = z.object({
   nombre: z.string().min(2, {
@@ -80,7 +81,7 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
           name="nombre"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Dni</FormLabel>
+              <FormLabel>Nombre</FormLabel>
               <FormControl>
                 <Input placeholder="0000000" {...field} />
               </FormControl>
@@ -93,9 +94,13 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
           name="descripcion"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Telefono</FormLabel>
+              <FormLabel>Descripción</FormLabel>
               <FormControl>
-                <Input placeholder="000000000" {...field} />
+                <Textarea
+                  placeholder="Ingrese una descripción sobre el tratamiento."
+                  className="resize-none"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
