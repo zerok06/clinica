@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
-import { format } from 'date-fns'
+import { format, max } from 'date-fns'
 import {
   Form,
   FormControl,
@@ -32,6 +32,8 @@ import {
 } from '@/components/ui/popover'
 import { CalendarIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { createNewPatient } from '@/lib/actions/patients'
+import { Textarea } from '../ui/textarea'
 
 const formSchema = z.object({
   nombres: z.string().min(2, {
@@ -46,8 +48,8 @@ const formSchema = z.object({
   nacimiento: z.date({
     required_error: 'A date of birth is required.',
   }),
-  edad: z.string().min(2, {
-    message: 'Se requiere como mínimo 2 caracteres',
+  edad: z.string().min(0, {
+    message: 'El numero mínimo es 0',
   }),
   dni: z.string().max(8, {
     message: 'Se requiere como mínimo 8 caracteres',
@@ -72,6 +74,7 @@ const FormNewPatient: React.FC<FormNewPatientProps> = ({ closeAlert }) => {
       nombres: '',
       apellidos: '',
       direccion: '',
+      edad: '',
       dni: '',
       celular: '',
       convenio: '',
@@ -83,12 +86,12 @@ const FormNewPatient: React.FC<FormNewPatientProps> = ({ closeAlert }) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
-    /* createNewUser(values).then(res =>
+    createNewPatient({ ...values, edad: Number(values.edad) }).then(res =>
       toast({
         title: 'Uh oh! Something went wrong.',
         description: JSON.stringify(res),
       })
-    ) */
+    )
     closeAlert()
   }
 
@@ -127,7 +130,7 @@ const FormNewPatient: React.FC<FormNewPatientProps> = ({ closeAlert }) => {
           name="direccion"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Dirección</FormLabel>
               <FormControl>
                 <Input placeholder="johndoe@gmail.com" {...field} />
               </FormControl>
@@ -140,7 +143,7 @@ const FormNewPatient: React.FC<FormNewPatientProps> = ({ closeAlert }) => {
           name="nacimiento"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Date of birth</FormLabel>
+              <FormLabel>Fecha de nacimiento</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -184,9 +187,9 @@ const FormNewPatient: React.FC<FormNewPatientProps> = ({ closeAlert }) => {
           name="edad"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Dni</FormLabel>
+              <FormLabel>Edad</FormLabel>
               <FormControl>
-                <Input placeholder="0000000" {...field} />
+                <Input placeholder="0000000" type="number" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -210,7 +213,7 @@ const FormNewPatient: React.FC<FormNewPatientProps> = ({ closeAlert }) => {
           name="celular"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Telefono</FormLabel>
+              <FormLabel>Celular</FormLabel>
               <FormControl>
                 <Input placeholder="000000000" {...field} />
               </FormControl>
@@ -223,9 +226,13 @@ const FormNewPatient: React.FC<FormNewPatientProps> = ({ closeAlert }) => {
           name="convenio"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Telefono</FormLabel>
+              <FormLabel>Convenio</FormLabel>
               <FormControl>
-                <Input placeholder="000000000" {...field} />
+                <Textarea
+                  placeholder="Ingrese su convenio"
+                  className="resize-none"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

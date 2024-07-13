@@ -1,16 +1,17 @@
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { columns } from '@/components/users/columns'
+import { columns } from '@/components/patients/columns'
 import { DataTable } from '@/components/data-table'
 
 import DATA from '@/lib/config/labels.json'
 import { fetchUsers } from '@/lib/actions/users'
 import ButtonNewPatient from '@/components/patients/ButtonNewPatient'
+import { fetchPatients } from '@/lib/actions/patients'
 
 const { pacientes } = DATA
 
 const Page = async () => {
-  const { users } = await fetchUsers()
+  const { patients } = await fetchPatients()
 
   return (
     <div className="py-3 px-4 rounded-xl bg-white">
@@ -22,7 +23,7 @@ const Page = async () => {
         <ButtonNewPatient />
       </div>
       <Separator className="my-3" />
-      <DataTable columns={columns} data={users!} />
+      <DataTable columns={columns} data={patients!} />
     </div>
   )
 }

@@ -2,17 +2,10 @@
 import { ColumnDef } from '@tanstack/react-table'
 import ButtonDelete from '../ButtonOption'
 import { deleteUser } from '@/lib/actions/users'
+import type { paciente } from '@prisma/client'
+import { deletePatient } from '@/lib/actions/patients'
 
-export type Props = {
-  id: string
-  nombres: string
-  apellidos: string
-  email: string
-  dni: string
-  telefono: string
-}
-
-export const columns: ColumnDef<Props>[] = [
+export const columns: ColumnDef<paciente>[] = [
   {
     accessorKey: 'nombres',
     header: 'Nombres',
@@ -22,16 +15,16 @@ export const columns: ColumnDef<Props>[] = [
     header: 'Apellidos',
   },
   {
-    accessorKey: 'email',
-    header: 'Email',
+    accessorKey: 'nacimiento',
+    header: 'Nacimiento',
   },
   {
     accessorKey: 'dni',
     header: 'Dni',
   },
   {
-    accessorKey: 'telefono',
-    header: 'Teléfono',
+    accessorKey: 'celular',
+    header: 'Celular',
   },
   {
     header: 'Opciones',
@@ -41,7 +34,7 @@ export const columns: ColumnDef<Props>[] = [
           <ButtonDelete
             label={'delete'}
             deleteDB={() =>
-              deleteUser(original.id).then(res => console.log(res))
+              deletePatient(original.id).then(res => console.log(res))
             }
           />
         </div>
