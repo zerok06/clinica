@@ -14,5 +14,9 @@
     "diagnostico": {
         "title": "Diagnósticos",
         "desc": "lorem10"
+    },
+    "insumos": {
+        "title": "Insumos",
+        "desc": "lorem10"
     }
 }

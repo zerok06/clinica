@@ -1,5 +1,6 @@
 import OptionBar from './OptionBar'
 import { ArrangeIcon } from './icons/ArrangeIcon'
+import { CellsIcon } from './icons/CellsIcon'
 import { DashboardSquare02Icon } from './icons/DashboardSquare02Icon'
 import { Note02Icon } from './icons/Note02Icon'
 import { UserGroupIcon } from './icons/UserGroupIcon'
@@ -29,6 +30,12 @@ const itemsBar = [
     href: '/dashboard/diagnosis',
     label: 'Diagnósticos',
     icon: <Note02Icon />,
+  },
+  {
+    id: '08b57372-7837-4404-acd3-59c18ae78368',
+    href: '/dashboard/insumos',
+    label: 'Insumos',
+    icon: <CellsIcon />,
   },
 ]
 
