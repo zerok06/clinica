@@ -84,3 +84,10 @@ model detalleDiagnosticoTratamiento {
   tratamiento   tratamiento @relation(fields: [tratamientoId], references: [id])
   tratamientoId String      @db.ObjectId
 }
+
+model insumo {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  nombre      String
+  cantidad    Int
+  description String
+}
