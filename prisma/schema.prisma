@@ -53,3 +53,16 @@ model doctor {
   usuario   usuario @relation(fields: [usuarioId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   usuarioId String  @unique @db.ObjectId
 }
+
+model paciente {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  nombres    String
+  apellidos  String
+  direccion  String
+  nacimiento DateTime
+  edad       Int
+  dni        String
+  celular    String
+  convenio   String
+  createAt   DateTime @default(now())
+}

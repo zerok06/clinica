@@ -11,11 +11,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { Button } from './ui/button'
-import FormNewUser from './users/FormNewUser'
+import { Button } from '../ui/button'
 import useControlAlert from '@/hook/useControlAlert'
+import FormNewPatient from './FormNewPatient'
 
-const ButtonNewUser = () => {
+const ButtonNewPatient = () => {
   const { active, close } = useControlAlert()
 
   return (
@@ -25,11 +25,11 @@ const ButtonNewUser = () => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <FormNewUser closeAlert={close} />
+          <FormNewPatient closeAlert={close} />
         </AlertDialogHeader>
       </AlertDialogContent>
     </AlertDialog>
   )
 }
 
-export default ButtonNewUser
+export default ButtonNewPatient
