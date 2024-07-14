@@ -29,7 +29,7 @@ const ButtonOption: React.FC<ButtonDeleteProps> = ({ label, deleteDB }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant={controls[label as keyof typeof controls].variant}>
+        <Button variant="destructive" size={'icon'}>
           {controls[label as keyof typeof controls].icon}
         </Button>
       </AlertDialogTrigger>

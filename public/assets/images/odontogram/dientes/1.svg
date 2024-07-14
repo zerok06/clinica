@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.55 38.54">
+    <defs>
+        <style>
+            .cls-1{fill:#fff;}.cls-1,.cls-2{stroke:#1d1d1b;}.cls-1,.cls-2,.cls-3{stroke-miterlimit:10;stroke-width:0.5px;}.cls-2,.cls-3{fill:none;}.cls-3{stroke:#fff;}</style>
+    </defs>
+    <g id="Capa_2" data-name="Capa 2">
+        <g id="Capa_1-2" data-name="Capa 1">
+            <polygon class="cls-1"
+                points="12.77 1.02 15.34 11.13 17.9 21.24 12.77 21.24 7.65 21.24 10.21 11.13 12.77 1.02" />
+            <polygon class="cls-1"
+                points="18.81 1.02 21.37 11.13 23.93 21.24 18.81 21.24 13.69 21.24 16.25 11.13 18.81 1.02" />
+            <polygon class="cls-1"
+                points="6.73 1.02 9.29 11.13 11.86 21.24 6.73 21.24 1.61 21.24 4.17 11.13 6.73 1.02" />
+            <rect class="cls-2" x="1.67" y="21.24" width="22.21" height="17.04" />
+            <rect class="cls-3" x="0.25" y="20.36" width="0.92" height="17.93" />
+            <rect class="cls-3" x="24.38" y="20.36" width="0.92" height="17.93" />
+            <rect class="cls-2" x="7.42" y="25.95" width="10.71" height="7.64" />
+            <line class="cls-2" x1="1.61" y1="21.24" x2="7.42" y2="25.95" />
+            <line class="cls-2" x1="23.93" y1="21.24" x2="18.13" y2="25.95" />
+            <line class="cls-2" x1="23.75" y1="38.29" x2="18.13" y2="33.58" />
+            <line class="cls-2" x1="1.67" y1="38.29" x2="7.42" y2="33.58" />
+            <line class="cls-2" x1="7.65" y1="29.76" x2="18.13" y2="29.76" />
+            <line class="cls-2" x1="12.83" y1="25.95" x2="12.83" y2="33.58" />
+        </g>
+    </g>
+</svg>
