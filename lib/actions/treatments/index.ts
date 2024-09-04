@@ -1,11 +1,31 @@
 'use server'
 
 import prisma from '@/lib/prisma'
+import { revalidatePath } from 'next/cache'
 
 export const fetchTreatments = async () => {
   try {
-    const all = await prisma.tratamiento.findMany()
+    const all = await prisma.tratamiento.findMany({
+      include: { categoriaTratamiento: true },
+    })
     return { success: true, tratamientos: all }
+  } catch (error) {
+    return { success: false }
+  }
+}
+interface CreateCategoryTreatmentProps {
+  nombre: string
+  descripcion: string
+}
+export const createCategoryTreatment = async (
+  params: CreateCategoryTreatmentProps
+) => {
+  try {
+    await prisma.categoriaTratamiento.create({
+      data: params,
+    })
+    revalidatePath('/dashboard/treatments')
+    return { success: true }
   } catch (error) {
     return { success: false }
   }
@@ -32,6 +52,7 @@ export const createTreatment = async (params: CreateTreatmentProps) => {
     await prisma.tratamiento.create({
       data: params,
     })
+    revalidatePath('/dashboard/treatments')
 
     return { success: true }
   } catch (error) {

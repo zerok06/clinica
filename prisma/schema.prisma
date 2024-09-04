@@ -65,6 +65,7 @@ model paciente {
   celular    String
   convenio   String
   createAt   DateTime @default(now())
+  cita       cita[]
 }
 
 model tratamiento {
@@ -96,6 +97,18 @@ model detalleDiagnosticoTratamiento {
   diagnosticoId String      @db.ObjectId
   tratamiento   tratamiento @relation(fields: [tratamientoId], references: [id])
   tratamientoId String      @db.ObjectId
+}
+
+model cita {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  start       DateTime
+  end         DateTime
+  createAt    DateTime @default(now())
+  updateAt    DateTime @updatedAt
+  paciente    paciente @relation(fields: [pacienteId], references: [id])
+  pacienteId  String   @db.ObjectId
 }
 
 model insumo {

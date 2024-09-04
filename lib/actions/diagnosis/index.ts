@@ -1,5 +1,6 @@
 'use server'
 import prisma from '@/lib/prisma'
+import { revalidatePath } from 'next/cache'
 
 export const fetchDiagnosis = async () => {
   try {
@@ -25,13 +26,23 @@ export const fetchOneDiagnosis = async (id: string) => {
 interface CreateDiagnosisProps {
   nombre: string
   descripcion: string
+  tratamientoId: string
 }
 
 export const createDiagnosis = async (params: CreateDiagnosisProps) => {
   try {
     await prisma.diagnostico.create({
-      data: params,
+      data: {
+        nombre: params.nombre,
+        descripcion: params.descripcion,
+        detalleDiagnosticoTratamiento: {
+          create: {
+            tratamientoId: params.tratamientoId,
+          },
+        },
+      },
     })
+    revalidatePath('/dashboard/diagnosis')
     return { success: true }
   } catch (error) {
     return { success: false }

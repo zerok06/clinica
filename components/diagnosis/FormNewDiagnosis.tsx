@@ -35,8 +35,8 @@ const formSchema = z.object({
   descripcion: z.string().min(2, {
     message: 'Se requiere como mínimo 2 caracteres',
   }),
-  categoriaTratamientoId: z.string({
-    required_error: 'Seleccione una categoría.',
+  tratamientoId: z.string({
+    required_error: 'Seleccione un tratamiento.',
   }),
 })
 
@@ -55,7 +55,7 @@ const FormNewDiagnosis: React.FC<FormNewDiagnosisProps> = ({
     defaultValues: {
       nombre: '',
       descripcion: '',
-      categoriaTratamientoId: '',
+      tratamientoId: '',
     },
   })
 
@@ -98,7 +98,7 @@ const FormNewDiagnosis: React.FC<FormNewDiagnosisProps> = ({
               <FormLabel>Descripción</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Ingrese una descripción sobre el tratamiento."
+                  placeholder="Ingrese una descripción sobre el diagnostico."
                   className="resize-none"
                   {...field}
                 />
@@ -109,10 +109,10 @@ const FormNewDiagnosis: React.FC<FormNewDiagnosisProps> = ({
         />
         <FormField
           control={form.control}
-          name="categoriaTratamientoId"
+          name="tratamientoId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tratamientos</FormLabel>
+              <FormLabel>Tratamiento relacionado</FormLabel>
               <Select
                 onValueChange={field.onChange}
                 disabled={treatments.length === 0}
@@ -130,12 +130,6 @@ const FormNewDiagnosis: React.FC<FormNewDiagnosisProps> = ({
                 </SelectContent>
               </Select>
               <FormMessage />
-              <FormDescription className="text-red-500">
-                Al parecer no existe ninguna categoria{' '}
-                <Link href={'#'} className="text-blue-400 hover:underline">
-                  Agregar
-                </Link>
-              </FormDescription>
             </FormItem>
           )}
         />

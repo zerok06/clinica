@@ -2,6 +2,7 @@
 import useOdontograma from '@/hook/useOdontograma'
 import React from 'react'
 import Tooth from './Tooth'
+import { Button } from '../ui/button'
 
 const Odontograma = () => {
   const { odontograma } = useOdontograma()
@@ -14,8 +15,8 @@ const Odontograma = () => {
   console.log(odontograma)
 
   return (
-    <section className="w-full">
-      <div className="w-[calc(16*40px+15*4px)] flex gap-4 flex-col items-center mx-auto">
+    <section className="w-full h-[calc(100vh-(12px+56px+48px+12px+12px+12px))] flex justify-center items-center bg-white rounded-2xl p-4 relative">
+      <div className="w-[calc(16*40px+15*4px)] flex gap-4 flex-col items-center ">
         <div className="flex gap-1">
           {permanente_1.map(item => (
             <Tooth {...item} />

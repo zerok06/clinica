@@ -22,64 +22,60 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { toast } from '../ui/use-toast'
-import { createTreatment } from '@/lib/actions/treatments'
-import type { categoriaTratamiento } from '@prisma/client'
-import Link from 'next/link'
 import { Textarea } from '../ui/textarea'
-import ButtonNewCategoryTreatment from './ButtonNewCategoryTreatment'
+import { createDates } from '@/lib/actions/dates'
+import type { paciente } from '@prisma/client'
+import { DateTimePicker } from '../ui/datetime-picker'
 
 const formSchema = z.object({
-  nombre: z.string().min(2, {
+  title: z.string().min(2, {
     message: 'Se requiere como mínimo 2 caracteres',
   }),
-  descripcion: z.string().min(2, {
+  description: z.string().min(2, {
     message: 'Se requiere como mínimo 2 caracteres',
   }),
-  categoriaTratamientoId: z.string({
-    required_error: 'Seleccione una categoría.',
+  pacienteId: z.string({
+    required_error: 'Seleccione un paciente.',
   }),
+  start: z.date({ required_error: 'A date of birth is required.' }),
+  end: z.date({ required_error: 'A date of birth is required.' }),
 })
 
-interface FormNewTreatmentProps {
+interface FormNewDateProps {
   closeAlert: () => void
-  categories: Array<categoriaTratamiento>
+  pacientes: paciente[]
 }
 
-const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
-  closeAlert,
-  categories,
-}) => {
-  // 1. Define your form.
+const FormNewDate: React.FC<FormNewDateProps> = ({ closeAlert, pacientes }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      nombre: '',
-      descripcion: '',
-      categoriaTratamientoId: '',
+      title: '',
+      description: '',
+      pacienteId: '',
+      start: new Date(),
+      end: new Date(),
     },
   })
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values)
-    createTreatment(values).then(res =>
+    createDates(values).then(res =>
       toast({
         title: 'Uh oh! Something went wrong.',
         description: JSON.stringify(res),
       })
     )
-    closeAlert()
+    /* closeAlert() */
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-        <h2 className="text-lg font-semibold">Tratamiento</h2>
+        <h2 className="text-lg font-semibold">Cita</h2>
         <FormField
           control={form.control}
-          name="nombre"
+          name="title"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Nombre</FormLabel>
@@ -92,7 +88,7 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
         />
         <FormField
           control={form.control}
-          name="descripcion"
+          name="description"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Descripción</FormLabel>
@@ -109,13 +105,13 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
         />
         <FormField
           control={form.control}
-          name="categoriaTratamientoId"
+          name="pacienteId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Categoria</FormLabel>
+              <FormLabel>Pacientes</FormLabel>
               <Select
                 onValueChange={field.onChange}
-                disabled={categories.length === 0}
+                disabled={pacientes.length === 0}
                 defaultValue={field.value}
               >
                 <FormControl>
@@ -124,16 +120,48 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {categories.map(item => (
-                    <SelectItem value={item.id}>{item.nombre}</SelectItem>
+                  {pacientes.map(item => (
+                    <SelectItem value={item.id}>{item.nombres}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
               <FormMessage />
-              <FormDescription className="text-red-500">
-                Al parecer no existe ninguna categoria{' '}
-                <ButtonNewCategoryTreatment />
-              </FormDescription>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="start"
+          render={({ field }) => (
+            <FormItem className="flex flex-col gap-2 w-full">
+              <FormLabel htmlFor="datetime">Date time</FormLabel>
+              <FormControl>
+                <DateTimePicker
+                  granularity="minute"
+                  hourCycle={12}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="end"
+          render={({ field }) => (
+            <FormItem className="flex flex-col gap-2 w-full">
+              <FormLabel htmlFor="datetime">Date time</FormLabel>
+              <FormControl>
+                <DateTimePicker
+                  granularity="minute"
+                  hourCycle={12}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -148,4 +176,4 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
   )
 }
 
-export default FormNewTreatment
+export default FormNewDate

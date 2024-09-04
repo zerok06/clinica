@@ -18,5 +18,9 @@
     "insumos": {
         "title": "Insumos",
         "desc": "lorem10"
+    },
+    "citas": {
+        "title": "Citas",
+        "desc": "lorem10"
     }
 }

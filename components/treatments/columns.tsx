@@ -2,6 +2,7 @@
 import { ColumnDef } from '@tanstack/react-table'
 import ButtonDelete from '../ButtonOption'
 import { deleteUser } from '@/lib/actions/users'
+import { Badge } from '../ui/badge'
 
 export type Props = {
   id: string
@@ -21,6 +22,15 @@ export const columns: ColumnDef<Props>[] = [
   {
     accessorKey: 'email',
     header: 'Categoría',
+
+    cell: ({ row: { original } }) => {
+      const {
+        /* @ts-ignore */
+        categoriaTratamiento: { nombre },
+      } = original
+
+      return <Badge variant="default">{nombre}</Badge>
+    },
   },
   {
     header: 'Opciones',

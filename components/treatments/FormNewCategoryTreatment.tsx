@@ -7,26 +7,16 @@ import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+
 import { toast } from '../ui/use-toast'
-import { createTreatment } from '@/lib/actions/treatments'
-import type { categoriaTratamiento } from '@prisma/client'
-import Link from 'next/link'
+import { createCategoryTreatment } from '@/lib/actions/treatments'
 import { Textarea } from '../ui/textarea'
-import ButtonNewCategoryTreatment from './ButtonNewCategoryTreatment'
 
 const formSchema = z.object({
   nombre: z.string().min(2, {
@@ -35,19 +25,14 @@ const formSchema = z.object({
   descripcion: z.string().min(2, {
     message: 'Se requiere como mínimo 2 caracteres',
   }),
-  categoriaTratamientoId: z.string({
-    required_error: 'Seleccione una categoría.',
-  }),
 })
 
-interface FormNewTreatmentProps {
+interface FormNewCategoryTreatmentProps {
   closeAlert: () => void
-  categories: Array<categoriaTratamiento>
 }
 
-const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
+const FormNewCategoryTreatment: React.FC<FormNewCategoryTreatmentProps> = ({
   closeAlert,
-  categories,
 }) => {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,7 +40,6 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
     defaultValues: {
       nombre: '',
       descripcion: '',
-      categoriaTratamientoId: '',
     },
   })
 
@@ -64,7 +48,7 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
-    createTreatment(values).then(res =>
+    createCategoryTreatment(values).then(res =>
       toast({
         title: 'Uh oh! Something went wrong.',
         description: JSON.stringify(res),
@@ -76,13 +60,13 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-        <h2 className="text-lg font-semibold">Tratamiento</h2>
+        <h2 className="text-lg font-semibold">Categoria de tratamiento</h2>
         <FormField
           control={form.control}
           name="nombre"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nombre</FormLabel>
+              <FormLabel>Nombre de categoria</FormLabel>
               <FormControl>
                 <Input placeholder="Nombre" {...field} />
               </FormControl>
@@ -98,7 +82,7 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
               <FormLabel>Descripción</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Ingrese una descripción sobre el tratamiento."
+                  placeholder="Ingrese una descripción sobre la categoria de tratamiento."
                   className="resize-none"
                   {...field}
                 />
@@ -107,45 +91,15 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="categoriaTratamientoId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Categoria</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                disabled={categories.length === 0}
-                defaultValue={field.value}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Categoria de tratamiento" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {categories.map(item => (
-                    <SelectItem value={item.id}>{item.nombre}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-              <FormDescription className="text-red-500">
-                Al parecer no existe ninguna categoria{' '}
-                <ButtonNewCategoryTreatment />
-              </FormDescription>
-            </FormItem>
-          )}
-        />
         <div className="flex justify-end items-center gap-2">
           <Button variant={'ghost'} type="button" onClick={closeAlert}>
             Cancelar
           </Button>
-          <Button type="submit">Registrar</Button>
+          <Button type="submit">Agregar</Button>
         </div>
       </form>
     </Form>
   )
 }
 
-export default FormNewTreatment
+export default FormNewCategoryTreatment

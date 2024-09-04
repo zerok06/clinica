@@ -1,3 +1,4 @@
+import { Calendar } from 'lucide-react'
 import OptionBar from './OptionBar'
 import { ArrangeIcon } from './icons/ArrangeIcon'
 import { CellsIcon } from './icons/CellsIcon'
@@ -36,6 +37,12 @@ const itemsBar = [
     href: '/dashboard/insumos',
     label: 'Insumos',
     icon: <CellsIcon />,
+  },
+  {
+    id: 'e65d25c5-0932-485e-ae61-e8a29b764c84',
+    href: '/dashboard/dates',
+    label: 'Citas',
+    icon: <Calendar size={18} />,
   },
 ]
 
