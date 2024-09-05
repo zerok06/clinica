@@ -20,6 +20,8 @@ import {
 } from '@/components/ui/alert-dialog'
 /* import { DeleteDates } from '@/lib/actions/agenda' */
 import Link from 'next/link'
+import OpcionsPatientDates from './OpcionsPatientDates'
+import { Configuration01Icon } from '../icons/Configuration01Icon'
 
 const localizer = momentLocalizer(moment)
 
@@ -77,36 +79,29 @@ const Dates: React.FC<DatesProps> = ({ agenda = [] }) => {
                           <p className="text-xs leading-none">73736059</p>
                         </div>
                       </div>
-                      <div className="flex justify-end items-center gap-2">
+                      <div>
                         {/* @ts-ignore */}
-                        {!evt.event?.completed ? (
-                          <>
-                            {/* <WhatsAppButton tel={'+51910852459'} /> */}
-                            <Button
-                              className="bg-danger hover:bg-danger/90 rounded-full"
-                              size={'icon'}
-                              onClick={async () =>
-                                /* @ts-ignore */
-                                await DeleteDates(evt.event.id)
-                              }
-                            >
-                              <X size={18} />
-                            </Button>
-                            <Button
-                              size={'icon'}
-                              variant={'outline'}
-                              className="rounded-full"
-                              asChild
-                            >
-                              {/* @ts-ignore */}
-                              <Link href={`/dashboard/cita/${evt.event.id}`}>
-                                <ChevronRight size={18} />
-                              </Link>
-                            </Button>
-                          </>
-                        ) : (
-                          <h4>Completado</h4>
+                        {evt.event?.estado == 'Cancelado' && (
+                          <div className="px-4 py-1 text-black/70 rounded-lg bg-[#DC3545]">
+                            Cancelada
+                          </div>
                         )}
+                        {/* @ts-ignore */}
+                        {evt.event?.estado == 'Completado' && (
+                          <div className="px-4 py-1 text-black/70 rounded-lg bg-[#218838]">
+                            Completada
+                          </div>
+                        )}
+                        {/* @ts-ignore */}
+                        {evt.event?.estado == 'Pendiente' && (
+                          <div className="px-4 py-1 text-black/70 rounded-lg bg-[#FFD700]">
+                            Pendiente
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        {/* @ts-ignore */}
+                        <OpcionsPatientDates id={evt.event?.id} />
                       </div>
                     </div>
                     {/* @ts-ignore */}
@@ -170,16 +165,32 @@ const Dates: React.FC<DatesProps> = ({ agenda = [] }) => {
                       </div>
                       <div className="flex justify-end items-center gap-2">
                         {/* <WhatsAppButton tel={'+51910852459'} /> */}
-                        <Button
-                          className="bg-danger hover:bg-danger/90 rounded-full"
-                          size={'icon'}
-                          onClick={async () =>
-                            /* @ts-ignore */
-                            await DeleteDates(evt.event.id)
-                          }
-                        >
-                          <X size={18} />
-                        </Button>
+                        <div>
+                          <div>
+                            {/* @ts-ignore */}
+                            {evt.event?.estado == 'Cancelado' && (
+                              <div className="px-4 py-1 text-black/70 rounded-lg bg-[#DC3545]">
+                                Cancelada
+                              </div>
+                            )}
+                            {/* @ts-ignore */}
+                            {evt.event?.estado == 'Completado' && (
+                              <div className="px-4 py-1 text-black/70 rounded-lg bg-[#218838]">
+                                Completada
+                              </div>
+                            )}
+                            {/* @ts-ignore */}
+                            {evt.event?.estado == 'Pendiente' && (
+                              <div className="px-4 py-1 text-black/70 rounded-lg bg-[#FFD700]">
+                                Pendiente
+                              </div>
+                            )}
+                          </div>
+                          <div>
+                            {/* @ts-ignore */}
+                            <OpcionsPatientDates id={evt.event?.id} />
+                          </div>
+                        </div>
                       </div>
                     </div>
                     {/* @ts-ignore */}
@@ -216,16 +227,32 @@ const Dates: React.FC<DatesProps> = ({ agenda = [] }) => {
             </div>
             <div className="flex justify-end items-center gap-2">
               {/* <WhatsAppButton tel={'+51910852459'} /> */}
-              <Button
-                className="bg-danger hover:bg-danger/90 rounded-full"
-                size={'icon'}
-                onClick={async () =>
-                  /* @ts-ignore */
-                  await DeleteDates(evt.event.id)
-                }
-              >
-                <X size={18} />
-              </Button>
+              <div>
+                <div>
+                  {/* @ts-ignore */}
+                  {evt.event?.estado == 'Cancelado' && (
+                    <div className="px-4 py-1 text-black/70 rounded-lg bg-[#DC3545]">
+                      Cancelada
+                    </div>
+                  )}
+                  {/* @ts-ignore */}
+                  {evt.event?.estado == 'Completado' && (
+                    <div className="px-4 py-1 text-black/70 rounded-lg bg-[#218838]">
+                      Completada
+                    </div>
+                  )}
+                  {/* @ts-ignore */}
+                  {evt.event?.estado == 'Pendiente' && (
+                    <div className="px-4 py-1 text-black/70 rounded-lg bg-[#FFD700]">
+                      Pendiente
+                    </div>
+                  )}
+                </div>
+                <div>
+                  {/* @ts-ignore */}
+                  <OpcionsPatientDates id={evt.event?.id} />
+                </div>
+              </div>
             </div>
           </div>
         ),

@@ -1,5 +1,6 @@
 'use server'
 import prisma from '@/lib/prisma'
+import type { EstadoCita } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 
 export const fetchDates = async () => {
@@ -10,6 +11,20 @@ export const fetchDates = async () => {
     return { success: false }
   }
 }
+
+export const fetchDatesPatient = async (id: string) => {
+  try {
+    const all = await prisma.cita.findMany({
+      where: {
+        pacienteId: id,
+      },
+    })
+    return { success: true, dates: all }
+  } catch (error) {
+    return { success: false }
+  }
+}
+
 export const fetchOneDate = async (id: string) => {
   try {
     const one = await prisma.cita.findUnique({
@@ -39,6 +54,21 @@ export const createDates = async (params: CreateDateProps) => {
       data: params,
     })
     revalidatePath('/dashboard/diagnosis')
+    return { success: true }
+  } catch (error) {
+    return { success: false }
+  }
+}
+
+export const changeStatus = async (id: string, status: EstadoCita) => {
+  try {
+    await prisma.cita.update({
+      where: { id },
+      data: {
+        estado: status,
+      },
+    })
+    revalidatePath('/dashboard/patient/[id]/dates')
     return { success: true }
   } catch (error) {
     return { success: false }

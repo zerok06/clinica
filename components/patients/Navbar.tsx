@@ -14,7 +14,7 @@ const ITEMS = [
   },
   {
     id: '6c35303d-330a-4a66-b4c7-0540110e395c',
-    slug: 'appointments',
+    slug: 'dates',
     label: 'Citas',
   },
   {

@@ -75,6 +75,7 @@ model tratamiento {
   categoriaTratamiento          categoriaTratamiento?           @relation(fields: [categoriaTratamientoId], references: [id], onUpdate: Cascade, onDelete: SetNull)
   categoriaTratamientoId        String?                         @db.ObjectId
   detalleDiagnosticoTratamiento detalleDiagnosticoTratamiento[]
+  cita                          cita[]
 }
 
 model categoriaTratamiento {
@@ -100,15 +101,18 @@ model detalleDiagnosticoTratamiento {
 }
 
 model cita {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  description String
-  start       DateTime
-  end         DateTime
-  createAt    DateTime @default(now())
-  updateAt    DateTime @updatedAt
-  paciente    paciente @relation(fields: [pacienteId], references: [id])
-  pacienteId  String   @db.ObjectId
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String
+  estado        EstadoCita   @default(Pendiente)
+  start         DateTime
+  end           DateTime
+  tratamiento   tratamiento? @relation(fields: [tratamientoId], references: [id])
+  createAt      DateTime     @default(now())
+  updateAt      DateTime     @updatedAt
+  paciente      paciente     @relation(fields: [pacienteId], references: [id])
+  pacienteId    String       @db.ObjectId
+  tratamientoId String?      @db.ObjectId
 }
 
 model insumo {
@@ -116,4 +120,10 @@ model insumo {
   nombre      String
   cantidad    Int
   description String
+}
+
+enum EstadoCita {
+  Pendiente
+  Completado
+  Cancelado
 }
