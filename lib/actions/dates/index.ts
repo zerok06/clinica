@@ -16,8 +16,21 @@ export const fetchDatesPatient = async (id: string) => {
   try {
     const all = await prisma.cita.findMany({
       where: {
-        pacienteId: id,
+        procedimiento: {
+          pacienteId: id,
+        },
       },
+    })
+    return { success: true, dates: all }
+  } catch (error) {
+    return { success: false }
+  }
+}
+
+export const fetchDatesProcedimientos = async (id: string) => {
+  try {
+    const all = await prisma.cita.findMany({
+      where: { procedimientoId: id },
     })
     return { success: true, dates: all }
   } catch (error) {
@@ -43,7 +56,7 @@ export interface CreateDateProps {
   description: string
   start: Date
   end: Date
-  pacienteId: string
+  pacienteId?: string
 }
 
 export const createDates = async (params: CreateDateProps) => {
@@ -52,6 +65,31 @@ export const createDates = async (params: CreateDateProps) => {
   try {
     await prisma.cita.create({
       data: params,
+    })
+    revalidatePath('/dashboard/diagnosis')
+    return { success: true }
+  } catch (error) {
+    return { success: false }
+  }
+}
+
+export interface CreateDateProcedimientoProps {
+  title: string
+  description: string
+  start: Date
+  end: Date
+  procedimientoId: string
+}
+
+export const createDatesProcedimiento = async (
+  params: CreateDateProcedimientoProps
+) => {
+  try {
+    const { description, end, procedimientoId, start, title } = params
+    console.log({ description, end, procedimientoId, start, title })
+
+    await prisma.cita.create({
+      data: { description, end, procedimientoId, start, title },
     })
     revalidatePath('/dashboard/diagnosis')
     return { success: true }

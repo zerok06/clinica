@@ -18,6 +18,11 @@ const ITEMS = [
     label: 'Citas',
   },
   {
+    id: '33fc0c73-8abf-4a49-9212-afaa7fdede0e',
+    slug: 'procedimientos',
+    label: 'Procedimientos',
+  },
+  {
     id: 'a84d92e2-31d2-4fc2-96ae-fa22bb380034',
     slug: 'history',
     label: 'Historia',
@@ -26,6 +31,11 @@ const ITEMS = [
     id: '62803ef8-9dc7-4ec9-bc22-f3c78880ad7d',
     slug: 'radiograph',
     label: 'Radiografías',
+  },
+  {
+    id: '959c1a64-bdce-440b-b1c4-1b45d4b60e44',
+    slug: 'files',
+    label: 'Archivos',
   },
 ]
 
@@ -45,7 +55,7 @@ const Navbar: React.FC<NavbarProps> = ({ idPatient }) => {
           <Link
             key={id}
             href={generateUrl(idPatient, slug)}
-            className="hover:bg-primary/5 px-4 py-1 rounded-md text-xs text-primary/80"
+            className="hover:bg-primary/5 px-2 py-1 rounded-md text-xs text-primary/80"
           >
             {label}
           </Link>

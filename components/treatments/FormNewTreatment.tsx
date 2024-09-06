@@ -38,6 +38,9 @@ const formSchema = z.object({
   categoriaTratamientoId: z.string({
     required_error: 'Seleccione una categoría.',
   }),
+  monto: z.string().min(0, {
+    message: 'Monto minimo es 1.',
+  }),
 })
 
 interface FormNewTreatmentProps {
@@ -56,6 +59,7 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
       nombre: '',
       descripcion: '',
       categoriaTratamientoId: '',
+      monto: '',
     },
   })
 
@@ -134,6 +138,24 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
                 Al parecer no existe ninguna categoria{' '}
                 <ButtonNewCategoryTreatment />
               </FormDescription>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="monto"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Monto</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  placeholder="Ingrese una descripción sobre el tratamiento."
+                  className="resize-none"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />

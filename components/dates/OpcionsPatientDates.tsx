@@ -7,9 +7,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '../ui/button'
-import { Configuration01Icon } from '../icons/Configuration01Icon'
 import { changeStatus } from '@/lib/actions/dates'
 import { toast } from '../ui/use-toast'
+import { Bolt } from 'lucide-react'
 
 interface DatePatientProps {
   id: string
@@ -18,9 +18,9 @@ interface DatePatientProps {
 const OpcionsPatientDates: React.FC<DatePatientProps> = ({ id }) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         <Button size={'icon'} variant={'outline'}>
-          <Configuration01Icon />
+          <Bolt size={16} className="text-black/70" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

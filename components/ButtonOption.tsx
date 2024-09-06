@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import {
   AlertDialog,
@@ -11,7 +12,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from './ui/button'
-import { Delete02Icon } from './icons/Delete02Icon'
+import { Trash2 } from 'lucide-react'
 
 interface ButtonDeleteProps {
   label: 'delete' | 'edit'
@@ -20,7 +21,7 @@ interface ButtonDeleteProps {
 
 const controls = {
   delete: {
-    icon: <Delete02Icon />,
+    icon: <Trash2 size={16} />,
     variant: 'destructive',
   },
 }

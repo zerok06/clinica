@@ -17,20 +17,31 @@ import FormNewDate from './FormNewDate'
 import { paciente } from '@prisma/client'
 
 interface ButtonNewDateProps {
-  pacientes: paciente[]
+  pacientes?: paciente[]
+  procedimientoId?: string
+  type: 'particular' | 'procedimiento'
 }
 
-const ButtonNewDate: React.FC<ButtonNewDateProps> = ({ pacientes = [] }) => {
+const ButtonNewDate: React.FC<ButtonNewDateProps> = ({
+  pacientes = [],
+  procedimientoId = '',
+  type,
+}) => {
   const { active, close } = useControlAlert()
 
   return (
     <AlertDialog open={active} onOpenChange={close}>
       <AlertDialogTrigger asChild>
-        <Button>Agregar</Button>
+        <Button size={'sm'}>Agregar</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <FormNewDate closeAlert={close} pacientes={pacientes} />
+          <FormNewDate
+            type={type}
+            closeAlert={close}
+            pacientes={pacientes}
+            procedimientoId={procedimientoId}
+          />
         </AlertDialogHeader>
       </AlertDialogContent>
     </AlertDialog>

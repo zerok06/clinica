@@ -44,13 +44,14 @@ export const categoriesTreatments = async () => {
 interface CreateTreatmentProps {
   nombre: string
   descripcion: string
+  monto: string
   categoriaTratamientoId: string
 }
 
 export const createTreatment = async (params: CreateTreatmentProps) => {
   try {
     await prisma.tratamiento.create({
-      data: params,
+      data: { ...params, monto: Number(params.monto) },
     })
     revalidatePath('/dashboard/treatments')
 

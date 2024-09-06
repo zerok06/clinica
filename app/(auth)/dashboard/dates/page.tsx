@@ -19,7 +19,7 @@ const Page = async () => {
           <h2 className="font-medium text-lg">{Cit.title}</h2>
           <p className="text-black/70 text-sm">{Cit.desc}</p>
         </div>
-        <ButtonNewDate pacientes={patients!} />
+        <ButtonNewDate pacientes={patients!} type={'particular'} />
       </div>
       <Separator className="my-3" />
       <Dates agenda={dates!} />

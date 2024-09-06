@@ -20,7 +20,10 @@ export const columns: ColumnDef<Props>[] = [
     header: 'Descripción',
   },
   {
-    accessorKey: 'email',
+    accessorKey: 'monto',
+    header: 'Precio',
+  },
+  {
     header: 'Categoría',
 
     cell: ({ row: { original } }) => {

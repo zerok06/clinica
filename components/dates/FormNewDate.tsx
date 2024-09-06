@@ -23,30 +23,40 @@ import {
 } from '@/components/ui/select'
 import { toast } from '../ui/use-toast'
 import { Textarea } from '../ui/textarea'
-import { createDates } from '@/lib/actions/dates'
+import { createDates, createDatesProcedimiento } from '@/lib/actions/dates'
 import type { paciente } from '@prisma/client'
 import { DateTimePicker } from '../ui/datetime-picker'
 
 const formSchema = z.object({
-  title: z.string().min(2, {
+  title: z.string().min(1, {
     message: 'Se requiere como mínimo 2 caracteres',
   }),
   description: z.string().min(2, {
     message: 'Se requiere como mínimo 2 caracteres',
   }),
-  pacienteId: z.string({
-    required_error: 'Seleccione un paciente.',
-  }),
+  pacienteId: z
+    .string({
+      required_error: 'Seleccione un paciente.',
+    })
+    .optional(),
   start: z.date({ required_error: 'A date of birth is required.' }),
   end: z.date({ required_error: 'A date of birth is required.' }),
 })
 
 interface FormNewDateProps {
   closeAlert: () => void
-  pacientes: paciente[]
+  type: 'particular' | 'procedimiento'
+  pacientes?: paciente[]
+  procedimiento?: boolean
+  procedimientoId: string
 }
 
-const FormNewDate: React.FC<FormNewDateProps> = ({ closeAlert, pacientes }) => {
+const FormNewDate: React.FC<FormNewDateProps> = ({
+  closeAlert,
+  pacientes = [],
+  procedimientoId = '',
+  type,
+}) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,13 +70,22 @@ const FormNewDate: React.FC<FormNewDateProps> = ({ closeAlert, pacientes }) => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
-    createDates(values).then(res =>
-      toast({
-        title: 'Uh oh! Something went wrong.',
-        description: JSON.stringify(res),
-      })
-    )
-    /* closeAlert() */
+    {
+      type == 'particular'
+        ? createDates(values).then(res =>
+            toast({
+              title: 'Uh oh! Something went wrong.',
+              description: JSON.stringify(res),
+            })
+          )
+        : createDatesProcedimiento({ ...values, procedimientoId }).then(res =>
+            toast({
+              title: 'Uh oh! Something went wrong.',
+              description: JSON.stringify(res),
+            })
+          )
+    }
+    closeAlert()
   }
 
   return (
@@ -103,32 +122,34 @@ const FormNewDate: React.FC<FormNewDateProps> = ({ closeAlert, pacientes }) => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="pacienteId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Pacientes</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                disabled={pacientes.length === 0}
-                defaultValue={field.value}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Categoria de tratamiento" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {pacientes.map(item => (
-                    <SelectItem value={item.id}>{item.nombres}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {type == 'particular' && (
+          <FormField
+            control={form.control}
+            name="pacienteId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Pacientes</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  disabled={pacientes.length === 0}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Categoria de tratamiento" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {pacientes.map(item => (
+                      <SelectItem value={item.id}>{item.nombres}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
         <FormField
           control={form.control}
           name="start"
