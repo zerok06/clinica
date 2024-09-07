@@ -422,9 +422,9 @@ const DEFAULT: OdontogramaProps = {
 const useOdontograma = () => {
   const [odontograma, setOdontograma] = useState<OdontogramaProps>(DEFAULT)
 
-  useEffect(() => {
+  /*  useEffect(() => {
     console.log(odontograma)
-  }, [odontograma])
+  }, [odontograma]) */
 
   const addDiagnosticoMono = (props: MonoProps, code: number) => {
     setOdontograma(state => {

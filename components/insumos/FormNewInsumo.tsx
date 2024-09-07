@@ -54,7 +54,6 @@ const FormNewInsumo: React.FC<FormNewInsumoProps> = ({ closeAlert }) => {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
     createInsumo({ ...values, cantidad: Number(values.cantidad) }).then(res =>
       toast({
         title: 'Uh oh! Something went wrong.',

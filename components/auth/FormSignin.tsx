@@ -40,7 +40,6 @@ const FormSignin = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
     authentication(values).then(res => {
       toast({
         title: 'Uh oh! Something went wrong.',

@@ -15,7 +15,6 @@ interface authenticationProps {
 export const authentication = async (params: authenticationProps) => {
   try {
     const { username, password } = params
-    console.log(username, password)
 
     if (!username && !password) {
       return { success: false, error: 'Credenciales faltantes' }
@@ -33,7 +32,6 @@ export const authentication = async (params: authenticationProps) => {
     if (!existUser) {
       return { success: false, error: 'Usuario no Existe' }
     }
-    console.log(existUser)
 
     const token = encrypt({
       user: existUser,

@@ -65,7 +65,6 @@ const createNewUser = async (user: CreateUser) => {
         },
       },
     })
-    console.log('paso')
 
     revalidatePath('/dashboard/users')
     return { success: true }

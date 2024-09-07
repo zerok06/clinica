@@ -34,7 +34,6 @@ const middleware = async (req: NextRequest) => {
     if (!token) {
       return NextResponse.redirect(new URL('/signin', req.url))
     }
-    console.log(payload)
 
     return NextResponse.next()
   } catch (error) {

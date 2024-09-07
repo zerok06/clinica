@@ -13,41 +13,37 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '../ui/button'
 import useControlAlert from '@/hook/useControlAlert'
-import FormNewDate from './FormNewDate'
-import { paciente } from '@prisma/client'
+import { Plus } from 'lucide-react'
+import UploadOdontogramForm from './UploadOdontogramForm'
 
-interface ButtonNewDateProps {
-  pacientes?: paciente[]
-  procedimientoId?: string
-  type: 'particular' | 'procedimiento'
+interface ButtonUploadOdontogramaProps {
+  id: string
 }
 
-const ButtonNewDate: React.FC<ButtonNewDateProps> = ({
-  pacientes = [],
-  procedimientoId = '',
-  type,
+const ButtonUploadOdontograma: React.FC<ButtonUploadOdontogramaProps> = ({
+  id,
 }) => {
   const { active, close } = useControlAlert()
 
   return (
     <AlertDialog open={active} onOpenChange={close}>
       <AlertDialogTrigger asChild>
-        <Button size={'sm'} variant={'outline'}>
-          Agregar
+        <Button
+          size={'sm'}
+          className="flex gap-1 flex-row text-sm"
+          variant={'default'}
+        >
+          Subir
+          <Plus size={'16'} />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <FormNewDate
-            type={type}
-            closeAlert={close}
-            pacientes={pacientes}
-            procedimientoId={procedimientoId}
-          />
+          <UploadOdontogramForm id={id} close={close} />
         </AlertDialogHeader>
       </AlertDialogContent>
     </AlertDialog>
   )
 }
 
-export default ButtonNewDate
+export default ButtonUploadOdontograma

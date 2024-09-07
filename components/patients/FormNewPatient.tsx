@@ -85,7 +85,6 @@ const FormNewPatient: React.FC<FormNewPatientProps> = ({ closeAlert }) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
     createNewPatient({ ...values, edad: Number(values.edad) }).then(res =>
       toast({
         title: 'Uh oh! Something went wrong.',

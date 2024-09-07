@@ -67,7 +67,6 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
     createTreatment(values).then(res =>
       toast({
         title: 'Uh oh! Something went wrong.',
@@ -129,7 +128,9 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
                 </FormControl>
                 <SelectContent>
                   {categories.map(item => (
-                    <SelectItem value={item.id}>{item.nombre}</SelectItem>
+                    <SelectItem value={item.id} key={item.id}>
+                      {item.nombre}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>

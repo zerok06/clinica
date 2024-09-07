@@ -24,6 +24,8 @@ import { es } from 'date-fns/locale/es'
 import { cn } from '@/lib/utils'
 import { Label } from '../ui/label'
 import { cita, pagos } from '@prisma/client'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import ExcelExport from '../ExcelExport'
 
 interface FormFinanceProps {
   pagos: pagos[]
@@ -94,6 +96,12 @@ const FormFinance: React.FC<FormFinanceProps> = ({ pagos = [] }) => {
         </div>
       </div>
       <div className="bg-background p-6 rounded-xl">
+        <div className="flex justify-between items-center">
+          <div></div>
+          <div>
+            <ExcelExport data={pagos} fileName="pagos" />
+          </div>
+        </div>
         <Table>
           <TableHeader>
             <TableRow>
@@ -115,9 +123,33 @@ const FormFinance: React.FC<FormFinanceProps> = ({ pagos = [] }) => {
                 </TableCell>
                 <TableCell>{item.desc}</TableCell>
                 <TableCell>
-                  {item?.procedimientoId &&
-                    /* @ts-ignore */
-                    item?.procedimiento.paciente.nombres}
+                  <div className="flex">
+                    {item?.procedimientoId && (
+                      /* @ts-ignore */
+                      <div className="py-1 pl-1 pr-3 rounded-full flex gap-2 bg-black/20">
+                        <Avatar>
+                          <AvatarImage src="" />
+                          <AvatarFallback>
+                            {/* @ts-ignore */}
+                            {item?.procedimiento.paciente.nombres[0]
+                              /* @ts-ignore */
+                              .concat(item?.procedimiento.paciente.apellidos[0])
+                              .toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="text-xs font-medium">
+                            {/* @ts-ignore */}
+                            {item?.procedimiento.paciente.nombres}
+                          </p>
+                          <p className="text-[10px] text-black/70">
+                            {/* @ts-ignore */}
+                            {item?.procedimiento.paciente.dni}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </TableCell>
                 <TableCell className="text-right">
                   PEN <span className="font-medium">{item.monto}</span>

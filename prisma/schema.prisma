@@ -156,6 +156,15 @@ model pagos {
   updateAt        DateTime      @updatedAt
 }
 
+model insumo {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  nombre      String
+  cantidad    Int
+  description String
+  createAt    DateTime @default(now())
+  updateAt    DateTime @updatedAt
+}
+
 enum StatusProcedimiento {
   completada
   cancelada
@@ -169,18 +178,10 @@ enum TypeFile {
 }
 
 enum CategoriaFile {
+  Odontograma
   Radiografia
   Consentimiento
   Otros
-}
-
-model insumo {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  nombre      String
-  cantidad    Int
-  description String
-  createAt    DateTime @default(now())
-  updateAt    DateTime @updatedAt
 }
 
 enum EstadoCita {

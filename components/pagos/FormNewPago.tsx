@@ -60,7 +60,6 @@ const FormNewPago: React.FC<FormNewPagoProps> = ({
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
     CreatePago({ ...values, procedimientoId }).then(res =>
       toast({
         title: 'Uh oh! Something went wrong.',

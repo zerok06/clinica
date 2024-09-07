@@ -60,8 +60,6 @@ export interface CreateDateProps {
 }
 
 export const createDates = async (params: CreateDateProps) => {
-  console.log(params)
-
   try {
     await prisma.cita.create({
       data: params,
@@ -86,7 +84,6 @@ export const createDatesProcedimiento = async (
 ) => {
   try {
     const { description, end, procedimientoId, start, title } = params
-    console.log({ description, end, procedimientoId, start, title })
 
     await prisma.cita.create({
       data: { description, end, procedimientoId, start, title },

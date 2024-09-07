@@ -10,33 +10,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Button } from '../ui/button'
 
 interface UploadFormProps {
   id: string
+  close: () => void
 }
 
-const UploadForm: React.FC<UploadFormProps> = ({ id }) => {
+const UploadForm: React.FC<UploadFormProps> = ({ id, close }) => {
   return (
     <form
-      action={data =>
+      action={data => {
         uploadFile(data).then(res =>
           toast({
             title: 'Uh oh! Something went wrong.',
             description: JSON.stringify(res),
           })
         )
-      }
-      className="flex flex-col gap-4 w-[300px]"
+        close()
+      }}
+      className="flex flex-col gap-4"
     >
       <label>
         <span>Subir un archivo</span>
         <div className="flex flex-col gap-2">
           <Input name="file" type="file" accept="image/*,.pdf" />
-          <Select defaultValue="Otros">
+          <Select defaultValue="Otros" name="category">
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Tipo de archivo" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="Odontograma">Odontograma</SelectItem>
               <SelectItem value="Radiografia">Radiografia</SelectItem>
               <SelectItem value="Consentimiento">Consentimiento</SelectItem>
               <SelectItem value="Otros">Otros</SelectItem>
@@ -45,7 +49,7 @@ const UploadForm: React.FC<UploadFormProps> = ({ id }) => {
           <input type="hidden" name="id" value={id} />
         </div>
       </label>
-      <button type="submit">Submit</button>
+      <Button type="submit">Submit</Button>
     </form>
   )
 }

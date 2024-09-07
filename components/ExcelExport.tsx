@@ -11,8 +11,6 @@ interface ExcelExportProps {
 }
 
 const ExcelExport: React.FC<ExcelExportProps> = ({ data, fileName }) => {
-  console.log(data)
-
   const exportToExcel = () => {
     const worksheet = XLSX?.utils.json_to_sheet(data)
     const workbook = XLSX?.utils.book_new()

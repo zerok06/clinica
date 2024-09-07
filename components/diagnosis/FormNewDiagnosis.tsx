@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,9 +21,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { toast } from '../ui/use-toast'
-import { createTreatment } from '@/lib/actions/treatments'
 import type { tratamiento } from '@prisma/client'
-import Link from 'next/link'
 import { Textarea } from '../ui/textarea'
 import { createDiagnosis } from '@/lib/actions/diagnosis'
 
@@ -63,7 +60,6 @@ const FormNewDiagnosis: React.FC<FormNewDiagnosisProps> = ({
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
     createDiagnosis(values).then(res =>
       toast({
         title: 'Uh oh! Something went wrong.',
@@ -125,7 +121,9 @@ const FormNewDiagnosis: React.FC<FormNewDiagnosisProps> = ({
                 </FormControl>
                 <SelectContent>
                   {treatments.map(item => (
-                    <SelectItem value={item.id}>{item.nombre}</SelectItem>
+                    <SelectItem value={item.id} key={item.id}>
+                      {item.nombre}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>

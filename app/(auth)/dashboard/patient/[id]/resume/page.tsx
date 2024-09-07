@@ -14,8 +14,8 @@ const Page: React.FC<PageResumeProps> = async ({ params: { id } }) => {
   const { data } = await fetchResumePatient(id)
 
   return (
-    <div className="flex flex-col gap-4  h-[calc(100vh-(12px+56px+48px+12px+12px+12px))] ">
-      <div className="flex flex-row gap-4 flex-wrap  h-[calc(100vh-(12px+56px+48px+12px+12px+12px))] ">
+    <div className="flex flex-col gap-4  ">
+      <div className="flex flex-row gap-4 flex-wrap  ">
         <div className="py-3 px-4 rounded-xl bg-white flex-1 min-w-[312px] flex">
           <div className="flex-1 flex-col border-r-2 pr-2 flex items-center">
             <div className="h-20 w-20 rounded-full bg-primary text-white flex justify-center items-center">

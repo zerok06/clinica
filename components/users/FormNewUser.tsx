@@ -73,7 +73,6 @@ const FormNewUser: React.FC<FormNewUserProps> = ({ closeAlert }) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
     createNewUser(values).then(res =>
       toast({
         title: 'Uh oh! Something went wrong.',

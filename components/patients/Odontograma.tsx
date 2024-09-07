@@ -17,8 +17,6 @@ const Odontograma: React.FC<OdontogramaProps> = ({ tratamientos }) => {
   const temporal_1 = odontograma.temporales.slice(0, 10)
   const temporal_2 = odontograma.temporales.slice(10, 20)
 
-  console.log(odontograma)
-
   return (
     <section className="w-full h-[calc(100vh-(12px+56px+48px+12px+12px+12px))] flex justify-center items-center bg-white rounded-2xl p-4 relative">
       <div className="w-[calc(16*40px+15*4px)] flex gap-4 flex-col items-center ">
@@ -26,6 +24,7 @@ const Odontograma: React.FC<OdontogramaProps> = ({ tratamientos }) => {
           {permanente_1.map(item => (
             <Tooth
               {...item}
+              key={item.id}
               tratamientos={tratamientos!}
               addDiagnosticoMono={addDiagnosticoMono}
             />
@@ -36,6 +35,7 @@ const Odontograma: React.FC<OdontogramaProps> = ({ tratamientos }) => {
           {temporal_1.map(item => (
             <Tooth
               {...item}
+              key={item.id}
               tratamientos={tratamientos!}
               addDiagnosticoMono={addDiagnosticoMono}
             />
@@ -45,6 +45,7 @@ const Odontograma: React.FC<OdontogramaProps> = ({ tratamientos }) => {
           {temporal_2.map(item => (
             <Tooth
               {...item}
+              key={item.id}
               tratamientos={tratamientos!}
               addDiagnosticoMono={addDiagnosticoMono}
             />
@@ -55,6 +56,7 @@ const Odontograma: React.FC<OdontogramaProps> = ({ tratamientos }) => {
           {permanente_2.map(item => (
             <Tooth
               {...item}
+              key={item.id}
               tratamientos={tratamientos!}
               addDiagnosticoMono={addDiagnosticoMono}
             />

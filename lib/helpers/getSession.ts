@@ -10,7 +10,6 @@ export const getSession = () => {
       return null
     }
     const params = verify(token, JWT_SECRET_KEY)
-    console.log(params)
 
     return params ? params : null
   } catch (error) {

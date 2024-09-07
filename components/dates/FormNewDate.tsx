@@ -69,7 +69,6 @@ const FormNewDate: React.FC<FormNewDateProps> = ({
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
     {
       type == 'particular'
         ? createDates(values).then(res =>
@@ -141,7 +140,9 @@ const FormNewDate: React.FC<FormNewDateProps> = ({
                   </FormControl>
                   <SelectContent>
                     {pacientes.map(item => (
-                      <SelectItem value={item.id}>{item.nombres}</SelectItem>
+                      <SelectItem value={item.id} key={item.id}>
+                        {item.nombres}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>

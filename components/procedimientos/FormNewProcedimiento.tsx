@@ -65,7 +65,6 @@ const FormNewProcedimiento: React.FC<FormNewProcedimientoProps> = ({
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
     CreateProcedimiento({ ...values, patientId }).then(res =>
       toast({
         title: 'Uh oh! Something went wrong.',
@@ -93,7 +92,7 @@ const FormNewProcedimiento: React.FC<FormNewProcedimientoProps> = ({
                 </FormControl>
                 <SelectContent>
                   {tratamientos.map(item => (
-                    <SelectItem value={item.id}>
+                    <SelectItem value={item.id} key={item.id}>
                       {item.nombre} - s/{item.monto}
                     </SelectItem>
                   ))}

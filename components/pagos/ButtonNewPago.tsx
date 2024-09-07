@@ -21,7 +21,7 @@ const ButtonNewPago: React.FC<ButtonNewPagoProps> = ({ procedimientoId }) => {
   return (
     <AlertDialog open={active} onOpenChange={close}>
       <AlertDialogTrigger asChild>
-        <Button variant={'ghost'} size={'sm'}>
+        <Button variant={'outline'} size={'sm'}>
           Agregar
         </Button>
       </AlertDialogTrigger>
