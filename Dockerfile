@@ -4,6 +4,7 @@ WORKDIR /clinica
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
+RUN npm run config
 RUN npm run build
 
 FROM node:18-alpine as runner
