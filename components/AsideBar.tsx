@@ -120,7 +120,7 @@ const itemsSecreBar = [
 
 const AsideBar = async () => {
   /* @ts-ignore */
-  const { user } = await getSession()
+  const data = await getSession()
   return (
     <aside className="min-w-[60px]">
       <nav className="flex-col text-white h-[calc(100svh-24px)] sticky top-3 bg-primary rounded-2xl p-2 flex">
@@ -132,21 +132,24 @@ const AsideBar = async () => {
               icon={<DashboardSquare02Icon />}
             />
           </div>
-          {user.role == 'administrador' && (
+          {/* @ts-ignore */}
+          {data?.user.role == 'administrador' && (
             <div className="flex flex-col gap-1">
               {itemsAdminBar.map(item => (
                 <OptionBar key={item.id} {...item} />
               ))}
             </div>
           )}
-          {user.role == 'secretaria' && (
+          {/* @ts-ignore */}
+          {data?.user.role == 'secretaria' && (
             <div className="flex flex-col gap-1">
               {itemsSecreBar.map(item => (
                 <OptionBar key={item.id} {...item} />
               ))}
             </div>
           )}
-          {user.role == 'doctor' && (
+          {/* @ts-ignore */}
+          {data?.user.role == 'doctor' && (
             <div className="flex flex-col gap-1">
               {itemsDoctorBar.map(item => (
                 <OptionBar key={item.id} {...item} />

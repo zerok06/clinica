@@ -80,7 +80,7 @@ const Tooth: React.FC<ToothProps> = diente => {
                   </TableHeader>
                   <TableBody>
                     {diagnostico.map((item, index) => (
-                      <TableRow>
+                      <TableRow key={item.name + index}>
                         <TableCell className="font-medium p-2">
                           {index}
                         </TableCell>
