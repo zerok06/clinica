@@ -4,6 +4,7 @@ import React from 'react'
 import OpcionsPatientDates from '@/components/dates/OpcionsPatientDates'
 import { Button } from '@/components/ui/button'
 import { Configuration01Icon } from '@/components/icons/Configuration01Icon'
+import { Badge } from '@/components/ui/badge'
 
 interface PagePatientProps {
   params: { id: string }
@@ -18,15 +19,15 @@ const Page: React.FC<PagePatientProps> = async ({ params: { id } }) => {
         {dates?.map(item => (
           <div
             key={item.id}
-            className="w-full rounded-xl border p-6 flex flex-row gap-4 items-center"
+            className="w-full rounded-xl border justify-between p-6 flex flex-row gap-4 items-center"
           >
             <div>
-              <h3 className="text-lg font-semibold">01 julio 2025</h3>
-              <p className="text-black/70">9:00 am - 11:00 am</p>
+              <h3 className="text-base font-semibold">01 julio 2025</h3>
+              <p className="text-black/70 text-sm">9:00 am - 11:00 am</p>
             </div>
             <div>
-              <h3 className="text-lg font-semibold">Retiro de muela</h3>
-              <p className="text-black/70">
+              <h3 className="text-base font-semibold">Retiro de muela</h3>
+              <p className="text-black/70 text-sm">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit
                 tenetur exercitationem ut explicabo iusto ea repellendus, ullam
                 tempore placeat rem.
@@ -34,19 +35,13 @@ const Page: React.FC<PagePatientProps> = async ({ params: { id } }) => {
             </div>
             <div>
               {item.estado == 'Cancelado' && (
-                <div className="px-4 py-1 text-black/70 rounded-lg bg-[#DC3545]">
-                  Cancelada
-                </div>
+                <Badge className="bg-[#DC3545]">Cancelada</Badge>
               )}
               {item.estado == 'Completado' && (
-                <div className="px-4 py-1 text-black/70 rounded-lg bg-[#218838]">
-                  Completada
-                </div>
+                <Badge className="bg-[#218838]">Completada</Badge>
               )}
               {item.estado == 'Pendiente' && (
-                <div className="px-4 py-1 text-black/70 rounded-lg bg-[#FFD700]">
-                  Pendiente
-                </div>
+                <Badge className="bg-[#FFD700]">Pendiente</Badge>
               )}
             </div>
             <div>

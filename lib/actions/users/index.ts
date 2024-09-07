@@ -1,6 +1,7 @@
 'use server'
 import encryptPassword from '@/lib/helpers/encryptPassword'
 import prisma from '@/lib/prisma'
+import { Role } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 
 export type response = {
@@ -24,7 +25,7 @@ export type CreateUser = {
   email: string
   dni: string
   telefono: string
-  role: 'admin' | 'management' | 'doctor'
+  role: Role
 }
 
 const createNewUser = async (user: CreateUser) => {
@@ -46,55 +47,30 @@ const createNewUser = async (user: CreateUser) => {
     })
 
     if (existCredentials) {
-      return new Error('Credenciales existentes')
+      return { success: false, message: 'Credenciales existentes' }
     }
-    const newCredenciales = await prisma.credenciales.create({
+    await prisma.usuario.create({
       data: {
-        username,
-        password: encryptPassword(password),
+        apellidos: user.apellidos,
+        nombres: user.nombres,
+        dni: user.dni,
+        email: user.email,
+        telefono: user.telefono,
+        role: user.role,
+        credenciales: {
+          create: {
+            username,
+            password: encryptPassword(password),
+          },
+        },
       },
     })
+    console.log('paso')
 
-    const newUser = await prisma.usuario.create({
-      data: {
-        apellidos,
-        dni,
-        email,
-        nombres,
-        telefono,
-        credencialesId: newCredenciales.id,
-      },
-    })
-
-    switch (role) {
-      case 'admin':
-        await prisma.administrador.create({
-          data: {
-            usuarioId: newUser.id,
-          },
-        })
-        break
-
-      case 'management':
-        await prisma.secretaria.create({
-          data: {
-            usuarioId: newUser.id,
-          },
-        })
-        break
-
-      case 'doctor':
-        await prisma.doctor.create({
-          data: {
-            usuarioId: newUser.id,
-          },
-        })
-        break
-    }
     revalidatePath('/dashboard/users')
     return { success: true }
   } catch (error) {
-    return { success: false, error }
+    return { success: false }
   }
 }
 

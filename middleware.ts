@@ -1,8 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { jwtVerify } from 'jose'
+import type { Role } from '@prisma/client'
 
 const JWT_SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET_KEY)
+
+/* const rolePermissions = {
+  '/admin/dashboard': ['admin'],
+  '/editor/posts': ['admin', 'editor'],
+  '/viewer/profile': ['admin', 'editor', 'viewer'],
+  '/public/home': ['admin', 'editor', 'viewer'], // Ruta pública
+}
+
+function hasAccess(role: Role, endpoint: string) {
+  const allowedRoles = rolePermissions[endpoint]
+
+  // Si no existe la ruta en el objeto, se asume que está protegida
+  if (!allowedRoles) {
+    return false
+  }
+
+  // Si el rol del usuario está en la lista de roles permitidos, permite acceso
+  return allowedRoles.includes(role)
+} */
 
 const middleware = async (req: NextRequest) => {
   try {
@@ -14,6 +34,8 @@ const middleware = async (req: NextRequest) => {
     if (!token) {
       return NextResponse.redirect(new URL('/signin', req.url))
     }
+    console.log(payload)
+
     return NextResponse.next()
   } catch (error) {
     return NextResponse.redirect(new URL('/signin', req.url))

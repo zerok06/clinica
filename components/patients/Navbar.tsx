@@ -4,8 +4,8 @@ import React from 'react'
 const ITEMS = [
   {
     id: '6bc00f48-1ea5-41b2-a08b-213ff3799ea7',
-    slug: 'home',
-    label: 'Home',
+    slug: 'resume',
+    label: 'Resumen',
   },
   {
     id: 'ec265cf5-54a8-45bd-9850-87035499fb03',

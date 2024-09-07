@@ -32,7 +32,9 @@ const ButtonNewDate: React.FC<ButtonNewDateProps> = ({
   return (
     <AlertDialog open={active} onOpenChange={close}>
       <AlertDialogTrigger asChild>
-        <Button size={'sm'}>Agregar</Button>
+        <Button size={'sm'} variant={'ghost'}>
+          Agregar
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

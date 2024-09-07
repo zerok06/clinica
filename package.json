@@ -2,11 +2,15 @@
   "name": "clinica",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "seed": "node lib/seed.ts"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "config": "npx prisma db push && npx prisma db seed && code . && next dev"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

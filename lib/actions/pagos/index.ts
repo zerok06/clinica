@@ -4,7 +4,15 @@ import { revalidatePath } from 'next/cache'
 
 export const fetchPagos = async () => {
   try {
-    const all = await prisma.pagos.findMany()
+    const all = await prisma.pagos.findMany({
+      include: {
+        procedimiento: {
+          include: {
+            paciente: true,
+          },
+        },
+      },
+    })
     return { success: true, pagos: all }
   } catch (error) {
     return { success: false }

@@ -1,23 +1,59 @@
 'use server'
 import { encrypt } from '@/lib/helpers/encrypt'
 import { getSession } from '@/lib/helpers/getSession'
+import prisma from '@/lib/prisma'
+import { revalidatePath } from 'next/cache'
 
 import { cookies } from 'next/headers'
-export const authentication = async (formData: FormData) => {
+import { redirect } from 'next/navigation'
+
+interface authenticationProps {
+  username: string
+  password: string
+}
+
+export const authentication = async (params: authenticationProps) => {
   try {
-    const { username, password } = Object.fromEntries(formData.entries())
-    if (username && password) {
-      const token = encrypt({ username, password })
-      if (typeof token != 'string') {
-        return new Error('No se puedo generar token')
-      }
-      cookies().set('auth-cli', token)
-      const session = await getSession()
-      return { success: true, session }
+    const { username, password } = params
+    console.log(username, password)
+
+    if (!username && !password) {
+      return { success: false, error: 'Credenciales faltantes' }
     }
-    return { success: false }
+    const existUser = await prisma.usuario.findFirst({
+      where: {
+        credenciales: {
+          username,
+        },
+      },
+      include: {
+        credenciales: true,
+      },
+    })
+    if (!existUser) {
+      return { success: false, error: 'Usuario no Existe' }
+    }
+    console.log(existUser)
+
+    const token = encrypt({
+      user: existUser,
+    })
+    if (!token) {
+      return { success: false, error: 'Error al generar token' }
+    }
+    /* @ts-ignore */
+    cookies().set('auth-cli', token)
+    const session = await getSession()
+    return { success: true, session }
   } catch (error) {
     return { success: false, error }
   }
 }
-export const signIn = async () => {}
+export const logout = async () => {
+  try {
+    cookies().delete('auth-cli')
+    return { success: true }
+  } catch (error) {
+    return { success: false, error }
+  }
+}

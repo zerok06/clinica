@@ -8,7 +8,7 @@ import { Button } from '../ui/button'
 import Link from 'next/link'
 import { Configuration01Icon } from '../icons/Configuration01Icon'
 
-const generatorUrl = (id: string) => `/dashboard/patient/${id}/home`
+const generatorUrl = (id: string) => `/dashboard/patient/${id}/resume`
 
 export const columns: ColumnDef<paciente>[] = [
   {

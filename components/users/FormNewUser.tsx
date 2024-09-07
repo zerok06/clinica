@@ -46,7 +46,7 @@ const formSchema = z.object({
   telefono: z.string().max(9, {
     message: 'Se requiere como mínimo 9 caracteres',
   }),
-  role: z.enum(['admin', 'management', 'doctor']),
+  role: z.enum(['administrador', 'secretaria', 'doctor']),
 })
 
 interface FormNewUserProps {
@@ -64,7 +64,7 @@ const FormNewUser: React.FC<FormNewUserProps> = ({ closeAlert }) => {
       dni: '',
       email: '',
       nombres: '',
-      role: 'management',
+      role: 'secretaria',
       telefono: '',
     },
   })
@@ -192,9 +192,9 @@ const FormNewUser: React.FC<FormNewUserProps> = ({ closeAlert }) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="admin">Administrador</SelectItem>
-                  <SelectItem value="management" defaultChecked>
-                    Gestión
+                  <SelectItem value="administrador">Administrador</SelectItem>
+                  <SelectItem value="secretaria" defaultChecked>
+                    Secretaria
                   </SelectItem>
                   <SelectItem value="doctor">Doctor</SelectItem>
                 </SelectContent>

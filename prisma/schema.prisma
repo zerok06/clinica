@@ -14,19 +14,23 @@ datasource db {
 }
 
 model usuario {
-  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
   nombres        String
   apellidos      String
   email          String
   dni            String
   telefono       String
-  createAt       DateTime       @default(now())
-  updateAt       DateTime       @updatedAt
-  credenciales   credenciales   @relation(fields: [credencialesId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  credencialesId String         @unique @db.ObjectId
-  administrador  administrador?
-  secretaria     secretaria?
-  doctor         doctor?
+  role           Role         @default(administrador)
+  createAt       DateTime     @default(now())
+  updateAt       DateTime     @updatedAt
+  credenciales   credenciales @relation(fields: [credencialesId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  credencialesId String       @unique @db.ObjectId
+}
+
+enum Role {
+  administrador
+  secretaria
+  doctor
 }
 
 model credenciales {
@@ -34,24 +38,8 @@ model credenciales {
   username String   @unique
   password String
   usuario  usuario?
-}
-
-model administrador {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  usuario   usuario @relation(fields: [usuarioId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  usuarioId String  @unique @db.ObjectId
-}
-
-model secretaria {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  usuario   usuario @relation(fields: [usuarioId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  usuarioId String  @unique @db.ObjectId
-}
-
-model doctor {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  usuario   usuario @relation(fields: [usuarioId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  usuarioId String  @unique @db.ObjectId
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
 }
 
 model paciente {
@@ -64,10 +52,11 @@ model paciente {
   dni           String
   celular       String
   convenio      String
-  createAt      DateTime        @default(now())
   file          file[]
   procedimiento procedimiento[]
   cita          cita[]
+  createAt      DateTime        @default(now())
+  updateAt      DateTime        @updatedAt
 }
 
 model tratamiento {
@@ -78,6 +67,8 @@ model tratamiento {
   categoriaTratamiento          categoriaTratamiento?           @relation(fields: [categoriaTratamientoId], references: [id], onUpdate: Cascade, onDelete: SetNull)
   categoriaTratamientoId        String?                         @db.ObjectId
   detalleDiagnosticoTratamiento detalleDiagnosticoTratamiento[]
+  createAt                      DateTime                        @default(now())
+  updateAt                      DateTime                        @updatedAt
 }
 
 model categoriaTratamiento {
@@ -85,6 +76,8 @@ model categoriaTratamiento {
   nombre      String
   descripcion String
   tratamiento tratamiento[]
+  createAt    DateTime      @default(now())
+  updateAt    DateTime      @updatedAt
 }
 
 model diagnostico {
@@ -92,6 +85,8 @@ model diagnostico {
   nombre                        String
   descripcion                   String
   detalleDiagnosticoTratamiento detalleDiagnosticoTratamiento[]
+  createAt                      DateTime                        @default(now())
+  updateAt                      DateTime                        @updatedAt
 }
 
 model detalleDiagnosticoTratamiento {
@@ -100,6 +95,8 @@ model detalleDiagnosticoTratamiento {
   diagnosticoId String      @db.ObjectId
   tratamiento   tratamiento @relation(fields: [tratamientoId], references: [id])
   tratamientoId String      @db.ObjectId
+  createAt      DateTime    @default(now())
+  updateAt      DateTime    @updatedAt
 }
 
 model cita {
@@ -127,6 +124,7 @@ model file {
   createAt   DateTime      @default(now())
   paciente   paciente      @relation(fields: [pacienteId], references: [id])
   pacienteId String        @db.ObjectId
+  updateAt   DateTime      @updatedAt
 }
 
 model procedimiento {
@@ -142,6 +140,8 @@ model procedimiento {
   pacienteId  String              @db.ObjectId
   pagos       pagos[]
   cita        cita[]
+  createAt    DateTime            @default(now())
+  updateAt    DateTime            @updatedAt
 }
 
 model pagos {
@@ -152,6 +152,8 @@ model pagos {
   monto           Float
   procedimiento   procedimiento @relation(fields: [procedimientoId], references: [id])
   procedimientoId String        @db.ObjectId
+  createAt        DateTime      @default(now())
+  updateAt        DateTime      @updatedAt
 }
 
 enum StatusProcedimiento {
@@ -173,10 +175,12 @@ enum CategoriaFile {
 }
 
 model insumo {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   nombre      String
   cantidad    Int
   description String
+  createAt    DateTime @default(now())
+  updateAt    DateTime @updatedAt
 }
 
 enum EstadoCita {
