@@ -22,6 +22,7 @@ import {
 import Link from 'next/link'
 import OpcionsPatientDates from './OpcionsPatientDates'
 import { Configuration01Icon } from '../icons/Configuration01Icon'
+import ChatWhatsapp from '../ChatWhatsapp'
 
 const localizer = momentLocalizer(moment)
 

@@ -1,5 +1,6 @@
 'use server'
 import prisma from '@/lib/prisma'
+import { revalidatePath } from 'next/cache'
 
 export const fetchResumePatient = async (id: string) => {
   try {
@@ -97,6 +98,7 @@ export const createNewPatient = async (params: CreatePatientProps) => {
     await prisma.paciente.create({
       data: params,
     })
+    revalidatePath('/dashboard/patients')
     return { success: true }
   } catch (error) {
     return { success: false }
@@ -109,6 +111,7 @@ export const deletePatient = async (id: string) => {
         id,
       },
     })
+    revalidatePath('/dashboard/patients')
     return { success: true }
   } catch (error) {
     return { success: false }

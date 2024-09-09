@@ -20,6 +20,9 @@ export const fetchDatesPatient = async (id: string) => {
           pacienteId: id,
         },
       },
+      include: {
+        paciente: true,
+      },
     })
     return { success: true, dates: all }
   } catch (error) {
@@ -31,6 +34,9 @@ export const fetchDatesProcedimientos = async (id: string) => {
   try {
     const all = await prisma.cita.findMany({
       where: { procedimientoId: id },
+      include: {
+        paciente: true,
+      },
     })
     return { success: true, dates: all }
   } catch (error) {
@@ -64,7 +70,9 @@ export const createDates = async (params: CreateDateProps) => {
     await prisma.cita.create({
       data: params,
     })
-    revalidatePath('/dashboard/diagnosis')
+    revalidatePath('/dashboard/patient/[id]/dates')
+    revalidatePath('/dashboard/patient/[id]/procedimiento/[idProcedimiento]')
+    revalidatePath('/dashboard/dates')
     return { success: true }
   } catch (error) {
     return { success: false }
@@ -88,7 +96,9 @@ export const createDatesProcedimiento = async (
     await prisma.cita.create({
       data: { description, end, procedimientoId, start, title },
     })
-    revalidatePath('/dashboard/diagnosis')
+    revalidatePath('/dashboard/patient/[id]/dates')
+    revalidatePath('/dashboard/patient/[id]/procedimiento/[idProcedimiento]')
+    revalidatePath('/dashboard/dates')
     return { success: true }
   } catch (error) {
     return { success: false }
@@ -104,6 +114,8 @@ export const changeStatus = async (id: string, status: EstadoCita) => {
       },
     })
     revalidatePath('/dashboard/patient/[id]/dates')
+    revalidatePath('/dashboard/patient/[id]/procedimiento/[idProcedimiento]')
+    revalidatePath('/dashboard/dates')
     return { success: true }
   } catch (error) {
     return { success: false }

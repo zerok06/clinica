@@ -1,12 +1,13 @@
 'use client'
 import { ColumnDef } from '@tanstack/react-table'
-import ButtonDelete from '../ButtonOption'
+import ButtonDelete from '../ButtonDelete'
 import { deleteUser } from '@/lib/actions/users'
 import type { paciente } from '@prisma/client'
 import { deletePatient } from '@/lib/actions/patients'
 import { Button } from '../ui/button'
 import Link from 'next/link'
 import { Configuration01Icon } from '../icons/Configuration01Icon'
+import { toast } from '../ui/use-toast'
 
 const generatorUrl = (id: string) => `/dashboard/patient/${id}/resume`
 
@@ -44,7 +45,12 @@ export const columns: ColumnDef<paciente>[] = [
           <ButtonDelete
             label={'delete'}
             deleteDB={() =>
-              deletePatient(original.id).then(res => console.log(res))
+              deletePatient(original.id).then(res =>
+                toast({
+                  title: 'Uh oh! Something went wrong.',
+                  description: JSON.stringify(res),
+                })
+              )
             }
           />
         </div>

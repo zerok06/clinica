@@ -53,6 +53,7 @@ export const deleteDiagnosis = async (id: string) => {
     await prisma.diagnostico.delete({
       where: { id },
     })
+    revalidatePath('/dashboard/diagnosis')
     return { success: true }
   } catch (error) {
     return { success: false }

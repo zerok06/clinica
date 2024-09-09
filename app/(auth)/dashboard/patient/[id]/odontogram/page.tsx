@@ -1,3 +1,4 @@
+import ButtonDeleteFile from '@/components/files/ButtonDeleteFile'
 import ButtonUploadOdontograma from '@/components/files/ButtonUploadOdontograma'
 import { fetchFilesOdontogramaPatient } from '@/lib/actions/files'
 import { Image } from 'lucide-react'
@@ -34,7 +35,12 @@ const Page: React.FC<PageProps> = async ({ params: { id } }) => {
                 {item.name}
               </a>
             </div>
-            <div className="text-black/70">{item.size}</div>
+            <div className="flex gap-3 flex-row">
+              <div className="text-black/70">{item.size}</div>
+              <div>
+                <ButtonDeleteFile id={item.id} />
+              </div>
+            </div>
           </div>
         ))}
       </div>

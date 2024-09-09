@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import type { pagos } from '@prisma/client'
-import ButtonOption from '../ButtonOption'
+import ButtonOption from '../ButtonDelete'
 import { DeletePagos } from '@/lib/actions/pagos'
 import { toast } from '../ui/use-toast'
 

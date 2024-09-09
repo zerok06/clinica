@@ -1,8 +1,10 @@
 'use client'
 import { ColumnDef } from '@tanstack/react-table'
-import ButtonDelete from '../ButtonOption'
+import ButtonDelete from '../ButtonDelete'
 import { deleteUser } from '@/lib/actions/users'
 import { Badge } from '../ui/badge'
+import { deleteTreatment } from '@/lib/actions/treatments'
+import { toast } from '../ui/use-toast'
 
 export type Props = {
   id: string
@@ -43,7 +45,12 @@ export const columns: ColumnDef<Props>[] = [
           <ButtonDelete
             label={'delete'}
             deleteDB={() =>
-              deleteUser(original.id).then(res => console.log(res))
+              deleteTreatment(original.id).then(res =>
+                toast({
+                  title: 'Uh oh! Something went wrong.',
+                  description: JSON.stringify(res),
+                })
+              )
             }
           />
         </div>

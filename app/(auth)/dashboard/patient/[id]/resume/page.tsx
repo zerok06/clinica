@@ -1,3 +1,4 @@
+import ChatWhatsapp from '@/components/ChatWhatsapp'
 import OpcionsPatientDates from '@/components/dates/OpcionsPatientDates'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -42,7 +43,7 @@ const Page: React.FC<PageResumeProps> = async ({ params: { id } }) => {
                 </div>
               </div>
             </div>
-            <Button>Enviar mensaje</Button>
+            <ChatWhatsapp tel={data?.patient?.celular!} />
           </div>
           <div className="min-w-[312px] px-8 py-6 flex flex-col gap-6">
             <div className="flex flex-row">

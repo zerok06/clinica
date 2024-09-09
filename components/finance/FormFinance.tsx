@@ -26,6 +26,9 @@ import { Label } from '../ui/label'
 import { cita, pagos } from '@prisma/client'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import ExcelExport from '../ExcelExport'
+import ButtonOption from '../ButtonDelete'
+import { DeletePagos } from '@/lib/actions/pagos'
+import { toast } from '../ui/use-toast'
 
 interface FormFinanceProps {
   pagos: pagos[]
@@ -109,7 +112,8 @@ const FormFinance: React.FC<FormFinanceProps> = ({ pagos = [] }) => {
               <TableHead>Fecha</TableHead>
               <TableHead>Descripcion</TableHead>
               <TableHead>Paciente</TableHead>
-              <TableHead className="text-right">Monto</TableHead>
+              <TableHead>Monto</TableHead>
+              <TableHead className="text-right">Opciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -127,7 +131,7 @@ const FormFinance: React.FC<FormFinanceProps> = ({ pagos = [] }) => {
                     {item?.procedimientoId && (
                       /* @ts-ignore */
                       <div className="py-1 pl-1 pr-3 rounded-full flex gap-2 bg-black/20">
-                        <Avatar>
+                        <Avatar className="h-7 w-7 text-xs">
                           <AvatarImage src="" />
                           <AvatarFallback>
                             {/* @ts-ignore */}
@@ -138,11 +142,11 @@ const FormFinance: React.FC<FormFinanceProps> = ({ pagos = [] }) => {
                           </AvatarFallback>
                         </Avatar>
                         <div>
-                          <p className="text-xs font-medium">
+                          <p className="text-[12px] font-medium leading-none">
                             {/* @ts-ignore */}
                             {item?.procedimiento.paciente.nombres}
                           </p>
-                          <p className="text-[10px] text-black/70">
+                          <p className="text-[10px] text-black/70 leading-tight">
                             {/* @ts-ignore */}
                             {item?.procedimiento.paciente.dni}
                           </p>
@@ -151,8 +155,21 @@ const FormFinance: React.FC<FormFinanceProps> = ({ pagos = [] }) => {
                     )}
                   </div>
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell>
                   PEN <span className="font-medium">{item.monto}</span>
+                </TableCell>
+                <TableCell className="text-right">
+                  <ButtonOption
+                    label={'delete'}
+                    deleteDB={() =>
+                      DeletePagos(item.id).then(res =>
+                        toast({
+                          title: 'Uh oh! Something went wrong.',
+                          description: JSON.stringify(res),
+                        })
+                      )
+                    }
+                  />
                 </TableCell>
               </TableRow>
             ))}

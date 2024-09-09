@@ -52,7 +52,7 @@ export const CreateProcedimiento = async (params: CreateProcedimientoProps) => {
         desc: tratamientoId?.descripcion!,
       },
     })
-
+    revalidatePath('/dashboard/patient/[id]/procedimientos')
     return { success: true }
   } catch (error) {
     return { success: false }
@@ -65,6 +65,7 @@ export const DeleteProcedimiento = async (id: string) => {
         id,
       },
     })
+    revalidatePath('/dashboard/patient/[id]/procedimientos')
     return { success: true }
   } catch (error) {
     return { success: false }

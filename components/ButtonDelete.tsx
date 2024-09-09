@@ -17,6 +17,8 @@ import { Trash2 } from 'lucide-react'
 interface ButtonDeleteProps {
   label: 'delete' | 'edit'
   deleteDB: () => void
+  title?: string
+  desc?: string
 }
 
 const controls = {
@@ -26,7 +28,16 @@ const controls = {
   },
 }
 
-const ButtonOption: React.FC<ButtonDeleteProps> = ({ label, deleteDB }) => {
+const DEFAULT_DESC =
+  '¿Estás seguro de que deseas realizar esta acción? Esta operación no puede deshacerse. Si estás seguro, presiona "Confirmar", de lo contrario, selecciona "Cancelar" para volver.'
+
+const DEFAULT_TITLE = 'Confirmación de acción'
+const ButtonOption: React.FC<ButtonDeleteProps> = ({
+  label,
+  deleteDB,
+  desc = DEFAULT_DESC,
+  title = DEFAULT_TITLE,
+}) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -36,15 +47,12 @@ const ButtonOption: React.FC<ButtonDeleteProps> = ({ label, deleteDB }) => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </AlertDialogDescription>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{desc}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={deleteDB}>Continue</AlertDialogAction>
+          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+          <AlertDialogAction onClick={deleteDB}>Confirmar</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -60,6 +60,7 @@ export const CreatePago = async (params: CreatePagoProps) => {
         },
       },
     })
+    revalidatePath('/dashboard/finance')
     revalidatePath('/dashboard/patient/[id]/procedimiento/[idProcedimiento]')
     return { success: true }
   } catch (error) {

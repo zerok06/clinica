@@ -19,7 +19,7 @@ const OptionBar: React.FC<OptionBarProps> = ({ href, icon, label }) => {
         <TooltipTrigger asChild>
           <Link
             href={href}
-            className="size-[44px] hover:bg-white/10 transition-colors duration-300 rounded-xl items-center flex justify-center"
+            className="size-[36px] hover:bg-white/10 transition-colors duration-300 rounded-xl items-center flex justify-center"
           >
             {icon}
           </Link>

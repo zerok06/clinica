@@ -1,8 +1,9 @@
 'use client'
 import { ColumnDef } from '@tanstack/react-table'
-import ButtonDelete from '../ButtonOption'
+import ButtonDelete from '../ButtonDelete'
 import type { insumo } from '@prisma/client'
 import { deleteInsumo } from '@/lib/actions/insumos'
+import { toast } from '../ui/use-toast'
 
 export const columns: ColumnDef<insumo>[] = [
   {
@@ -25,7 +26,12 @@ export const columns: ColumnDef<insumo>[] = [
           <ButtonDelete
             label={'delete'}
             deleteDB={() =>
-              deleteInsumo(original.id).then(res => console.log(res))
+              deleteInsumo(original.id).then(res =>
+                toast({
+                  title: 'Uh oh! Something went wrong.',
+                  description: JSON.stringify(res),
+                })
+              )
             }
           />
         </div>

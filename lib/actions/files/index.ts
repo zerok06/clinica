@@ -97,6 +97,7 @@ export const deleteFilePatient = async (id: string) => {
         id,
       },
     })
+    revalidatePath('/dashboard/patient/[id]/files')
     return { success: true }
   } catch (error) {
     return { success: false }

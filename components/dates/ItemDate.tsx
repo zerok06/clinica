@@ -2,10 +2,11 @@
 import React from 'react'
 import type { cita } from '@prisma/client'
 import OpcionsPatientDates from './OpcionsPatientDates'
-import ButtonOption from '../ButtonOption'
+import ButtonOption from '../ButtonDelete'
 import { deleteDate } from '@/lib/actions/dates'
 import { toast } from '../ui/use-toast'
 import { Badge } from '../ui/badge'
+import ChatWhatsapp from '../ChatWhatsapp'
 const ItemDate: React.FC<cita> = item => {
   return (
     <div className="w-full rounded-xl border px-4 py-2 flex flex-row gap-4 items-center">
