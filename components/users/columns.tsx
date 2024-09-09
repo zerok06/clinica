@@ -1,5 +1,6 @@
 'use client'
 import { ColumnDef } from '@tanstack/react-table'
+import type { usuario } from '@prisma/client'
 import { Button } from '../ui/button'
 import { MoreVerticalCircle01Icon } from '../icons/MoreVerticalCircle01Icon'
 import {
@@ -13,6 +14,7 @@ import {
 import ButtonDelete from '../ButtonDelete'
 import { deleteUser } from '@/lib/actions/users'
 import { toast } from '../ui/use-toast'
+import FormatDate from '../FormatDate'
 
 export type Props = {
   id: string
@@ -23,7 +25,7 @@ export type Props = {
   telefono: string
 }
 
-export const columns: ColumnDef<Props>[] = [
+export const columns: ColumnDef<usuario>[] = [
   {
     accessorKey: 'nombres',
     header: 'Nombres',
@@ -43,6 +45,20 @@ export const columns: ColumnDef<Props>[] = [
   {
     accessorKey: 'telefono',
     header: 'Teléfono',
+  },
+  {
+    accessorKey: 'createAt',
+    header: 'Creacion',
+    cell: ({ row: { original } }) => {
+      return <FormatDate fecha={original.createAt} />
+    },
+  },
+  {
+    accessorKey: 'updateAt',
+    header: 'Ultima actualizacion',
+    cell: ({ row: { original } }) => {
+      return <FormatDate fecha={original.updateAt} />
+    },
   },
   {
     header: 'Opciones',

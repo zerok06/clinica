@@ -5,6 +5,8 @@ import { deleteUser } from '@/lib/actions/users'
 import { Badge } from '../ui/badge'
 import { deleteTreatment } from '@/lib/actions/treatments'
 import { toast } from '../ui/use-toast'
+import FormatDate from '../FormatDate'
+import { tratamiento } from '@prisma/client'
 
 export type Props = {
   id: string
@@ -12,7 +14,7 @@ export type Props = {
   descripcion: string
 }
 
-export const columns: ColumnDef<Props>[] = [
+export const columns: ColumnDef<tratamiento>[] = [
   {
     accessorKey: 'nombre',
     header: 'Nombre',
@@ -35,6 +37,20 @@ export const columns: ColumnDef<Props>[] = [
       } = original
 
       return <Badge variant="default">{nombre}</Badge>
+    },
+  },
+  {
+    accessorKey: 'createAt',
+    header: 'Creacion',
+    cell: ({ row: { original } }) => {
+      return <FormatDate fecha={original.createAt} />
+    },
+  },
+  {
+    accessorKey: 'updateAt',
+    header: 'Ultima actualizacion',
+    cell: ({ row: { original } }) => {
+      return <FormatDate fecha={original.updateAt} />
     },
   },
   {

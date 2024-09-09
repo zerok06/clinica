@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { Configuration01Icon } from '../icons/Configuration01Icon'
 import { DeleteProcedimiento } from '@/lib/actions/procedimientos'
 import { toast } from '../ui/use-toast'
+import FormatDate from '../FormatDate'
 
 const generatorUrl = (id: string, idProcedimiento: string) =>
   `/dashboard/patient/${id}/procedimiento/${idProcedimiento}`
@@ -36,6 +37,20 @@ export const columns: ColumnDef<procedimiento>[] = [
       const { estado } = original
 
       return <Badge variant="default">{estado}</Badge>
+    },
+  },
+  {
+    accessorKey: 'createAt',
+    header: 'Creacion',
+    cell: ({ row: { original } }) => {
+      return <FormatDate fecha={original.createAt} />
+    },
+  },
+  {
+    accessorKey: 'updateAt',
+    header: 'Ultima actualizacion',
+    cell: ({ row: { original } }) => {
+      return <FormatDate fecha={original.updateAt} />
     },
   },
   {

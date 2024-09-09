@@ -8,6 +8,7 @@ import { Button } from '../ui/button'
 import Link from 'next/link'
 import { Configuration01Icon } from '../icons/Configuration01Icon'
 import { toast } from '../ui/use-toast'
+import FormatDate from '../FormatDate'
 
 const generatorUrl = (id: string) => `/dashboard/patient/${id}/resume`
 
@@ -23,6 +24,9 @@ export const columns: ColumnDef<paciente>[] = [
   {
     accessorKey: 'nacimiento',
     header: 'Nacimiento',
+    cell: ({ row: { original } }) => {
+      return <FormatDate fecha={original.nacimiento} />
+    },
   },
   {
     accessorKey: 'dni',
@@ -31,6 +35,20 @@ export const columns: ColumnDef<paciente>[] = [
   {
     accessorKey: 'celular',
     header: 'Celular',
+  },
+  {
+    accessorKey: 'createAt',
+    header: 'Creacion',
+    cell: ({ row: { original } }) => {
+      return <FormatDate fecha={original.createAt} />
+    },
+  },
+  {
+    accessorKey: 'updateAt',
+    header: 'Ultima actualizacion',
+    cell: ({ row: { original } }) => {
+      return <FormatDate fecha={original.updateAt} />
+    },
   },
   {
     header: 'Opciones',

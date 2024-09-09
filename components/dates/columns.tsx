@@ -1,11 +1,12 @@
 'use client'
 import { ColumnDef } from '@tanstack/react-table'
 import ButtonDelete from '../ButtonDelete'
-import type { insumo } from '@prisma/client'
+import type { cita, insumo } from '@prisma/client'
 import { deleteDate } from '@/lib/actions/dates'
 import { toast } from '@/components/ui/use-toast'
+import FormatDate from '../FormatDate'
 
-export const columns: ColumnDef<insumo>[] = [
+export const columns: ColumnDef<cita>[] = [
   {
     accessorKey: 'title',
     header: 'Titulo',
@@ -17,6 +18,20 @@ export const columns: ColumnDef<insumo>[] = [
   {
     accessorKey: 'description',
     header: 'Descripcion',
+  },
+  {
+    accessorKey: 'createAt',
+    header: 'Creacion',
+    cell: ({ row: { original } }) => {
+      return <FormatDate fecha={original.createAt} />
+    },
+  },
+  {
+    accessorKey: 'updateAt',
+    header: 'Ultima actualizacion',
+    cell: ({ row: { original } }) => {
+      return <FormatDate fecha={original.updateAt} />
+    },
   },
   {
     header: 'Opciones',
