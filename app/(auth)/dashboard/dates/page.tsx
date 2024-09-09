@@ -9,8 +9,8 @@ import Dates from '../../../../components/dates/Dates'
 const { citas: Cit } = DATA
 
 const Page = async () => {
-  const { patients } = await fetchPatients()
-  const { dates } = await fetchDates()
+  const { patients = [] } = await fetchPatients()
+  const { dates = [] } = await fetchDates()
 
   return (
     <div className="py-3 px-4 rounded-xl bg-white">

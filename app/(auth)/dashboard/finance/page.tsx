@@ -3,7 +3,7 @@ import { fetchPagos } from '@/lib/actions/pagos'
 import React from 'react'
 
 const Page = async () => {
-  const { pagos } = await fetchPagos()
+  const { pagos = [] } = await fetchPagos()
   return <FormFinance pagos={pagos!} />
 }
 

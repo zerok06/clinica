@@ -11,7 +11,7 @@ import { fetchPatients } from '@/lib/actions/patients'
 const { pacientes } = DATA
 
 const Page = async () => {
-  const { patients } = await fetchPatients()
+  const { patients = [] } = await fetchPatients()
 
   return (
     <div className="py-3 px-4 rounded-xl bg-white">

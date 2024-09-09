@@ -11,7 +11,7 @@ import ButtonNewUser from '@/components/users/ButtonNewUser'
 const { usuarios } = DATA
 
 const Page = async () => {
-  const { users } = await fetchUsers()
+  const { users = [] } = await fetchUsers()
 
   return (
     <div className="py-3 px-4 rounded-xl bg-white">

@@ -52,8 +52,12 @@ const load = async () => {
         },
       })
     }
+    const users = await temporal_prisma.usuario.findMany()
     console.log('✅ Semilla desplegada!')
+    console.table(users)
   } catch (error) {
+    console.log('🚫 Semilla no desplegada!')
+    console.log(error)
     await temporal_prisma.$disconnect()
   }
 }

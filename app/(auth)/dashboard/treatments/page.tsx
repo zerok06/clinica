@@ -9,8 +9,8 @@ import ButtonNewTreatment from '@/components/ButtonNewTreatment'
 const { tratamientos: Trat } = DATA
 
 const Page = async () => {
-  const { tratamientos } = await fetchTreatments()
-  const { categories } = await categoriesTreatments()
+  const { tratamientos = [] } = await fetchTreatments()
+  const { categories = [] } = await categoriesTreatments()
 
   return (
     <div className="py-3 px-4 rounded-xl bg-white">

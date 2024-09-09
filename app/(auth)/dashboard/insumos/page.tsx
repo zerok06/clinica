@@ -9,7 +9,7 @@ import { columns } from '@/components/insumos/columns'
 const { insumos: Insu } = DATA
 
 const Page = async () => {
-  const { insumos } = await fetchInsumo()
+  const { insumos = [] } = await fetchInsumo()
 
   return (
     <div className="py-3 px-4 rounded-xl bg-white">

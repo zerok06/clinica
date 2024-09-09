@@ -10,8 +10,8 @@ import { fetchTreatments } from '@/lib/actions/treatments'
 const { diagnostico: Diag } = DATA
 
 const Page = async () => {
-  const { tratamientos } = await fetchTreatments()
-  const { diagnoses } = await fetchDiagnosis()
+  const { tratamientos = [] } = await fetchTreatments()
+  const { diagnoses = [] } = await fetchDiagnosis()
 
   return (
     <div className="py-3 px-4 rounded-xl bg-white">
