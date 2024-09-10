@@ -43,7 +43,7 @@ export interface Diente {
   diagnostico: Array<MonoProps>
 }
 
-interface OdontogramaProps {
+export interface OdontogramaProps {
   permanentes: Array<Diente>
   temporales: Array<Diente>
 }
@@ -422,9 +422,9 @@ const DEFAULT: OdontogramaProps = {
 const useOdontograma = () => {
   const [odontograma, setOdontograma] = useState<OdontogramaProps>(DEFAULT)
 
-  /*  useEffect(() => {
+  useEffect(() => {
     console.log(odontograma)
-  }, [odontograma]) */
+  }, [odontograma])
 
   const addDiagnosticoMono = (props: MonoProps, code: number) => {
     setOdontograma(state => {

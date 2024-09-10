@@ -92,6 +92,14 @@ export const fetchFilesPatient = async (id: string) => {
 
 export const deleteFilePatient = async (id: string) => {
   try {
+    const fileData = await prisma.file.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    await fs.unlink(`./public${fileData?.path!}`)
+
     await prisma.file.delete({
       where: {
         id,

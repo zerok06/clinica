@@ -67,6 +67,22 @@ export interface CreateDateProps {
 
 export const createDates = async (params: CreateDateProps) => {
   try {
+    const startDate = new Date(params.start)
+    const endDate = new Date(params.end)
+
+    const citaSolapada = await prisma.cita.findFirst({
+      where: {
+        AND: [{ start: { lt: endDate } }, { end: { gt: startDate } }],
+      },
+    })
+
+    if (citaSolapada) {
+      return {
+        success: false,
+        error: 'Ya existe una cita en este intervalo de tiempo.',
+      }
+    }
+
     await prisma.cita.create({
       data: params,
     })

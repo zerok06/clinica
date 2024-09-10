@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import type { Diente, MonoProps } from '../../hook/useOdontograma'
 import useOpen from '../../hook/useOpen'
 import { ReactSketchCanvas, ReactSketchCanvasRef } from 'react-sketch-canvas'
@@ -11,15 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../../components/ui/dialog'
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '../../components/ui/table'
+
 import { Label } from '../ui/label'
 import { Eraser, Pen, Trash } from 'lucide-react'
 import { tratamiento } from '@prisma/client'
@@ -331,7 +323,7 @@ const AddDiagnosis: React.FC<AddDiagnosisProps> = ({
   return (
     <Dialog open={open} onOpenChange={handleOpen}>
       <DialogTrigger>
-        <button>Nuevo diagnostico</button>
+        <Button size={'sm'}>Nuevo diagnostico</Button>
       </DialogTrigger>
       <DialogContent className="max-w-xl">
         <DialogHeader>
@@ -381,26 +373,27 @@ const AddDiagnosis: React.FC<AddDiagnosisProps> = ({
                 </div>
                 <div className="flex  gap-1 justify-end">
                   <button
-                    className="border rounded-md h-6 flex justify-center items-center w-6 bg-primary"
+                    className="border rounded-md h-8 flex justify-center items-center w-8 bg-primary"
                     onClick={() => changeMode(false)}
                   >
                     <Pen size={10} color="#fff" />
                   </button>
                   <input
                     type="color"
-                    className="border rounded-md h-6 justify-center items-center w-5  outline-none"
+                    className="border rounded-md h-8 justify-center items-center w-8  outline-none"
                     /* @ts-ignore */
                     onChange={({ target: { value } }) => handleText(value)}
-                    value={text}
+                    color={text}
+                    defaultValue={text}
                   />
                   <button
-                    className="border rounded-md h-6 flex justify-center items-center w-6 bg-primary"
+                    className="border rounded-md h-8 flex justify-center items-center w-8 bg-primary"
                     onClick={() => changeMode(true)}
                   >
                     <Eraser size={10} color="#fff" />
                   </button>
                   <button
-                    className="border rounded-md h-6 flex justify-center items-center w-6 bg-primary"
+                    className="border rounded-md h-8 flex justify-center items-center w-8 bg-primary"
                     onClick={resetCanvas}
                   >
                     <Trash size={10} color="#fff" />
@@ -417,6 +410,7 @@ const AddDiagnosis: React.FC<AddDiagnosisProps> = ({
                   'png'
                 )!
                 addDiagnosticoMono({ ...props, base64: currentBase64 }, code)
+                handleOpen()
               }}
             >
               Agregar

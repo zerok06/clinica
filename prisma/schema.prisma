@@ -57,6 +57,7 @@ model paciente {
   cita          cita[]
   createAt      DateTime        @default(now())
   updateAt      DateTime        @updatedAt
+  odontograma   odontograma[]
 }
 
 model tratamiento {
@@ -163,6 +164,44 @@ model insumo {
   description String
   createAt    DateTime @default(now())
   updateAt    DateTime @updatedAt
+}
+
+model odontograma {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  paciente   paciente? @relation(fields: [pacienteId], references: [id], onDelete: SetNull, onUpdate: SetNull)
+  createAt   DateTime  @default(now())
+  updateAt   DateTime  @updatedAt
+  pacienteId String?   @db.ObjectId
+  diente     diente[]
+}
+
+model diente {
+  id                    String                  @id @default(auto()) @map("_id") @db.ObjectId
+  name                  String
+  code                  Int
+  tipo                  TipoDienteEnum
+  odontograma           odontograma             @relation(fields: [odontogramaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createAt              DateTime                @default(now())
+  updateAt              DateTime                @updatedAt
+  odontogramaId         String                  @db.ObjectId
+  diagnosticoMonoDiente diagnosticoMonoDiente[]
+}
+
+model diagnosticoMonoDiente {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  base64      String
+  desc        String
+  name        String
+  nomeclatura String   @default("N/A")
+  createAt    DateTime @default(now())
+  updateAt    DateTime @updatedAt
+  diente      diente   @relation(fields: [dienteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  dienteId    String   @db.ObjectId
+}
+
+enum TipoDienteEnum {
+  Permanente
+  Temporal
 }
 
 enum StatusProcedimiento {

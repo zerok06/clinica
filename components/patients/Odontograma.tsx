@@ -4,12 +4,15 @@ import React from 'react'
 import Tooth from './Tooth'
 import { Button } from '../ui/button'
 import type { tratamiento } from '@prisma/client'
+import { createOdontograma } from '@/lib/actions/odontograma'
+import { toast } from '../ui/use-toast'
 
 interface OdontogramaProps {
   tratamientos: tratamiento[]
+  id: string
 }
 
-const Odontograma: React.FC<OdontogramaProps> = ({ tratamientos }) => {
+const Odontograma: React.FC<OdontogramaProps> = ({ tratamientos, id }) => {
   const { odontograma, addDiagnosticoMono } = useOdontograma()
 
   const permanente_1 = odontograma.permanentes.slice(0, 16)
@@ -64,7 +67,18 @@ const Odontograma: React.FC<OdontogramaProps> = ({ tratamientos }) => {
         </div>
       </div>
       <div>
-        <Button onClick={() => console.log(odontograma)}>Guardar</Button>
+        <Button
+          onClick={() =>
+            createOdontograma(odontograma, id).then(res =>
+              toast({
+                title: 'Uh oh! Something went wrong.',
+                description: JSON.stringify(res),
+              })
+            )
+          }
+        >
+          Guardar
+        </Button>
       </div>
     </section>
   )

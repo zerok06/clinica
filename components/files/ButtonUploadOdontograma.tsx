@@ -31,7 +31,7 @@ const ButtonUploadOdontograma: React.FC<ButtonUploadOdontogramaProps> = ({
         <Button
           size={'sm'}
           className="flex gap-1 flex-row text-sm"
-          variant={'default'}
+          variant={'outline'}
         >
           Subir
           <Plus size={'16'} />
