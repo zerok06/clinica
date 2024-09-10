@@ -35,5 +35,4 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-
 DATABASE_URL="mongodb://root:clinica@localhost:27017/clinica?authSource=admin"

@@ -10,17 +10,6 @@ services:
     volumes:
       - mongodbdata:/data/db
 
-  clinica:
-    build: .
-    ports:
-      - '3000:3000'
-    links:
-      - mongodb
-    depends_on:
-      - mongodb
-    volumes:
-      - files:/clinica/public/uploads
-    
 volumes:
   files:
   mongodbdata:
