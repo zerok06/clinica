@@ -4,6 +4,7 @@ import {
   BookHeart,
   Calendar,
   LayoutDashboard,
+  NotepadTextDashed,
   PackageSearch,
   Rows3,
   UserRoundCog,
@@ -59,6 +60,12 @@ const itemsAdminBar = [
     href: '/dashboard/finance',
     label: 'Finanzas',
     icon: <BadgeDollarSign size={15} />,
+  },
+  {
+    id: '57eab79a-8686-4273-a37f-109c0b99afbc',
+    href: '/dashboard/templates',
+    label: 'Plantillas',
+    icon: <NotepadTextDashed size={15} />,
   },
 ]
 const itemsDoctorBar = [

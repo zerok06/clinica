@@ -199,6 +199,14 @@ model diagnosticoMonoDiente {
   dienteId    String   @db.ObjectId
 }
 
+model PlantillaMensaje {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  asunto   String
+  mensaje  String
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
 enum TipoDienteEnum {
   Permanente
   Temporal

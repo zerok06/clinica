@@ -24,7 +24,11 @@ const ExcelExport: React.FC<ExcelExportProps> = ({ data, fileName }) => {
   }
 
   return (
-    <Button variant={'outline'} onClick={exportToExcel}>
+    <Button
+      variant={'outline'}
+      disabled={data.length == 0}
+      onClick={exportToExcel}
+    >
       Exportar a Excel
     </Button>
   )
