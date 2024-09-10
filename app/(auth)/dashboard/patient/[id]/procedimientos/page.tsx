@@ -27,7 +27,12 @@ const Page: React.FC<PagePatientProps> = async ({ params: { id } }) => {
         <ButtonNewProcedimiento tratamientos={tratamientos!} patientId={id} />
       </div>
       <Separator className="my-3" />
-      <DataTable columns={columns} data={procedimientos!} />
+      <DataTable
+        columns={columns}
+        filterColumn="title"
+        excelName="procedimientos"
+        data={procedimientos!}
+      />
     </div>
   )
 }

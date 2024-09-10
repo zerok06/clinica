@@ -6,7 +6,7 @@ import * as XLSX from 'xlsx'
 import { Button } from './ui/button'
 
 interface ExcelExportProps {
-  data: Array<Object>
+  data: [] | Object[]
   fileName: string
 }
 

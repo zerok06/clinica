@@ -49,6 +49,7 @@ const Page: React.FC<PageProps> = async ({ params: { id } }) => {
       path: item.path,
     }))
     .concat(
+      /* @ts-ignore */
       odontogramas?.map(item => ({
         id: item.id,
         createAt: item.createAt,

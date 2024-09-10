@@ -8,13 +8,13 @@ const NavBar = async () => {
   const data = await getSession()
 
   return (
-    <nav className="flex justify-between h-14 sticky top-3  p-2">
+    <nav className="flex justify-between h-14 sticky top-3 z-50 p-2 bg-white rounded-xl shadow-sm">
       <div> {/* {JSON.stringify(user)} */}</div>
       <div>
         <div className="px-1 py-1 rounded-full bg-primary/5 flex flex-row gap-2 items-center">
-          <Avatar>
+          <Avatar className="size-8">
             <AvatarImage src="" />
-            <AvatarFallback>
+            <AvatarFallback className="bg-white">
               {/* @ts-ignore */}
               {data?.user.nombres[0]
                 /* @ts-ignore */
@@ -23,9 +23,11 @@ const NavBar = async () => {
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-0">
-            {/* @ts-ignore */}
-            <p className="text-xs font-medium">{data?.user.nombres}</p>
-            <p className="text-xs font-normal text-black/70">
+            <p className="text-xs font-medium leading-none">
+              {/* @ts-ignore */}
+              {data?.user.nombres}
+            </p>
+            <p className="text-xs font-normal text-black/70 leading-none">
               {/* @ts-ignore */}
               {data?.user.dni}
             </p>

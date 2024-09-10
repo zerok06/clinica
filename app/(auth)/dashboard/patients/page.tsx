@@ -23,7 +23,12 @@ const Page = async () => {
         <ButtonNewPatient />
       </div>
       <Separator className="my-3" />
-      <DataTable columns={columns} data={patients!} />
+      <DataTable
+        columns={columns}
+        filterColumn="nombres"
+        excelName="pacientes"
+        data={patients!}
+      />
     </div>
   )
 }

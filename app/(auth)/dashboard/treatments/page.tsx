@@ -22,7 +22,11 @@ const Page = async () => {
         <ButtonNewTreatment categories={categories!} />
       </div>
       <Separator className="my-3" />
-      <DataTable columns={columns} data={tratamientos!} />
+      <DataTable
+        columns={columns}
+        excelName="tratamientos"
+        data={tratamientos!}
+      />
     </div>
   )
 }

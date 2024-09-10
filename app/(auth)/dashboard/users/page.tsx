@@ -21,12 +21,16 @@ const Page = async () => {
           <p className="text-black/70 text-sm">{usuarios.desc}</p>
         </div>
         <div>
-          <ExcelExport data={users!} fileName="users" />
           <ButtonNewUser />
         </div>
       </div>
       <Separator className="my-3" />
-      <DataTable columns={columns} data={users!} />
+      <DataTable
+        columns={columns}
+        filterColumn="nombres"
+        data={users!}
+        excelName="users"
+      />
     </div>
   )
 }

@@ -86,7 +86,10 @@ const Dashboard = async () => {
           </div>
           <div className="flex flex-col gap-1 mt-2">
             {dashboard?.pagos.map(item => (
-              <div className="py-1 flex justify-between items-center">
+              <div
+                className="py-1 flex justify-between items-center"
+                key={item.id}
+              >
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 bg-primary/20 rounded-lg"></div>
                   <div className="text-sm text-black/80 ">{item.title}</div>

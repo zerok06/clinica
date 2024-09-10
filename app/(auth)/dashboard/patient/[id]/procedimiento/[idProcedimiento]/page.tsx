@@ -1,4 +1,3 @@
-import ButtonOption from '@/components/ButtonOption'
 import ButtonNewDate from '@/components/dates/ButtonNewDate'
 import ItemDate from '@/components/dates/ItemDate'
 import OpcionsPatientDates from '@/components/dates/OpcionsPatientDates'
