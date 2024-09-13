@@ -1,7 +1,8 @@
 'use server'
 import { OdontogramaProps } from '@/hook/useOdontograma'
 import prisma from '@/lib/prisma'
-import { diente, TipoDienteEnum } from '@prisma/client'
+import { TipoDienteEnum } from '@/lib/types'
+import { diente } from '@prisma/client'
 
 export const fetchOdontograma = async () => {
   try {

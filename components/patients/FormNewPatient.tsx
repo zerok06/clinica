@@ -16,14 +16,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { createNewUser } from '@/lib/actions/users'
 import { toast } from '../ui/use-toast'
 import {
   Popover,
@@ -78,6 +70,7 @@ const FormNewPatient: React.FC<FormNewPatientProps> = ({ closeAlert }) => {
       dni: '',
       celular: '',
       convenio: '',
+      nacimiento: new Date(),
     },
   })
 
@@ -98,32 +91,35 @@ const FormNewPatient: React.FC<FormNewPatientProps> = ({ closeAlert }) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
         <h2 className="text-lg font-semibold">Datos</h2>
-        <FormField
-          control={form.control}
-          name="nombres"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nombres</FormLabel>
-              <FormControl>
-                <Input placeholder="John" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="apellidos"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Apellidos</FormLabel>
-              <FormControl>
-                <Input placeholder="Doe" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+          <FormField
+            control={form.control}
+            name="nombres"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nombres</FormLabel>
+                <FormControl>
+                  <Input placeholder="John" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="apellidos"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Apellidos</FormLabel>
+                <FormControl>
+                  <Input placeholder="Doe" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
         <FormField
           control={form.control}
           name="direccion"
@@ -174,52 +170,52 @@ const FormNewPatient: React.FC<FormNewPatientProps> = ({ closeAlert }) => {
                   />
                 </PopoverContent>
               </Popover>
-              <FormDescription>
-                Your date of birth is used to calculate your age.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="edad"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Edad</FormLabel>
-              <FormControl>
-                <Input placeholder="0000000" type="number" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="dni"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Dni</FormLabel>
-              <FormControl>
-                <Input placeholder="0000000" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="celular"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Celular</FormLabel>
-              <FormControl>
-                <Input placeholder="000000000" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
+          <FormField
+            control={form.control}
+            name="edad"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Edad</FormLabel>
+                <FormControl>
+                  <Input placeholder="Ejemplo: 12" type="number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="dni"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Dni</FormLabel>
+                <FormControl>
+                  <Input placeholder="Ejemplo: 78672345" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="celular"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Celular</FormLabel>
+                <FormControl>
+                  <Input placeholder="Ejemplo: 978234567" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
         <FormField
           control={form.control}
           name="convenio"

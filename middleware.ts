@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { jwtVerify } from 'jose'
-import type { Role } from '@prisma/client'
 
 const JWT_SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET_KEY)
 

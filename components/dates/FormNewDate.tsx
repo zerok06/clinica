@@ -24,7 +24,7 @@ import {
 import { toast } from '../ui/use-toast'
 import { Textarea } from '../ui/textarea'
 import { createDates, createDatesProcedimiento } from '@/lib/actions/dates'
-import type { paciente } from '@prisma/client'
+import type { doctor, paciente } from '@prisma/client'
 import { DateTimePicker } from '../ui/datetime-picker'
 
 const formSchema = z.object({
@@ -38,7 +38,10 @@ const formSchema = z.object({
     .string({
       required_error: 'Seleccione un paciente.',
     })
-    .optional(),
+    .nullable(),
+  doctorId: z.string({
+    required_error: 'Seleccione un paciente.',
+  }),
   start: z.date({ required_error: 'A date of birth is required.' }),
   end: z.date({ required_error: 'A date of birth is required.' }),
 })
@@ -47,6 +50,7 @@ interface FormNewDateProps {
   closeAlert: () => void
   type: 'particular' | 'procedimiento'
   pacientes?: paciente[]
+  doctors?: doctor[]
   procedimiento?: boolean
   procedimientoId: string
 }
@@ -54,6 +58,7 @@ interface FormNewDateProps {
 const FormNewDate: React.FC<FormNewDateProps> = ({
   closeAlert,
   pacientes = [],
+  doctors = [],
   procedimientoId = '',
   type,
 }) => {
@@ -63,6 +68,7 @@ const FormNewDate: React.FC<FormNewDateProps> = ({
       title: '',
       description: '',
       pacienteId: '',
+      doctorId: '',
       start: new Date(),
       end: new Date(),
     },
@@ -131,11 +137,11 @@ const FormNewDate: React.FC<FormNewDateProps> = ({
                 <Select
                   onValueChange={field.onChange}
                   disabled={pacientes.length === 0}
-                  defaultValue={field.value}
+                  defaultValue={field.value || ''}
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Categoria de tratamiento" />
+                      <SelectValue placeholder="Selecione un paciente" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -151,6 +157,34 @@ const FormNewDate: React.FC<FormNewDateProps> = ({
             )}
           />
         )}
+        <FormField
+          control={form.control}
+          name="doctorId"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Pacientes</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                disabled={doctors.length === 0}
+                defaultValue={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione un doctor" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {pacientes.map(item => (
+                    <SelectItem value={item.id} key={item.id}>
+                      {item.nombres}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="start"

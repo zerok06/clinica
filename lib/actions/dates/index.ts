@@ -1,6 +1,7 @@
 'use server'
 import prisma from '@/lib/prisma'
-import type { EstadoCita } from '@prisma/client'
+import { EstadoCita } from '@/lib/types'
+import { cita } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 
 export const fetchDates = async () => {
@@ -57,13 +58,10 @@ export const fetchOneDate = async (id: string) => {
   }
 }
 
-export interface CreateDateProps {
-  title: string
-  description: string
-  start: Date
-  end: Date
-  pacienteId?: string
-}
+export type CreateDateProps = Omit<
+  cita,
+  'createAt' | 'updateAt' | 'id' | 'procedimientoId' | 'estado'
+>
 
 export const createDates = async (params: CreateDateProps) => {
   try {
@@ -95,22 +93,18 @@ export const createDates = async (params: CreateDateProps) => {
   }
 }
 
-export interface CreateDateProcedimientoProps {
-  title: string
-  description: string
-  start: Date
-  end: Date
-  procedimientoId: string
-}
-
+export type CreateDateProcedimientoProps = Omit<
+  cita,
+  'createAt' | 'updateAt' | 'id' | 'estado'
+>
 export const createDatesProcedimiento = async (
   params: CreateDateProcedimientoProps
 ) => {
   try {
-    const { description, end, procedimientoId, start, title } = params
+    const { description, end, procedimientoId, start, title, doctorId } = params
 
     await prisma.cita.create({
-      data: { description, end, procedimientoId, start, title },
+      data: { description, end, procedimientoId, start, title, doctorId },
     })
     revalidatePath('/dashboard/patient/[id]/dates')
     revalidatePath('/dashboard/patient/[id]/procedimiento/[idProcedimiento]')

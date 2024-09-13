@@ -1,6 +1,6 @@
 'use server'
 import prisma from '@/lib/prisma'
-import { StatusProcedimiento } from '@prisma/client'
+import { StatusProcedimiento } from '@/lib/types'
 import { revalidatePath } from 'next/cache'
 
 export const fetchProcedimiento = async () => {

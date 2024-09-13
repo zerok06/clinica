@@ -2,6 +2,7 @@ import {
   BadgeDollarSign,
   BadgeIndianRupee,
   BookHeart,
+  BriefcaseMedical,
   Calendar,
   LayoutDashboard,
   NotepadTextDashed,
@@ -11,11 +12,6 @@ import {
   UsersRound,
 } from 'lucide-react'
 import OptionBar from './OptionBar'
-import { ArrangeIcon } from './icons/ArrangeIcon'
-import { CellsIcon } from './icons/CellsIcon'
-import { DashboardSquare02Icon } from './icons/DashboardSquare02Icon'
-import { Note02Icon } from './icons/Note02Icon'
-import { UserGroupIcon } from './icons/UserGroupIcon'
 import { getSession } from '@/lib/helpers/getSession'
 
 const itemsAdminBar = [
@@ -66,6 +62,12 @@ const itemsAdminBar = [
     href: '/dashboard/templates',
     label: 'Plantillas',
     icon: <NotepadTextDashed size={15} />,
+  },
+  {
+    id: '49e6bbf8-a953-49e0-b6ac-14f99e66d67b',
+    href: '/dashboard/doctors',
+    label: 'Doctores',
+    icon: <BriefcaseMedical size={15} />,
   },
 ]
 const itemsDoctorBar = [

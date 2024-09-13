@@ -9,32 +9,26 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./sqlite/clinica.db"
 }
 
 model usuario {
-  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  id             String       @id @default(uuid())
   nombres        String
   apellidos      String
   email          String
   dni            String
   telefono       String
-  role           Role         @default(administrador)
+  role           String       @default("administrador")
   createAt       DateTime     @default(now())
   updateAt       DateTime     @updatedAt
   credenciales   credenciales @relation(fields: [credencialesId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  credencialesId String       @unique @db.ObjectId
-}
-
-enum Role {
-  administrador
-  secretaria
-  doctor
+  credencialesId String       @unique
 }
 
 model credenciales {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  id       String   @id @default(uuid())
   username String   @unique
   password String
   usuario  usuario?
@@ -43,7 +37,7 @@ model credenciales {
 }
 
 model paciente {
-  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  id            String          @id @default(uuid())
   nombres       String
   apellidos     String
   direccion     String
@@ -61,19 +55,19 @@ model paciente {
 }
 
 model tratamiento {
-  id                            String                          @id @default(auto()) @map("_id") @db.ObjectId
+  id                            String                          @id @default(uuid())
   nombre                        String
   descripcion                   String
   monto                         Float
   categoriaTratamiento          categoriaTratamiento?           @relation(fields: [categoriaTratamientoId], references: [id], onUpdate: Cascade, onDelete: SetNull)
-  categoriaTratamientoId        String?                         @db.ObjectId
+  categoriaTratamientoId        String?
   detalleDiagnosticoTratamiento detalleDiagnosticoTratamiento[]
   createAt                      DateTime                        @default(now())
   updateAt                      DateTime                        @updatedAt
 }
 
 model categoriaTratamiento {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  id          String        @id @default(uuid())
   nombre      String
   descripcion String
   tratamiento tratamiento[]
@@ -82,7 +76,7 @@ model categoriaTratamiento {
 }
 
 model diagnostico {
-  id                            String                          @id @default(auto()) @map("_id") @db.ObjectId
+  id                            String                          @id @default(uuid())
   nombre                        String
   descripcion                   String
   detalleDiagnosticoTratamiento detalleDiagnosticoTratamiento[]
@@ -91,74 +85,76 @@ model diagnostico {
 }
 
 model detalleDiagnosticoTratamiento {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  id            String      @id @default(uuid())
   diagnostico   diagnostico @relation(fields: [diagnosticoId], references: [id])
-  diagnosticoId String      @db.ObjectId
+  diagnosticoId String
   tratamiento   tratamiento @relation(fields: [tratamientoId], references: [id])
-  tratamientoId String      @db.ObjectId
+  tratamientoId String
   createAt      DateTime    @default(now())
   updateAt      DateTime    @updatedAt
 }
 
 model cita {
-  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  id              String         @id @default(uuid())
   title           String
   description     String
-  estado          EstadoCita     @default(Pendiente)
+  estado          String         @default("Pendiente")
   start           DateTime
   end             DateTime
   createAt        DateTime       @default(now())
   updateAt        DateTime       @updatedAt
+  doctor          doctor         @relation(fields: [doctorId], references: [id])
   procedimiento   procedimiento? @relation(fields: [procedimientoId], references: [id])
-  procedimientoId String?        @db.ObjectId
+  procedimientoId String?
   paciente        paciente?      @relation(fields: [pacienteId], references: [id])
-  pacienteId      String?        @db.ObjectId
+  pacienteId      String?
+  doctorId        String
 }
 
 model file {
-  id         String        @id @default(auto()) @map("_id") @db.ObjectId
+  id         String   @id @default(uuid())
   name       String
   type       String
   path       String
   size       String
-  category   CategoriaFile @default(Otros)
-  createAt   DateTime      @default(now())
-  paciente   paciente      @relation(fields: [pacienteId], references: [id])
-  pacienteId String        @db.ObjectId
-  updateAt   DateTime      @updatedAt
+  category   String   @default("Otros")
+  createAt   DateTime @default(now())
+  paciente   paciente @relation(fields: [pacienteId], references: [id])
+  pacienteId String
+  updateAt   DateTime @updatedAt
 }
 
 model procedimiento {
-  id          String              @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(uuid())
   start       DateTime
   end         DateTime
   monto_total Float
-  recaudado   Float               @default(0.00)
-  estado      StatusProcedimiento @default(pendiente)
+  recaudado   Float    @default(0.00)
+  estado      String   @default("pendiente")
   title       String
   desc        String
-  paciente    paciente            @relation(fields: [pacienteId], references: [id])
-  pacienteId  String              @db.ObjectId
+  paciente    paciente @relation(fields: [pacienteId], references: [id])
+  pacienteId  String
   pagos       pagos[]
   cita        cita[]
-  createAt    DateTime            @default(now())
-  updateAt    DateTime            @updatedAt
+  createAt    DateTime @default(now())
+  updateAt    DateTime @updatedAt
 }
 
 model pagos {
-  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  id              String        @id @default(uuid())
   title           String
   fecha           DateTime      @default(now())
   desc            String
   monto           Float
   procedimiento   procedimiento @relation(fields: [procedimientoId], references: [id])
-  procedimientoId String        @db.ObjectId
+  procedimientoId String
   createAt        DateTime      @default(now())
   updateAt        DateTime      @updatedAt
 }
 
 model insumo {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(uuid())
   nombre      String
   cantidad    Int
   description String
@@ -167,28 +163,28 @@ model insumo {
 }
 
 model odontograma {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  id         String    @id @default(uuid())
   paciente   paciente? @relation(fields: [pacienteId], references: [id], onDelete: SetNull, onUpdate: SetNull)
   createAt   DateTime  @default(now())
   updateAt   DateTime  @updatedAt
-  pacienteId String?   @db.ObjectId
+  pacienteId String?
   diente     diente[]
 }
 
 model diente {
-  id                    String                  @id @default(auto()) @map("_id") @db.ObjectId
+  id                    String                  @id @default(uuid())
   name                  String
   code                  Int
-  tipo                  TipoDienteEnum
+  tipo                  String
   odontograma           odontograma             @relation(fields: [odontogramaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   createAt              DateTime                @default(now())
   updateAt              DateTime                @updatedAt
-  odontogramaId         String                  @db.ObjectId
+  odontogramaId         String
   diagnosticoMonoDiente diagnosticoMonoDiente[]
 }
 
 model diagnosticoMonoDiente {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(uuid())
   base64      String
   desc        String
   name        String
@@ -196,43 +192,25 @@ model diagnosticoMonoDiente {
   createAt    DateTime @default(now())
   updateAt    DateTime @updatedAt
   diente      diente   @relation(fields: [dienteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  dienteId    String   @db.ObjectId
+  dienteId    String
 }
 
 model PlantillaMensaje {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  id       String   @id @default(uuid())
   asunto   String
   mensaje  String
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }
 
-enum TipoDienteEnum {
-  Permanente
-  Temporal
-}
-
-enum StatusProcedimiento {
-  completada
-  cancelada
-  pendiente
-}
-
-enum TypeFile {
-  pdf
-  image
-  otros
-}
-
-enum CategoriaFile {
-  Odontograma
-  Radiografia
-  Consentimiento
-  Otros
-}
-
-enum EstadoCita {
-  Pendiente
-  Completado
-  Cancelado
+model doctor {
+  id        String   @id @default(uuid())
+  nombres   String
+  apellidos String
+  email     String
+  dni       String
+  code      String
+  createAt  DateTime @default(now())
+  updateAt  DateTime @updatedAt
+  cita      cita[]
 }

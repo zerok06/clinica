@@ -13,9 +13,9 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '../ui/button'
 import useControlAlert from '@/hook/useControlAlert'
-import FormNewPatient from './FormNewPatient'
+import FormNewInsumo from './FormNewDoctor'
 
-const ButtonNewPatient = () => {
+const ButtonNewDoctor = () => {
   const { active, close } = useControlAlert()
 
   return (
@@ -23,13 +23,13 @@ const ButtonNewPatient = () => {
       <AlertDialogTrigger asChild>
         <Button>Agregar</Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="max-w-3xl">
+      <AlertDialogContent>
         <AlertDialogHeader>
-          <FormNewPatient closeAlert={close} />
+          <FormNewInsumo closeAlert={close} />
         </AlertDialogHeader>
       </AlertDialogContent>
     </AlertDialog>
   )
 }
 
-export default ButtonNewPatient
+export default ButtonNewDoctor

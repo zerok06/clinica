@@ -1,7 +1,7 @@
 'use server'
 import encryptPassword from '@/lib/helpers/encryptPassword'
 import prisma from '@/lib/prisma'
-import { Role } from '@prisma/client'
+import { Role } from '@/lib/types'
 import { revalidatePath } from 'next/cache'
 
 export type response = {

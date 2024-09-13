@@ -4,7 +4,7 @@ import fs from 'node:fs/promises'
 import { nanoid } from 'nanoid'
 import { revalidatePath } from 'next/cache'
 import path from 'node:path'
-import { CategoriaFile } from '@prisma/client'
+import { CategoriaFile } from '@/lib/types'
 
 export async function uploadFile(formData: FormData) {
   try {

@@ -1,30 +1,34 @@
 {
     "usuarios": {
         "title": "Usuarios",
-        "desc": "lorem10"
+        "desc": "Sección destinada a la gestión de los usuarios registrados en el sistema, incluyendo roles y permisos."
     },
     "pacientes": {
         "title": "Pacientes",
-        "desc": "lorem10"
+        "desc": "Administración completa de los datos de los pacientes, con historiales clínicos y seguimiento de su salud."
     },
     "tratamientos": {
         "title": "Tratamientos",
-        "desc": "lorem10"
+        "desc": "Listado y manejo de los tratamientos médicos asignados a los pacientes, con detalles y duración."
     },
     "diagnostico": {
         "title": "Diagnósticos",
-        "desc": "lorem10"
+        "desc": "Aquí se registran los diagnósticos médicos realizados, con detalles sobre síntomas, análisis y recomendaciones."
     },
     "insumos": {
         "title": "Insumos",
-        "desc": "lorem10"
+        "desc": "Control y gestión de los insumos médicos utilizados en los tratamientos y procedimientos clínicos."
     },
     "citas": {
         "title": "Citas",
-        "desc": "lorem10"
+        "desc": "Planificación, registro y seguimiento de las citas médicas agendadas, incluyendo recordatorios automáticos."
     },
     "messages": {
         "title": "Mensajes",
-        "desc": "lorem10"
+        "desc": "Interfaz para la comunicación interna entre pacientes y profesionales de la salud, a través de mensajes seguros."
+    },
+    "doctors": {
+        "title": "Doctores",
+        "desc": "Gestión de la información de los doctores, incluyendo especialidades, horarios y disponibilidad."
     }
 }
