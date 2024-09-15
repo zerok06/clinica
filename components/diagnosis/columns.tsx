@@ -6,6 +6,7 @@ import { deleteDiagnosis } from '@/lib/actions/diagnosis'
 import { toast } from '../ui/use-toast'
 import FormatDate from '../FormatDate'
 import { diagnostico } from '@prisma/client'
+import ButtonUpdateDiagnosis from './update/ButtonUpdateDiagnosis'
 
 export type Props = {
   id: string
@@ -44,7 +45,8 @@ export const columns: ColumnDef<diagnostico>[] = [
     header: 'Opciones',
     cell: ({ row: { original } }) => {
       return (
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-2">
+          <ButtonUpdateDiagnosis id={original.id} diagnostico={original} />
           <ButtonDelete
             label={'delete'}
             deleteDB={() =>

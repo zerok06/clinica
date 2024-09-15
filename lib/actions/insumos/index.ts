@@ -1,6 +1,7 @@
 'use server'
 
 import prisma from '@/lib/prisma'
+import { insumo } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 
 export const fetchInsumo = async () => {
@@ -39,6 +40,21 @@ export const createInsumo = async (params: CreateInsumoProps) => {
     return { success: false }
   }
 }
+
+type updateInsumoParams = Omit<insumo, 'createAt' | 'updateAt' | 'id'>
+
+export const updateInsumo = async (id: string, params: updateInsumoParams) => {
+  try {
+    await prisma.insumo.update({
+      where: { id },
+      data: params,
+    })
+    return { success: true }
+  } catch (error) {
+    return { success: false }
+  }
+}
+
 export const deleteInsumo = async (id: string) => {
   try {
     await prisma.insumo.delete({

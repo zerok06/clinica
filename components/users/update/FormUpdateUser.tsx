@@ -21,8 +21,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { createNewUser } from '@/lib/actions/users'
-import { toast } from '../ui/use-toast'
+import { createNewUser, updateUser } from '@/lib/actions/users'
+import { credenciales, usuario } from '@prisma/client'
+import { toast } from '@/components/ui/use-toast'
+import { Role } from '@/lib/types'
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -49,23 +51,33 @@ const formSchema = z.object({
   role: z.enum(['administrador', 'secretaria', 'doctor']),
 })
 
-interface FormNewUserProps {
-  closeAlert: () => void
+interface UserProps extends usuario {
+  credenciales: credenciales
 }
 
-const FormNewUser: React.FC<FormNewUserProps> = ({ closeAlert }) => {
+interface FormUpdateUserProps {
+  closeAlert: () => void
+  id: string
+  user: UserProps
+}
+
+const FormUpdateUser: React.FC<FormUpdateUserProps> = ({
+  closeAlert,
+  id,
+  user,
+}) => {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
+      username: user.credenciales.username,
       password: '',
-      apellidos: '',
-      dni: '',
-      email: '',
-      nombres: '',
-      role: 'secretaria',
-      telefono: '',
+      apellidos: user.apellidos,
+      dni: user.dni,
+      email: user.email,
+      nombres: user.nombres,
+      role: user.role as Role,
+      telefono: user.telefono,
     },
   })
 
@@ -73,7 +85,7 @@ const FormNewUser: React.FC<FormNewUserProps> = ({ closeAlert }) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    createNewUser(values).then(res =>
+    updateUser(id, values).then(res =>
       toast({
         title: 'Uh oh! Something went wrong.',
         description: JSON.stringify(res),
@@ -223,4 +235,4 @@ const FormNewUser: React.FC<FormNewUserProps> = ({ closeAlert }) => {
   )
 }
 
-export default FormNewUser
+export default FormUpdateUser

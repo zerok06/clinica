@@ -11,25 +11,37 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { Button } from '../ui/button'
-import FormNewUser from './FormNewUser'
 import useControlAlert from '@/hook/useControlAlert'
+import { doctor } from '@prisma/client'
+import { Button } from '@/components/ui/button'
+import { Pencil } from 'lucide-react'
+import FormUpdateDoctor from './FormUpdateDoctor'
 
-const ButtonNewUser = () => {
+interface ButtonUpdateDoctorProps {
+  id: string
+  doctor: doctor
+}
+
+const ButtonUpdateDoctor: React.FC<ButtonUpdateDoctorProps> = ({
+  id,
+  doctor,
+}) => {
   const { active, close } = useControlAlert()
 
   return (
     <AlertDialog open={active} onOpenChange={close}>
       <AlertDialogTrigger asChild>
-        <Button>Agregar</Button>
+        <Button variant={'outline'} size={'icon'}>
+          <Pencil size={16} />
+        </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="max-w-2xl">
+      <AlertDialogContent>
         <AlertDialogHeader>
-          <FormNewUser closeAlert={close} />
+          <FormUpdateDoctor doctor={doctor} id={id} closeAlert={close} />
         </AlertDialogHeader>
       </AlertDialogContent>
     </AlertDialog>
   )
 }
 
-export default ButtonNewUser
+export default ButtonUpdateDoctor

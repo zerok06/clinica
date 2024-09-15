@@ -5,6 +5,7 @@ import type { insumo } from '@prisma/client'
 import { deleteInsumo } from '@/lib/actions/insumos'
 import { toast } from '../ui/use-toast'
 import FormatDate from '../FormatDate'
+import ButtonUpdateInsumo from './update/ButtonUpdateInsumo'
 
 export const columns: ColumnDef<insumo>[] = [
   {
@@ -37,7 +38,8 @@ export const columns: ColumnDef<insumo>[] = [
     header: 'Opciones',
     cell: ({ row: { original } }) => {
       return (
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-2">
+          <ButtonUpdateInsumo id={original.id} insumo={original} />
           <ButtonDelete
             label={'delete'}
             deleteDB={() =>

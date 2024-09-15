@@ -1,5 +1,6 @@
 'use server'
 import prisma from '@/lib/prisma'
+import { pagos } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 
 export const fetchPagos = async () => {
@@ -67,6 +68,38 @@ export const CreatePago = async (params: CreatePagoProps) => {
     return { success: false }
   }
 }
+
+type UpdatePagoParams = Omit<
+  pagos,
+  'createAt' | 'updateAt' | 'id' | 'procedimientoId' | 'fecha'
+>
+
+export const updatePago = async (id: string, params: UpdatePagoParams) => {
+  try {
+    const pago = await prisma.pagos.findUnique({ where: { id } })
+
+    await prisma.pagos.update({
+      where: { id },
+      data: params,
+    })
+
+    await prisma.procedimiento.update({
+      where: {
+        id: pago?.procedimientoId,
+      },
+      data: {
+        recaudado: {
+          increment: Number(params.monto) - Number(pago?.monto),
+        },
+      },
+    })
+
+    return { success: true }
+  } catch (error) {
+    return { success: false }
+  }
+}
+
 export const DeletePagos = async (id: string) => {
   try {
     const pago = await prisma.pagos.findUnique({ where: { id } })

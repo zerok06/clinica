@@ -20,11 +20,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { toast } from '../ui/use-toast'
-import { Textarea } from '../ui/textarea'
 import { createDates, createDatesProcedimiento } from '@/lib/actions/dates'
-import type { doctor, paciente } from '@prisma/client'
-import { DateTimePicker } from '../ui/datetime-picker'
+import type { cita, doctor, paciente } from '@prisma/client'
+import { toast } from '@/components/ui/use-toast'
+import { Textarea } from '@/components/ui/textarea'
+import { DateTimePicker } from '@/components/ui/datetime-picker'
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -33,11 +33,6 @@ const formSchema = z.object({
   description: z.string().min(2, {
     message: 'Se requiere como mínimo 2 caracteres',
   }),
-  pacienteId: z
-    .string({
-      required_error: 'Seleccione un paciente.',
-    })
-    .nullable(),
   doctorId: z.string({
     required_error: 'Seleccione un paciente.',
   }),
@@ -45,36 +40,32 @@ const formSchema = z.object({
   end: z.date({ required_error: 'A date of birth is required.' }),
 })
 
-interface FormNewDateProps {
+interface FormUpdateDateProps {
+  id: string
   closeAlert: () => void
-  type: 'particular' | 'procedimiento'
-  pacientes?: paciente[]
   doctors: doctor[]
-  procedimiento?: boolean
-  procedimientoId: string
+  cita: cita
 }
 
-const FormNewDate: React.FC<FormNewDateProps> = ({
+const FormUpdateDate: React.FC<FormUpdateDateProps> = ({
   closeAlert,
-  pacientes = [],
   doctors = [],
-  procedimientoId = '',
-  type,
+  id,
+  cita,
 }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: '',
-      description: '',
-      pacienteId: '',
-      doctorId: '',
-      start: new Date(),
-      end: new Date(),
+      title: cita.title,
+      description: cita.description,
+      doctorId: cita.doctorId,
+      start: cita.start,
+      end: cita.end,
     },
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    {
+    /* {
       type == 'particular'
         ? createDates(values).then(res =>
             toast({
@@ -88,7 +79,7 @@ const FormNewDate: React.FC<FormNewDateProps> = ({
               description: JSON.stringify(res),
             })
           )
-    }
+    } */
     closeAlert()
   }
 
@@ -126,36 +117,6 @@ const FormNewDate: React.FC<FormNewDateProps> = ({
             </FormItem>
           )}
         />
-        {type == 'particular' && (
-          <FormField
-            control={form.control}
-            name="pacienteId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Pacientes</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  disabled={pacientes.length === 0}
-                  defaultValue={field.value || ''}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione un paciente" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {pacientes.map(item => (
-                      <SelectItem value={item.id} key={item.id}>
-                        {item.nombres}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        )}
         <FormField
           control={form.control}
           name="doctorId"
@@ -231,4 +192,4 @@ const FormNewDate: React.FC<FormNewDateProps> = ({
   )
 }
 
-export default FormNewDate
+export default FormUpdateDate

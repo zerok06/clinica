@@ -15,7 +15,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { toast } from '../ui/use-toast'
 import {
   Popover,
   PopoverContent,
@@ -23,8 +22,10 @@ import {
 } from '@/components/ui/popover'
 import { CalendarIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { createNewPatient } from '@/lib/actions/patients'
-import { Textarea } from '../ui/textarea'
+import { createNewPatient, updatePatient } from '@/lib/actions/patients'
+import { toast } from '@/components/ui/use-toast'
+import { Textarea } from '@/components/ui/textarea'
+import { paciente } from '@prisma/client'
 
 const formSchema = z.object({
   nombres: z.string().min(2, {
@@ -53,23 +54,29 @@ const formSchema = z.object({
   }),
 })
 
-interface FormNewPatientProps {
+interface FormUpdatePacienteProps {
   closeAlert: () => void
+  id: string
+  paciente: paciente
 }
 
-const FormNewPatient: React.FC<FormNewPatientProps> = ({ closeAlert }) => {
+const FormUpdatePaciente: React.FC<FormUpdatePacienteProps> = ({
+  closeAlert,
+  id,
+  paciente,
+}) => {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      nombres: '',
-      apellidos: '',
-      direccion: '',
-      edad: '',
-      dni: '',
-      celular: '',
-      convenio: '',
-      nacimiento: new Date(),
+      nombres: paciente.nombres,
+      apellidos: paciente.apellidos,
+      direccion: paciente.direccion,
+      edad: String(paciente.edad),
+      dni: paciente.dni,
+      celular: paciente.celular,
+      convenio: paciente.convenio,
+      nacimiento: paciente.nacimiento,
     },
   })
 
@@ -77,7 +84,7 @@ const FormNewPatient: React.FC<FormNewPatientProps> = ({ closeAlert }) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    createNewPatient({ ...values, edad: Number(values.edad) }).then(res =>
+    updatePatient(id, { ...values, edad: Number(values.edad) }).then(res =>
       toast({
         title: 'Uh oh! Something went wrong.',
         description: JSON.stringify(res),
@@ -243,4 +250,4 @@ const FormNewPatient: React.FC<FormNewPatientProps> = ({ closeAlert }) => {
   )
 }
 
-export default FormNewPatient
+export default FormUpdatePaciente

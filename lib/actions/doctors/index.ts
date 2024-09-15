@@ -40,6 +40,20 @@ export const createDoctors = async (params: CreateDoctor) => {
   }
 }
 
+type UpdateDoctorParams = Omit<doctor, 'createAt' | 'updateAt' | 'id'>
+
+export const updateDoctor = async (id: string, params: UpdateDoctorParams) => {
+  try {
+    await prisma.doctor.update({
+      where: { id },
+      data: params,
+    })
+    return { success: true }
+  } catch (error) {
+    return { success: false }
+  }
+}
+
 export const deleteDoctors = async (id: string) => {
   try {
     await prisma.doctor.delete({ where: { id } })

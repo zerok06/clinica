@@ -6,6 +6,7 @@ import ItemPago from '@/components/pagos/ItemPago'
 import OptionsProcedimientos from '@/components/procedimientos/OptionsProcedimientos'
 import { Badge } from '@/components/ui/badge'
 import { fetchDatesProcedimientos } from '@/lib/actions/dates'
+import { fetchDoctors } from '@/lib/actions/doctors'
 import { DeletePagos } from '@/lib/actions/pagos'
 import { fetchOneProcedimiento } from '@/lib/actions/procedimientos'
 import { cn } from '@/lib/utils'
@@ -20,6 +21,7 @@ const Page: React.FC<PagePatientProps> = async ({
 }) => {
   const { dates } = await fetchDatesProcedimientos(idProcedimiento)
   const { procedimiento } = await fetchOneProcedimiento(idProcedimiento)
+  const { doctors = [] } = await fetchDoctors()
   const pendiente = 'pendiente'
 
   return (
@@ -85,11 +87,12 @@ const Page: React.FC<PagePatientProps> = async ({
             <ButtonNewDate
               type={'procedimiento'}
               procedimientoId={idProcedimiento}
+              doctors={doctors}
             />
           </div>
           <div className="flex flex-col gap-2 mt-2">
             {dates?.map(item => (
-              <ItemDate {...item} key={item.id} />
+              <ItemDate doctors={doctors!} cita={item} key={item.id} />
             ))}
           </div>
         </div>

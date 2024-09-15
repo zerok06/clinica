@@ -1,12 +1,12 @@
 'use client'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Calendar, momentLocalizer, type Components } from 'react-big-calendar'
 import moment from 'moment'
 import './calendar.css'
-import { type cita } from '@prisma/client'
+import { doctor, paciente, type cita } from '@prisma/client'
 import { Button } from '../ui/button'
 /* import WhatsAppButton from '../Patients/WhatsAppButton' */
-import { X, Bolt, HelpCircle, ChevronRight } from 'lucide-react'
+import { HelpCircle } from 'lucide-react'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,18 +19,31 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 /* import { DeleteDates } from '@/lib/actions/agenda' */
-import Link from 'next/link'
 import OpcionsPatientDates from './OpcionsPatientDates'
-import { Configuration01Icon } from '../icons/Configuration01Icon'
-import ChatWhatsapp from '../ChatWhatsapp'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Badge } from '../ui/badge'
+import { Label } from '../ui/label'
+import FormatDate from '../FormatDate'
 
 const localizer = momentLocalizer(moment)
 
-interface DatesProps {
-  agenda: cita[]
+interface CitaItem extends cita {
+  doctor: doctor
+  paciente: paciente
 }
 
-const Dates: React.FC<DatesProps> = ({ agenda = [] }) => {
+interface DatesProps {
+  agenda: CitaItem[]
+  doctors: doctor[]
+}
+
+const Dates: React.FC<DatesProps> = ({ agenda = [], doctors = [] }) => {
   const components: Components = useMemo(
     () => ({
       month: {
@@ -63,50 +76,228 @@ const Dates: React.FC<DatesProps> = ({ agenda = [] }) => {
                           hourCycle: 'h12',
                         })}
                       </p>
-                    </div>
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    <div className="flex justify-between items-center py-2">
-                      <div className="flex gap-3">
-                        <img
-                          src="/assets/images/default.jpg"
-                          className="h-10 w-10 rounded-full"
-                          alt=""
-                        />
-                        <div className="flex flex-col justify-center">
-                          <p className="text-sm leading-tight">
-                            Jose Paye Mamani
-                          </p>
-                          <p className="text-xs leading-none">73736059</p>
-                        </div>
-                      </div>
-                      <div>
+                      <div className="flex gap-2 items-center">
                         {/* @ts-ignore */}
                         {evt.event?.estado == 'Cancelado' && (
-                          <div className="px-4 py-1 text-black/70 rounded-lg bg-[#DC3545]">
-                            Cancelada
-                          </div>
+                          <Badge className="bg-[#DC3545]">Cancelada</Badge>
                         )}
                         {/* @ts-ignore */}
                         {evt.event?.estado == 'Completado' && (
-                          <div className="px-4 py-1 text-black/70 rounded-lg bg-[#218838]">
-                            Completada
-                          </div>
+                          <Badge className="bg-[#218838]">Completada</Badge>
                         )}
                         {/* @ts-ignore */}
                         {evt.event?.estado == 'Pendiente' && (
-                          <div className="px-4 py-1 text-black/70 rounded-lg bg-[#FFD700]">
-                            Pendiente
-                          </div>
+                          <Badge className="bg-[#FFD700]">Pendiente</Badge>
                         )}
-                      </div>
-                      <div>
                         {/* @ts-ignore */}
                         <OpcionsPatientDates id={evt.event?.id} />
                       </div>
                     </div>
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    <div>
+                      <div className="pt-4">
+                        {/* @ts-ignore */}
+                        {evt.event?.pacienteId != null ? (
+                          <>
+                            <h3 className="text-base font-medium">
+                              Datos de paciente
+                            </h3>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Nombres</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.paciente.nombres}</p>
+                              </div>
+                              <div>
+                                <Label>Apellidos</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.paciente.apellidos}</p>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Direccion</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.paciente.direccion}</p>
+                              </div>
+                              <div>
+                                <Label>Nacimiento</Label>
+                                <FormatDate
+                                  fecha={
+                                    /* @ts-ignore */
+                                    evt.event?.paciente.nacimiento
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Edad</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.paciente.edad}</p>
+                              </div>
+                              <div>
+                                <Label>Dni</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.paciente.dni}</p>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Celular</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.paciente.celular}</p>
+                              </div>
+                              <div>
+                                <Label>Convenio</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.paciente.convenio}</p>
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <h3 className="text-base font-medium">
+                              Datos de paciente
+                            </h3>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Nombres</Label>
+                                <p>
+                                  {/* @ts-ignore */}
+                                  {evt.event?.procedimiento.paciente.nombres}
+                                </p>
+                              </div>
+                              <div>
+                                <Label>Apellidos</Label>
+                                <p>
+                                  {/* @ts-ignore */}
+                                  {evt.event?.procedimiento.paciente.apellidos}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Direccion</Label>
+                                <p>
+                                  {/* @ts-ignore */}
+                                  {evt.event?.procedimiento.paciente.direccion}
+                                </p>
+                              </div>
+                              <div>
+                                <Label>Nacimiento</Label>
+                                <p>
+                                  <FormatDate
+                                    fecha={
+                                      /* @ts-ignore */
+                                      evt.event?.procedimiento.paciente
+                                        .nacimiento
+                                    }
+                                  />
+                                </p>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Edad</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.procedimiento.paciente.edad}</p>
+                              </div>
+                              <div>
+                                <Label>Dni</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.procedimiento.paciente.dni}</p>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Celular</Label>
+                                <p>
+                                  {/* @ts-ignore */}
+                                  {evt.event?.procedimiento.paciente.celular}
+                                </p>
+                              </div>
+                              <div>
+                                <Label>Convenio</Label>
+                                <p>
+                                  {/* @ts-ignore */}
+                                  {evt.event?.procedimiento.paciente.convenio}
+                                </p>
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      {/* @ts-ignore */}
+                      {evt.event.procedimientoId != null && (
+                        <div className="pt-4">
+                          <h3 className="text-base font-medium">
+                            Datos de procedimiento
+                          </h3>
+                          <div className="grid grid-cols-2">
+                            <div>
+                              <Label>Asunto</Label>
+                              <p>
+                                {/* @ts-ignore */}
+                                {evt.event?.procedimiento.title}
+                              </p>
+                            </div>
+                            <div>
+                              <Label>Estado</Label>
+                              <p>
+                                {/* @ts-ignore */}
+                                {evt.event?.procedimiento.estado}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2">
+                            <div>
+                              <Label>Inicio</Label>
+                              <p>
+                                <FormatDate
+                                  fecha={
+                                    /* @ts-ignore */
+                                    evt.event?.procedimiento.start
+                                  }
+                                />
+                              </p>
+                            </div>
+                            <div>
+                              <Label>Final</Label>
+                              <p>
+                                <FormatDate
+                                  fecha={
+                                    /* @ts-ignore */
+                                    evt.event?.procedimiento.end
+                                  }
+                                />
+                              </p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2">
+                            <div>
+                              <Label>Monto</Label>
+                              <p>
+                                {/* @ts-ignore */}
+                                {evt.event?.procedimiento.monto_total}
+                              </p>
+                            </div>
+                            <div>
+                              <Label>Recaudado</Label>
+                              <p>
+                                {/* @ts-ignore */}
+                                {evt.event?.procedimiento.recaudado}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                     {/* @ts-ignore */}
                     <p>{evt.event.desc}</p>
+                    {/* @ts-ignore */}
+                    {/* <div>{JSON.stringify(evt.event)}</div> */}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -150,52 +341,209 @@ const Dates: React.FC<DatesProps> = ({ agenda = [] }) => {
                     </div>
                   </AlertDialogTitle>
                   <AlertDialogDescription>
-                    <div className="flex justify-between items-center py-2">
-                      <div className="flex gap-3">
-                        <img
-                          src="/assets/images/default.jpg"
-                          className="h-10 w-10 rounded-full"
-                          alt=""
-                        />
-                        <div className="flex flex-col justify-center">
-                          <p className="text-sm leading-tight">
-                            Jose Paye Mamani
-                          </p>
-                          <p className="text-xs leading-none">73736059</p>
-                        </div>
+                    <div>
+                      <div className="pt-4">
+                        {/* @ts-ignore */}
+                        {evt.event?.pacienteId != null ? (
+                          <>
+                            <h3 className="text-base font-medium">
+                              Datos de paciente
+                            </h3>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Nombres</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.paciente.nombres}</p>
+                              </div>
+                              <div>
+                                <Label>Apellidos</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.paciente.apellidos}</p>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Direccion</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.paciente.direccion}</p>
+                              </div>
+                              <div>
+                                <Label>Nacimiento</Label>
+                                <FormatDate
+                                  fecha={
+                                    /* @ts-ignore */
+                                    evt.event?.paciente.nacimiento
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Edad</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.paciente.edad}</p>
+                              </div>
+                              <div>
+                                <Label>Dni</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.paciente.dni}</p>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Celular</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.paciente.celular}</p>
+                              </div>
+                              <div>
+                                <Label>Convenio</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.paciente.convenio}</p>
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <h3 className="text-base font-medium">
+                              Datos de paciente
+                            </h3>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Nombres</Label>
+                                <p>
+                                  {/* @ts-ignore */}
+                                  {evt.event?.procedimiento.paciente.nombres}
+                                </p>
+                              </div>
+                              <div>
+                                <Label>Apellidos</Label>
+                                <p>
+                                  {/* @ts-ignore */}
+                                  {evt.event?.procedimiento.paciente.apellidos}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Direccion</Label>
+                                <p>
+                                  {/* @ts-ignore */}
+                                  {evt.event?.procedimiento.paciente.direccion}
+                                </p>
+                              </div>
+                              <div>
+                                <Label>Nacimiento</Label>
+                                <p>
+                                  <FormatDate
+                                    fecha={
+                                      /* @ts-ignore */
+                                      evt.event?.procedimiento.paciente
+                                        .nacimiento
+                                    }
+                                  />
+                                </p>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Edad</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.procedimiento.paciente.edad}</p>
+                              </div>
+                              <div>
+                                <Label>Dni</Label>
+                                {/* @ts-ignore */}
+                                <p>{evt.event?.procedimiento.paciente.dni}</p>
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2">
+                              <div>
+                                <Label>Celular</Label>
+                                <p>
+                                  {/* @ts-ignore */}
+                                  {evt.event?.procedimiento.paciente.celular}
+                                </p>
+                              </div>
+                              <div>
+                                <Label>Convenio</Label>
+                                <p>
+                                  {/* @ts-ignore */}
+                                  {evt.event?.procedimiento.paciente.convenio}
+                                </p>
+                              </div>
+                            </div>
+                          </>
+                        )}
                       </div>
-                      <div className="flex justify-end items-center gap-2">
-                        {/* <WhatsAppButton tel={'+51910852459'} /> */}
-                        <div>
-                          <div>
-                            {/* @ts-ignore */}
-                            {evt.event?.estado == 'Cancelado' && (
-                              <div className="px-4 py-1 text-black/70 rounded-lg bg-[#DC3545]">
-                                Cancelada
-                              </div>
-                            )}
-                            {/* @ts-ignore */}
-                            {evt.event?.estado == 'Completado' && (
-                              <div className="px-4 py-1 text-black/70 rounded-lg bg-[#218838]">
-                                Completada
-                              </div>
-                            )}
-                            {/* @ts-ignore */}
-                            {evt.event?.estado == 'Pendiente' && (
-                              <div className="px-4 py-1 text-black/70 rounded-lg bg-[#FFD700]">
-                                Pendiente
-                              </div>
-                            )}
+                      {/* @ts-ignore */}
+                      {evt.event.procedimientoId != null && (
+                        <div className="pt-4">
+                          <h3 className="text-base font-medium">
+                            Datos de procedimiento
+                          </h3>
+                          <div className="grid grid-cols-2">
+                            <div>
+                              <Label>Asunto</Label>
+                              <p>
+                                {/* @ts-ignore */}
+                                {evt.event?.procedimiento.title}
+                              </p>
+                            </div>
+                            <div>
+                              <Label>Estado</Label>
+                              <p>
+                                {/* @ts-ignore */}
+                                {evt.event?.procedimiento.estado}
+                              </p>
+                            </div>
                           </div>
-                          <div>
-                            {/* @ts-ignore */}
-                            <OpcionsPatientDates id={evt.event?.id} />
+                          <div className="grid grid-cols-2">
+                            <div>
+                              <Label>Inicio</Label>
+                              <p>
+                                <FormatDate
+                                  fecha={
+                                    /* @ts-ignore */
+                                    evt.event?.procedimiento.start
+                                  }
+                                />
+                              </p>
+                            </div>
+                            <div>
+                              <Label>Final</Label>
+                              <p>
+                                <FormatDate
+                                  fecha={
+                                    /* @ts-ignore */
+                                    evt.event?.procedimiento.end
+                                  }
+                                />
+                              </p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2">
+                            <div>
+                              <Label>Monto</Label>
+                              <p>
+                                {/* @ts-ignore */}
+                                {evt.event?.procedimiento.monto_total}
+                              </p>
+                            </div>
+                            <div>
+                              <Label>Recaudado</Label>
+                              <p>
+                                {/* @ts-ignore */}
+                                {evt.event?.procedimiento.recaudado}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                     {/* @ts-ignore */}
                     <p>{evt.event.desc}</p>
+                    {/* @ts-ignore */}
+                    {/* <div>{JSON.stringify(evt.event)}</div> */}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -220,36 +568,48 @@ const Dates: React.FC<DatesProps> = ({ agenda = [] }) => {
                   className="h-10 w-10 rounded-full"
                   alt=""
                 />
-                <div className="flex flex-col justify-center">
-                  <p className="text-sm leading-tight">Jose Paye Mamani</p>
-                  <p className="text-xs leading-none">73736059</p>
-                </div>
+                {/* @ts-ignore */}
+                {evt.event?.pacienteId != null ? (
+                  <div className="flex flex-col justify-center">
+                    <p className="text-sm leading-tight">
+                      {/* @ts-ignore */}
+                      {evt.event?.paciente.nombres}
+                    </p>
+                    <p className="text-xs leading-none">
+                      {/* @ts-ignore */}
+                      {evt.event?.paciente.dni}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col justify-center">
+                    <p className="text-sm leading-tight">
+                      {/* @ts-ignore */}
+                      {evt.event?.procedimiento.paciente.nombres}
+                    </p>
+                    <p className="text-xs leading-none">
+                      {/* @ts-ignore */}
+                      {evt.event?.procedimiento.paciente.dni}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
             <div className="flex justify-end items-center gap-2">
               {/* <WhatsAppButton tel={'+51910852459'} /> */}
               <div>
-                <div>
+                <div className="flex gap-2 items-center">
                   {/* @ts-ignore */}
                   {evt.event?.estado == 'Cancelado' && (
-                    <div className="px-4 py-1 text-black/70 rounded-lg bg-[#DC3545]">
-                      Cancelada
-                    </div>
+                    <Badge className="bg-[#DC3545]">Cancelada</Badge>
                   )}
                   {/* @ts-ignore */}
                   {evt.event?.estado == 'Completado' && (
-                    <div className="px-4 py-1 text-black/70 rounded-lg bg-[#218838]">
-                      Completada
-                    </div>
+                    <Badge className="bg-[#218838]">Completada</Badge>
                   )}
                   {/* @ts-ignore */}
                   {evt.event?.estado == 'Pendiente' && (
-                    <div className="px-4 py-1 text-black/70 rounded-lg bg-[#FFD700]">
-                      Pendiente
-                    </div>
+                    <Badge className="bg-[#FFD700]">Pendiente</Badge>
                   )}
-                </div>
-                <div>
                   {/* @ts-ignore */}
                   <OpcionsPatientDates id={evt.event?.id} />
                 </div>
@@ -262,18 +622,66 @@ const Dates: React.FC<DatesProps> = ({ agenda = [] }) => {
     []
   )
 
+  const [filters, setFilters] = useState({
+    doctor: 'todos',
+  })
+
+  let filteredData: CitaItem[] = useMemo(() => {
+    if (filters.doctor !== 'todos') {
+      return agenda.filter(item => item.doctorId == filters.doctor)
+    }
+    return agenda
+  }, [filters])
+
+  const messages = {
+    week: 'Semana',
+    work_week: 'Semana de trabajo',
+    day: 'Día',
+    month: 'Mes',
+    previous: 'Atrás',
+    next: 'Después',
+    today: 'Hoy',
+    agenda: 'Agenda',
+
+    showMore: (total: number) => `+${total} más`,
+  }
+
   return (
-    <div className="h-[600px]">
-      <Calendar
-        localizer={localizer}
-        events={agenda}
-        /* @ts-ignore */
-        components={components}
-        min={new Date(1972, 0, 1, 8, 0, 0, 0)}
-        max={new Date(1972, 0, 1, 21, 0, 0, 0)}
-        startAccessor="start"
-        endAccessor="end"
-      />
+    <div>
+      <div>
+        <h3>Filtros</h3>
+        <div className="py-3">
+          <Label>Doctor</Label>
+          <Select
+            onValueChange={value =>
+              setFilters(state => ({ ...state, doctor: value }))
+            }
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Doctor" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="todos">Todos</SelectItem>
+              {doctors.map(item => (
+                <SelectItem value={item.id}>Dr(a).{item.nombres}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+      <div className="h-[450px]">
+        <Calendar
+          localizer={localizer}
+          events={filteredData}
+          /* @ts-ignore */
+          components={components}
+          messages={messages}
+          min={new Date(1972, 0, 1, 8, 0, 0, 0)}
+          max={new Date(1972, 0, 1, 21, 0, 0, 0)}
+          startAccessor="start"
+          endAccessor="end"
+        />
+      </div>
     </div>
   )
 }

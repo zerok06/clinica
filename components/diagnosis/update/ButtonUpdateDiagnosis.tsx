@@ -11,41 +11,36 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { Button } from '../ui/button'
 import useControlAlert from '@/hook/useControlAlert'
-import FormNewDate from './FormNewDate'
-import { doctor, paciente } from '@prisma/client'
+import { diagnostico, doctor, paciente } from '@prisma/client'
+import { Button } from '@/components/ui/button'
+import FormUpdateDiagnosis from './FormUpdateDiagnosis'
+import { Pencil } from 'lucide-react'
 
-interface ButtonNewDateProps {
-  pacientes?: paciente[]
-  doctors: doctor[]
-  procedimientoId?: string
-  type: 'particular' | 'procedimiento'
+interface ButtonUpdateDiagnosisProps {
+  id: string
+  diagnostico: diagnostico
 }
 
-const ButtonNewDate: React.FC<ButtonNewDateProps> = ({
-  pacientes = [],
-  doctors = [],
-  procedimientoId = '',
-  type,
+const ButtonUpdateDiagnosis: React.FC<ButtonUpdateDiagnosisProps> = ({
+  id,
+  diagnostico,
 }) => {
   const { active, close } = useControlAlert()
 
   return (
     <AlertDialog open={active} onOpenChange={close}>
       <AlertDialogTrigger asChild>
-        <Button size={'sm'} variant={'outline'}>
-          Agregar
+        <Button variant={'outline'} size={'icon'}>
+          <Pencil size={16} />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <FormNewDate
-            type={type}
+          <FormUpdateDiagnosis
+            diagnostico={diagnostico}
+            id={id}
             closeAlert={close}
-            doctors={doctors}
-            pacientes={pacientes}
-            procedimientoId={procedimientoId}
           />
         </AlertDialogHeader>
       </AlertDialogContent>
@@ -53,4 +48,4 @@ const ButtonNewDate: React.FC<ButtonNewDateProps> = ({
   )
 }
 
-export default ButtonNewDate
+export default ButtonUpdateDiagnosis

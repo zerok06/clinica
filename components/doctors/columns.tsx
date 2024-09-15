@@ -5,6 +5,7 @@ import { toast } from '../ui/use-toast'
 import FormatDate from '../FormatDate'
 import ButtonDeleteDoctor from './ButtonDeleteDoctor'
 import { deleteDoctors } from '@/lib/actions/doctors'
+import ButtonUpdateDoctor from './update/ButtonUpdateDoctor'
 
 export const columns: ColumnDef<doctor>[] = [
   {
@@ -45,7 +46,8 @@ export const columns: ColumnDef<doctor>[] = [
     header: 'Opciones',
     cell: ({ row: { original } }) => {
       return (
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-2">
+          <ButtonUpdateDoctor doctor={original} id={original.id} />
           <ButtonDeleteDoctor
             label={'delete'}
             deleteDB={() =>

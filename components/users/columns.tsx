@@ -1,6 +1,6 @@
 'use client'
 import { ColumnDef } from '@tanstack/react-table'
-import type { usuario } from '@prisma/client'
+import type { credenciales, usuario } from '@prisma/client'
 import { Button } from '../ui/button'
 import { MoreVerticalCircle01Icon } from '../icons/MoreVerticalCircle01Icon'
 import {
@@ -15,17 +15,13 @@ import ButtonDelete from '../ButtonDelete'
 import { deleteUser } from '@/lib/actions/users'
 import { toast } from '../ui/use-toast'
 import FormatDate from '../FormatDate'
+import ButtonUpdateUser from './update/ButtonUpdateUser'
 
-export type Props = {
-  id: string
-  nombres: string
-  apellidos: string
-  email: string
-  dni: string
-  telefono: string
+interface Props extends usuario {
+  credenciales: credenciales
 }
 
-export const columns: ColumnDef<usuario>[] = [
+export const columns: ColumnDef<Props>[] = [
   {
     accessorKey: 'nombres',
     header: 'Nombres',
@@ -64,7 +60,8 @@ export const columns: ColumnDef<usuario>[] = [
     header: 'Opciones',
     cell: ({ row: { original } }) => {
       return (
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-2">
+          <ButtonUpdateUser id={original.id} user={original} />
           <ButtonDelete
             label={'delete'}
             deleteDB={() =>

@@ -1,6 +1,7 @@
 'use server'
 
 import prisma from '@/lib/prisma'
+import { tratamiento } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 
 export const fetchTreatments = async () => {
@@ -55,6 +56,19 @@ export const createTreatment = async (params: CreateTreatmentProps) => {
     })
     revalidatePath('/dashboard/treatments')
 
+    return { success: true }
+  } catch (error) {
+    return { success: false }
+  }
+}
+
+type UpdateTreatmentParams = Omit<tratamiento, 'id' | 'createAt' | 'updateAt'>
+
+export const updateTreatment = async (
+  id: string,
+  params: UpdateTreatmentParams
+) => {
+  try {
     return { success: true }
   } catch (error) {
     return { success: false }

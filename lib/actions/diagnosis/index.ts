@@ -1,5 +1,6 @@
 'use server'
 import prisma from '@/lib/prisma'
+import { diagnostico } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 
 export const fetchDiagnosis = async () => {
@@ -59,4 +60,22 @@ export const deleteDiagnosis = async (id: string) => {
     return { success: false }
   }
 }
-export const updateDiagnosis = async () => {}
+
+type UpdateDiagnosisParams = Omit<diagnostico, 'createAt' | 'updateAt' | 'id'>
+
+export const updateDiagnosis = async (
+  id: string,
+  params: UpdateDiagnosisParams
+) => {
+  try {
+    await prisma.diagnostico.update({
+      where: { id },
+      data: params,
+    })
+
+    revalidatePath('/dashboard/diagnosis')
+    return { success: true }
+  } catch (error) {
+    return { success: false }
+  }
+}

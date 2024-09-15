@@ -6,7 +6,17 @@ import { revalidatePath } from 'next/cache'
 
 export const fetchDates = async () => {
   try {
-    const all = await prisma.cita.findMany()
+    const all = await prisma.cita.findMany({
+      include: {
+        doctor: true,
+        paciente: true,
+        procedimiento: {
+          include: {
+            paciente: true,
+          },
+        },
+      },
+    })
     return { success: true, dates: all }
   } catch (error) {
     return { success: false }
@@ -126,6 +136,23 @@ export const changeStatus = async (id: string, status: EstadoCita) => {
     revalidatePath('/dashboard/patient/[id]/dates')
     revalidatePath('/dashboard/patient/[id]/procedimiento/[idProcedimiento]')
     revalidatePath('/dashboard/dates')
+    return { success: true }
+  } catch (error) {
+    return { success: false }
+  }
+}
+
+type UpdateDateParams = Omit<
+  cita,
+  'id' | 'estado' | 'createAt' | 'updateAt' | 'procedimientoId' | 'pacienteId'
+>
+
+export const updateDate = async (id: string, params: UpdateDateParams) => {
+  try {
+    await prisma.cita.update({
+      where: { id },
+      data: params,
+    })
     return { success: true }
   } catch (error) {
     return { success: false }

@@ -1,6 +1,7 @@
 'use server'
 import prisma from '@/lib/prisma'
 import type { PlantillaMensaje } from '@prisma/client'
+import { revalidatePath } from 'next/cache'
 
 export const fetchTemplateMessage = async () => {
   try {
@@ -35,7 +36,7 @@ export const updateTemplateMessage = async (
       },
       data: params,
     })
-
+    revalidatePath('/dashboard/templates')
     return { success: true }
   } catch (error) {
     return { success: false }

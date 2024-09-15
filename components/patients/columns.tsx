@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { Configuration01Icon } from '../icons/Configuration01Icon'
 import { toast } from '../ui/use-toast'
 import FormatDate from '../FormatDate'
+import ButtonUpdatePaciente from './update/ButtonUpdatePaciente'
 
 const generatorUrl = (id: string) => `/dashboard/patient/${id}/resume`
 
@@ -60,6 +61,7 @@ export const columns: ColumnDef<paciente>[] = [
               <Configuration01Icon />
             </Link>
           </Button>
+          <ButtonUpdatePaciente id={original.id} paciente={original} />
           <ButtonDelete
             label={'delete'}
             deleteDB={() =>

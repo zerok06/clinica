@@ -1,5 +1,6 @@
 'use server'
 import prisma from '@/lib/prisma'
+import { paciente } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 
 export const fetchResumePatient = async (id: string) => {
@@ -104,6 +105,25 @@ export const createNewPatient = async (params: CreatePatientProps) => {
     return { success: false }
   }
 }
+
+type UpdatePatientParams = Omit<paciente, 'id' | 'createAt' | 'updateAt'>
+
+export const updatePatient = async (
+  id: string,
+  params: UpdatePatientParams
+) => {
+  try {
+    await prisma.paciente.update({
+      where: { id },
+      data: params,
+    })
+
+    return { success: true }
+  } catch (error) {
+    return { success: false }
+  }
+}
+
 export const deletePatient = async (id: string) => {
   try {
     await prisma.paciente.delete({
