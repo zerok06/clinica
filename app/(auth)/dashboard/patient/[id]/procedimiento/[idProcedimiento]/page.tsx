@@ -7,6 +7,7 @@ import OptionsProcedimientos from '@/components/procedimientos/OptionsProcedimie
 import { Badge } from '@/components/ui/badge'
 import { fetchDatesProcedimientos } from '@/lib/actions/dates'
 import { fetchDoctors } from '@/lib/actions/doctors'
+import { fetchOneTemplateMessage } from '@/lib/actions/message'
 import { DeletePagos } from '@/lib/actions/pagos'
 import { fetchOneProcedimiento } from '@/lib/actions/procedimientos'
 import { cn } from '@/lib/utils'
@@ -22,6 +23,7 @@ const Page: React.FC<PagePatientProps> = async ({
   const { dates } = await fetchDatesProcedimientos(idProcedimiento)
   const { procedimiento } = await fetchOneProcedimiento(idProcedimiento)
   const { doctors = [] } = await fetchDoctors()
+  const { plantilla } = await fetchOneTemplateMessage('cita')
   const pendiente = 'pendiente'
 
   return (
@@ -92,7 +94,12 @@ const Page: React.FC<PagePatientProps> = async ({
           </div>
           <div className="flex flex-col gap-2 mt-2">
             {dates?.map(item => (
-              <ItemDate doctors={doctors!} cita={item} key={item.id} />
+              <ItemDate
+                plantilla={plantilla!}
+                doctors={doctors!}
+                cita={item}
+                key={item.id}
+              />
             ))}
           </div>
         </div>

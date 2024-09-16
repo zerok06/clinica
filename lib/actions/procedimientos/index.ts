@@ -19,6 +19,7 @@ export const fetchOneProcedimiento = async (id: string) => {
       },
       include: {
         pagos: true,
+        paciente: true,
       },
     })
     return { success: true, procedimiento: all }

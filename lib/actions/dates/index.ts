@@ -47,6 +47,9 @@ export const fetchDatesProcedimientos = async (id: string) => {
       where: { procedimientoId: id },
       include: {
         paciente: true,
+        procedimiento: {
+          include: { paciente: true },
+        },
       },
     })
     return { success: true, dates: all }

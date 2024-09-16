@@ -13,6 +13,15 @@ const DEFAULT_USUARIO = {
   role: 'administrador',
 }
 
+const DEFAULT_MESSAGES = [
+  {
+    asunto: '📅 ¡Recordatorio de tu próxima cita!',
+    mensaje:
+      'Hola [name], solo queríamos recordarte que tienes una cita programada para el [start] a las [hora]. \n📍 Ubicación: [Dirección o lugar de la cita].\n⏰ ¡No olvides llegar a tiempo! Si necesitas reprogramar o cancelar, no dudes en contactarnos. \n\n ¡Te esperamos! 😊',
+    type: 'cita',
+  },
+]
+
 const load = async () => {
   try {
     const root = await temporal_prisma.usuario.findFirst({
@@ -20,6 +29,7 @@ const load = async () => {
     })
     if (!root) {
       await temporal_prisma.usuario.deleteMany()
+      await temporal_prisma.PlantillaMensaje.deleteMany()
       await temporal_prisma.credenciales.deleteMany()
       const {
         password,
@@ -51,6 +61,10 @@ const load = async () => {
           credencialesId: newCredenciales.id,
         },
       })
+      const countCreate = await temporal_prisma.PlantillaMensaje.createMany({
+        data: DEFAULT_MESSAGES,
+      })
+      console.log(countCreate)
     }
     const users = await temporal_prisma.usuario.findMany()
     console.log('✅ Semilla desplegada!')

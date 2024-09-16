@@ -1,5 +1,6 @@
 'use server'
 import prisma from '@/lib/prisma'
+import { TipoMensaje } from '@/lib/types'
 import type { PlantillaMensaje } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 
@@ -7,6 +8,19 @@ export const fetchTemplateMessage = async () => {
   try {
     const all = await prisma.plantillaMensaje.findMany()
     return { success: true, plantillas: all }
+  } catch (error) {
+    return { success: false }
+  }
+}
+
+export const fetchOneTemplateMessage = async (type: TipoMensaje) => {
+  try {
+    const msg = await prisma.plantillaMensaje.findFirst({
+      where: {
+        type,
+      },
+    })
+    return { success: true, plantilla: msg }
   } catch (error) {
     return { success: false }
   }

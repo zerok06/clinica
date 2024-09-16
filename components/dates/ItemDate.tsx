@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import type { cita, doctor } from '@prisma/client'
+import type { cita, doctor, PlantillaMensaje } from '@prisma/client'
 import OpcionsPatientDates from './OpcionsPatientDates'
 import ButtonOption from '../ButtonDelete'
 import { deleteDate } from '@/lib/actions/dates'
@@ -12,9 +12,10 @@ import ButtonUpdateDate from './update/ButtonUpdateDate'
 interface CitaItemProps {
   cita: cita
   doctors: doctor[]
+  plantilla: PlantillaMensaje
 }
 
-const ItemDate: React.FC<CitaItemProps> = ({ cita, doctors }) => {
+const ItemDate: React.FC<CitaItemProps> = ({ cita, doctors, plantilla }) => {
   return (
     <div className="w-full rounded-xl border px-4 py-2 flex flex-row gap-4 items-center">
       <div>
@@ -36,6 +37,22 @@ const ItemDate: React.FC<CitaItemProps> = ({ cita, doctors }) => {
         )}
       </div>
       <div className="flex flex-row gap-2">
+        {/* @ts-ignore */}
+        <ChatWhatsapp
+          icon={true}
+          params={{
+            title: cita.title,
+            end: cita.end,
+            /* @ts-ignore */
+            pacienteApellidos: cita.procedimiento.paciente.apellidos,
+            /* @ts-ignore */
+            pacienteNombres: cita.procedimiento.paciente.nombres,
+            start: cita.start,
+          }}
+          plantilla={plantilla}
+          /* @ts-ignore */
+          tel={cita.procedimiento.paciente.celular}
+        />
         <ButtonUpdateDate cita={cita} doctors={doctors} id={cita.id} />
         <OpcionsPatientDates id={cita.id} />
         <ButtonOption

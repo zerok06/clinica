@@ -19,3 +19,5 @@ export type CategoriaFile =
 
 // Definición de EstadoCita
 export type EstadoCita = 'Pendiente' | 'Completado' | 'Cancelado'
+
+export type TipoMensaje = 'cita' | 'pago'
