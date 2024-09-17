@@ -17,8 +17,7 @@ const Dashboard = async () => {
           <h1 className="text-lg font-semibold">Informacion importante</h1>
           <p className="text-xs text-black/70">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,
-            nulla!
-          </p>
+          </p> 
         </div>
         <div className="flex mt-4 flex-row gap-4 flex-wrap">
           <div className="p-4 bg-white rounded-lg min-w-[150px]">
