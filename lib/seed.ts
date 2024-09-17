@@ -17,7 +17,7 @@ const DEFAULT_MESSAGES = [
   {
     asunto: '📅 ¡Recordatorio de tu próxima cita!',
     mensaje:
-      'Hola [name], solo queríamos recordarte que tienes una cita programada para el [start] a las [hora]. \n📍 Ubicación: [Dirección o lugar de la cita].\n⏰ ¡No olvides llegar a tiempo! Si necesitas reprogramar o cancelar, no dudes en contactarnos. \n\n ¡Te esperamos! 😊',
+      'Asunto: Recordatorio de tu próxima cita, [pacienteNombres]  [pacienteApellidos] Descripción: Hola [pacienteNombres], te recordamos que tienes una cita programada. Aquí tienes los detalles: Fecha y hora: Desde el [start] hasta el [end]   Ubicación: [Dirección o lugar de la cita].   Por favor, te pedimos llegar a tiempo. Si necesitas cambiar o cancelar la cita, no dudes en contactarnos. ¡Te esperamos!',
     type: 'cita',
   },
 ]
