@@ -18,12 +18,14 @@ import { tratamiento } from '@prisma/client'
 
 interface ButtonNewProcedimientoProps {
   tratamientos: tratamiento[]
+  recomendados: tratamiento[]
   patientId: string
 }
 
 const ButtonNewProcedimiento: React.FC<ButtonNewProcedimientoProps> = ({
   tratamientos,
   patientId,
+  recomendados,
 }) => {
   const { active, close } = useControlAlert()
 
@@ -35,6 +37,7 @@ const ButtonNewProcedimiento: React.FC<ButtonNewProcedimientoProps> = ({
       <AlertDialogContent>
         <AlertDialogHeader>
           <FormNewProcedimiento
+            recomendados={recomendados}
             patientId={patientId}
             closeAlert={close}
             tratamientos={tratamientos}

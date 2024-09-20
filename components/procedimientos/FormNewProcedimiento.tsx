@@ -16,7 +16,9 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -49,12 +51,14 @@ const formSchema = z.object({
 interface FormNewProcedimientoProps {
   closeAlert: () => void
   tratamientos: tratamiento[]
+  recomendados: tratamiento[]
   patientId: string
 }
 
 const FormNewProcedimiento: React.FC<FormNewProcedimientoProps> = ({
   closeAlert,
   tratamientos = [],
+  recomendados = [],
   patientId,
 }) => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -91,11 +95,22 @@ const FormNewProcedimiento: React.FC<FormNewProcedimientoProps> = ({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {tratamientos.map(item => (
-                    <SelectItem value={item.id} key={item.id}>
-                      {item.nombre} - s/{item.monto}
-                    </SelectItem>
-                  ))}
+                  <SelectGroup>
+                    <SelectLabel>Recomendados</SelectLabel>
+                    {tratamientos.map(item => (
+                      <SelectItem value={item.id} key={item.id}>
+                        {item.nombre} - s/{item.monto}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                  <SelectGroup>
+                    <SelectLabel>Otros</SelectLabel>
+                    {tratamientos.map(item => (
+                      <SelectItem value={item.id} key={item.id}>
+                        {item.nombre} - s/{item.monto}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
                 </SelectContent>
               </Select>
               <FormMessage />

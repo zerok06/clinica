@@ -29,6 +29,7 @@ export interface BiProps {
 }
 
 export interface MonoProps {
+  diagnosticoId: string
   name: string
   desc: string
   nomenclatura?: string | null

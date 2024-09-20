@@ -82,6 +82,7 @@ model diagnostico {
   detalleDiagnosticoTratamiento detalleDiagnosticoTratamiento[]
   createAt                      DateTime                        @default(now())
   updateAt                      DateTime                        @updatedAt
+  diagnosticoMonoDiente         diagnosticoMonoDiente[]
 }
 
 model detalleDiagnosticoTratamiento {
@@ -184,15 +185,17 @@ model diente {
 }
 
 model diagnosticoMonoDiente {
-  id          String   @id @default(uuid())
-  base64      String
-  desc        String
-  name        String
-  nomeclatura String   @default("N/A")
-  createAt    DateTime @default(now())
-  updateAt    DateTime @updatedAt
-  diente      diente   @relation(fields: [dienteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  dienteId    String
+  id            String      @id @default(uuid())
+  base64        String
+  desc          String
+  name          String
+  nomeclatura   String      @default("N/A")
+  createAt      DateTime    @default(now())
+  updateAt      DateTime    @updatedAt
+  diente        diente      @relation(fields: [dienteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  dienteId      String
+  dignostico    diagnostico @relation(fields: [diagnosticoId], references: [id])
+  diagnosticoId String
 }
 
 model PlantillaMensaje {

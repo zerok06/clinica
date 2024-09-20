@@ -14,6 +14,55 @@ export const fetchTreatments = async () => {
     return { success: false }
   }
 }
+
+export const fetchTratamientoPacienteOrdontograma = async (id: string) => {
+  try {
+    const odontograma = await prisma.odontograma.findFirst({
+      where: { pacienteId: id },
+    })
+
+    const diagnosticos = await prisma.diagnosticoMonoDiente.findMany({
+      where: {
+        diente: {
+          odontogramaId: odontograma?.id,
+        },
+      },
+      include: {
+        dignostico: {
+          select: {
+            detalleDiagnosticoTratamiento: {
+              include: {
+                tratamiento: true,
+              },
+              distinct: 'diagnosticoId',
+            },
+          },
+        },
+      },
+      distinct: 'diagnosticoId',
+    })
+
+    const tratamientosRecomendados = diagnosticos
+      .map(item => ({ ...item.dignostico.detalleDiagnosticoTratamiento }))
+      .map(obj => {
+        const key = Object.keys(obj)[0]
+        /* @ts-ignore */
+        const tratamiento = obj[key].tratamiento
+
+        return tratamiento
+      })
+
+    console.log(tratamientosRecomendados)
+
+    return {
+      success: true,
+      tratamientos: tratamientosRecomendados,
+    }
+  } catch (error) {
+    return { success: false }
+  }
+}
+
 interface CreateCategoryTreatmentProps {
   nombre: string
   descripcion: string

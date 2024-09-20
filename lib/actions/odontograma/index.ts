@@ -63,6 +63,7 @@ export const createOdontograma = async (
         base64: e.base64,
         desc: e.desc,
         name: e.name,
+        diagnosticoId: e.diagnosticoId,
         nomeclatura: e.nomenclatura || undefined,
       })),
     }))
@@ -79,6 +80,7 @@ export const createOdontograma = async (
           desc: e.desc,
           name: e.name,
           nomeclatura: e.nomenclatura || undefined,
+          diagnosticoId: e.diagnosticoId,
         })),
       }))
     )

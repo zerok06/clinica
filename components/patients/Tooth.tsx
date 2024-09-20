@@ -18,23 +18,16 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import AddDiagnosis from './AddDiagnosis'
-import type { tratamiento } from '@prisma/client'
+import type { diagnostico } from '@prisma/client'
 
 interface ToothProps extends Diente {
-  tratamientos: tratamiento[]
+  diagnoses: diagnostico[]
   addDiagnosticoMono: (props: MonoProps, code: number) => void
 }
 
 const Tooth: React.FC<ToothProps> = diente => {
-  const {
-    code,
-    diagnostico,
-    id,
-    image,
-    name,
-    tratamientos,
-    addDiagnosticoMono,
-  } = diente
+  const { code, diagnostico, id, image, name, diagnoses, addDiagnosticoMono } =
+    diente
   return (
     <Dialog>
       <DialogTrigger>
@@ -66,7 +59,7 @@ const Tooth: React.FC<ToothProps> = diente => {
                   <TableCaption>
                     <AddDiagnosis
                       {...diente}
-                      tratamientos={tratamientos}
+                      diagnoses={diagnoses}
                       addDiagnosticoMono={addDiagnosticoMono}
                     />
                   </TableCaption>

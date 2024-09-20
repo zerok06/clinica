@@ -3,16 +3,16 @@ import useOdontograma from '@/hook/useOdontograma'
 import React from 'react'
 import Tooth from './Tooth'
 import { Button } from '../ui/button'
-import type { tratamiento } from '@prisma/client'
+import type { diagnostico, tratamiento } from '@prisma/client'
 import { createOdontograma } from '@/lib/actions/odontograma'
 import { toast } from '../ui/use-toast'
 
 interface OdontogramaProps {
-  tratamientos: tratamiento[]
+  diagnoses: diagnostico[]
   id: string
 }
 
-const Odontograma: React.FC<OdontogramaProps> = ({ tratamientos, id }) => {
+const Odontograma: React.FC<OdontogramaProps> = ({ diagnoses, id }) => {
   const { odontograma, addDiagnosticoMono } = useOdontograma()
 
   const permanente_1 = odontograma.permanentes.slice(0, 16)
@@ -28,7 +28,7 @@ const Odontograma: React.FC<OdontogramaProps> = ({ tratamientos, id }) => {
             <Tooth
               {...item}
               key={item.id}
-              tratamientos={tratamientos!}
+              diagnoses={diagnoses!}
               addDiagnosticoMono={addDiagnosticoMono}
             />
           ))}
@@ -39,7 +39,7 @@ const Odontograma: React.FC<OdontogramaProps> = ({ tratamientos, id }) => {
             <Tooth
               {...item}
               key={item.id}
-              tratamientos={tratamientos!}
+              diagnoses={diagnoses!}
               addDiagnosticoMono={addDiagnosticoMono}
             />
           ))}
@@ -49,7 +49,7 @@ const Odontograma: React.FC<OdontogramaProps> = ({ tratamientos, id }) => {
             <Tooth
               {...item}
               key={item.id}
-              tratamientos={tratamientos!}
+              diagnoses={diagnoses!}
               addDiagnosticoMono={addDiagnosticoMono}
             />
           ))}
@@ -60,7 +60,7 @@ const Odontograma: React.FC<OdontogramaProps> = ({ tratamientos, id }) => {
             <Tooth
               {...item}
               key={item.id}
-              tratamientos={tratamientos!}
+              diagnoses={diagnoses!}
               addDiagnosticoMono={addDiagnosticoMono}
             />
           ))}

@@ -3,7 +3,10 @@ import ButtonNewProcedimiento from '@/components/procedimientos/ButtonNewProcedi
 import { columns } from '@/components/procedimientos/columns'
 import { Separator } from '@/components/ui/separator'
 import { fetchProcedimiento } from '@/lib/actions/procedimientos'
-import { fetchTreatments } from '@/lib/actions/treatments'
+import {
+  fetchTratamientoPacienteOrdontograma,
+  fetchTreatments,
+} from '@/lib/actions/treatments'
 import React from 'react'
 
 interface PagePatientProps {
@@ -12,6 +15,8 @@ interface PagePatientProps {
 
 const Page: React.FC<PagePatientProps> = async ({ params: { id } }) => {
   const { tratamientos } = await fetchTreatments()
+  const { tratamientos: tratamientosPacienteOdontograma } =
+    await fetchTratamientoPacienteOrdontograma(id)
   const { procedimientos } = await fetchProcedimiento()
 
   return (
@@ -24,7 +29,11 @@ const Page: React.FC<PagePatientProps> = async ({ params: { id } }) => {
             dolorum.
           </p>
         </div>
-        <ButtonNewProcedimiento tratamientos={tratamientos!} patientId={id} />
+        <ButtonNewProcedimiento
+          recomendados={tratamientosPacienteOdontograma!}
+          tratamientos={tratamientos!}
+          patientId={id}
+        />
       </div>
       <Separator className="my-3" />
       <DataTable

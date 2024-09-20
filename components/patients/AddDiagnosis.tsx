@@ -14,7 +14,7 @@ import {
 
 import { Label } from '../ui/label'
 import { Eraser, Pen, Trash } from 'lucide-react'
-import { tratamiento } from '@prisma/client'
+import { diagnostico, tratamiento } from '@prisma/client'
 import { ComboBox } from '../ComboBox'
 import { Textarea } from '../ui/textarea'
 import { Button } from '../ui/button'
@@ -283,7 +283,7 @@ const sistema_code = [
 ]
 
 interface AddDiagnosisProps extends Diente {
-  tratamientos: tratamiento[]
+  diagnoses: diagnostico[]
   addDiagnosticoMono: (props: MonoProps, code: number) => void
 }
 
@@ -293,20 +293,21 @@ const AddDiagnosis: React.FC<AddDiagnosisProps> = ({
   id,
   image,
   name,
-  tratamientos,
+  diagnoses,
   addDiagnosticoMono,
 }) => {
   const { open, handleOpen } = useOpen()
   const [props, setProps] = useState({
     name: '',
     nomenclatura: '',
+    diagnosticoId: '',
     desc: '',
     canvas: '',
     base64: '',
   })
 
   const handleTreatment = (value: string) => {
-    setProps(state => ({ ...state, name: value }))
+    setProps(state => ({ ...state, diagnosticoId: value }))
   }
   /* @ts-ignore */
   const handleProps = ({ target: { value, name } }) => {
@@ -334,12 +335,12 @@ const AddDiagnosis: React.FC<AddDiagnosisProps> = ({
                 <div>
                   <Label>Diagnostico</Label>
                   <ComboBox
-                    items={tratamientos.map(item => ({
+                    items={diagnoses.map(item => ({
                       label: item.nombre,
                       value: item.id,
                     }))}
                     setValue={handleTreatment}
-                    value={props.name}
+                    value={props.diagnosticoId}
                     placeholder={'Seleciona un diagnostico...'}
                   />
                 </div>
