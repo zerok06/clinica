@@ -7,26 +7,17 @@ import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { toast } from '../ui/use-toast'
-import { createTreatment } from '@/lib/actions/treatments'
+
+import { updateCategoryTreatment } from '@/lib/actions/treatments'
 import type { categoriaTratamiento } from '@prisma/client'
-import Link from 'next/link'
-import { Textarea } from '../ui/textarea'
-import ButtonNewCategoryTreatment from './ButtonNewCategoryTreatment'
+import { toast } from '@/components/ui/use-toast'
+import { Textarea } from '@/components/ui/textarea'
 
 const formSchema = z.object({
   nombre: z.string().min(2, {
@@ -35,31 +26,23 @@ const formSchema = z.object({
   descripcion: z.string().min(2, {
     message: 'Se requiere como mínimo 2 caracteres',
   }),
-  categoriaTratamientoId: z.string({
-    required_error: 'Seleccione una categoría.',
-  }),
-  monto: z.string().min(0, {
-    message: 'Monto minimo es 1.',
-  }),
 })
 
-interface FormNewTreatmentProps {
+interface FormUpdateCategoryTratamientoProps {
   closeAlert: () => void
-  categories: Array<categoriaTratamiento>
+  id: string
+  tratamiento: categoriaTratamiento
 }
 
-const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
-  closeAlert,
-  categories,
-}) => {
+const FormUpdateCategoryTratamiento: React.FC<
+  FormUpdateCategoryTratamientoProps
+> = ({ closeAlert, id, tratamiento }) => {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      nombre: '',
-      descripcion: '',
-      categoriaTratamientoId: '',
-      monto: '',
+      nombre: tratamiento.nombre,
+      descripcion: tratamiento.descripcion,
     },
   })
 
@@ -67,7 +50,9 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    createTreatment(values).then(res =>
+    updateCategoryTreatment(id, {
+      ...values,
+    }).then(res =>
       toast({
         title: 'Uh oh! Something went wrong.',
         description: JSON.stringify(res),
@@ -110,52 +95,6 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="categoriaTratamientoId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Categoria</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                disabled={categories.length === 0}
-                defaultValue={field.value}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Categoria de tratamiento" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {categories.map(item => (
-                    <SelectItem value={item.id} key={item.id}>
-                      {item.nombre}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="monto"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Monto</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  placeholder="Ingrese una descripción sobre el tratamiento."
-                  className="resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <div className="flex justify-end items-center gap-2">
           <Button variant={'ghost'} type="button" onClick={closeAlert}>
             Cancelar
@@ -167,4 +106,4 @@ const FormNewTreatment: React.FC<FormNewTreatmentProps> = ({
   )
 }
 
-export default FormNewTreatment
+export default FormUpdateCategoryTratamiento

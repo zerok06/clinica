@@ -11,33 +11,27 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { Button } from './ui/button'
 import useControlAlert from '@/hook/useControlAlert'
-import FormNewTreatment from './treatments/FormNewTreatment'
 
-import type { categoriaTratamiento } from '@prisma/client'
+import { Button } from '../ui/button'
+import FormNewTreatment from './FormNewTreatment'
+import FormNewCategoryTreatment from './FormNewCategoryTreatment'
 
-interface ButtonNewTreatmentProps {
-  categories: Array<categoriaTratamiento>
-}
-
-const ButtonNewTreatment: React.FC<ButtonNewTreatmentProps> = ({
-  categories,
-}) => {
+const ButtonNewCategoryTreatment = ({}) => {
   const { active, close } = useControlAlert()
 
   return (
     <AlertDialog open={active} onOpenChange={close}>
       <AlertDialogTrigger asChild>
-        <Button disabled={categories.length == 0}>Agregar</Button>
+        <Button variant={'ghost'}>Agregar</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <FormNewTreatment closeAlert={close} categories={categories} />
+          <FormNewCategoryTreatment closeAlert={close} />
         </AlertDialogHeader>
       </AlertDialogContent>
     </AlertDialog>
   )
 }
 
-export default ButtonNewTreatment
+export default ButtonNewCategoryTreatment

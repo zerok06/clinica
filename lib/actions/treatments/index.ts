@@ -1,7 +1,7 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-import { tratamiento } from '@prisma/client'
+import { categoriaTratamiento, tratamiento } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 
 export const fetchTreatments = async () => {
@@ -86,6 +86,42 @@ export const categoriesTreatments = async () => {
     const all = await prisma.categoriaTratamiento.findMany()
 
     return { success: true, categories: all }
+  } catch (error) {
+    return { success: false }
+  }
+}
+export const deleteCategoryTreatment = async (id: string) => {
+  try {
+    await prisma.categoriaTratamiento.delete({
+      where: {
+        id,
+      },
+    })
+    revalidatePath('/dashboard/treatments')
+    return { success: true }
+  } catch (error) {
+    return { success: false }
+  }
+}
+
+type UpdateCategoryTreatmentProps = Omit<
+  categoriaTratamiento,
+  'createAt' | 'updateAt' | 'id'
+>
+
+export const updateCategoryTreatment = async (
+  id: string,
+  props: UpdateCategoryTreatmentProps
+) => {
+  try {
+    await prisma.categoriaTratamiento.update({
+      where: {
+        id,
+      },
+      data: props,
+    })
+    revalidatePath('/dashboard/treatments')
+    return { success: true }
   } catch (error) {
     return { success: false }
   }
