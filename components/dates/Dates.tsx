@@ -663,7 +663,9 @@ const Dates: React.FC<DatesProps> = ({ agenda = [], doctors = [] }) => {
             <SelectContent>
               <SelectItem value="todos">Todos</SelectItem>
               {doctors.map(item => (
-                <SelectItem value={item.id}>Dr(a).{item.nombres}</SelectItem>
+                <SelectItem value={item.id} key={item.id}>
+                  Dr(a).{item.nombres}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>

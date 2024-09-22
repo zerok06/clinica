@@ -202,7 +202,7 @@ model PlantillaMensaje {
   id       String   @id @default(uuid())
   asunto   String
   mensaje  String
-  type     String
+  type     String   @default("cita")
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }

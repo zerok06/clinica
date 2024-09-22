@@ -27,7 +27,9 @@ export const fetchOneTemplateMessage = async (type: TipoMensaje) => {
 }
 
 export const createTemplateMessage = async (
-  params: Omit<PlantillaMensaje, 'createAt' | 'updateAt' | 'id'>
+  params: Readonly<
+    Omit<PlantillaMensaje, 'createAt' | 'updateAt' | 'id' | 'type'>
+  >
 ) => {
   try {
     await prisma.plantillaMensaje.create({
@@ -41,7 +43,7 @@ export const createTemplateMessage = async (
 
 export const updateTemplateMessage = async (
   id: string,
-  params: Omit<PlantillaMensaje, 'createAt' | 'updateAt' | 'id'>
+  params: Omit<PlantillaMensaje, 'createAt' | 'updateAt' | 'id' | 'type'>
 ) => {
   try {
     await prisma.plantillaMensaje.update({

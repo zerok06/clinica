@@ -25,5 +25,6 @@ export const FormatMessageCita = (
   const regex = new RegExp(Object.keys(params).join('|'), 'g')
 
   // Usamos el método replace con una función como segundo argumento
+  /* @ts-ignore */
   return text.replace(regex, matched => params[matched])
 }

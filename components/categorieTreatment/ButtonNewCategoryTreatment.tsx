@@ -14,7 +14,6 @@ import {
 import useControlAlert from '@/hook/useControlAlert'
 
 import { Button } from '../ui/button'
-import FormNewTreatment from './FormNewTreatment'
 import FormNewCategoryTreatment from './FormNewCategoryTreatment'
 
 const ButtonNewCategoryTreatment = ({}) => {

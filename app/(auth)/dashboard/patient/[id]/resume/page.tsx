@@ -43,7 +43,7 @@ const Page: React.FC<PageResumeProps> = async ({ params: { id } }) => {
                 </div>
               </div>
             </div>
-            <ChatWhatsapp tel={data?.patient?.celular!} />
+            <ChatWhatsapp tel={data?.patient?.celular!} icon={false} />
           </div>
           <div className="min-w-[312px] px-8 py-6 flex flex-col gap-6">
             <div className="flex flex-row">

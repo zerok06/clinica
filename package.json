@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "config": "npx prisma generate && npx prisma db seed"
+    "config": "npx prisma db push && npx prisma db seed"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
