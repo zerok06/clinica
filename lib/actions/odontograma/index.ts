@@ -85,8 +85,6 @@ export const createOdontograma = async (
       }))
     )
 
-  console.log(newOdontograma.id)
-
   dientes.forEach(async item => {
     const newDiente = await prisma.diente.create({
       data: {

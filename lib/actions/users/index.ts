@@ -85,8 +85,6 @@ interface UpdateUserParams
 
 export const updateUser = async (id: string, params: UpdateUserParams) => {
   try {
-    console.log(params.password !== '')
-
     await prisma.usuario.update({
       where: { id },
       data: {

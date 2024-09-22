@@ -52,8 +52,6 @@ export const fetchTratamientoPacienteOrdontograma = async (id: string) => {
         return tratamiento
       })
 
-    console.log(tratamientosRecomendados)
-
     return {
       success: true,
       tratamientos: tratamientosRecomendados,
