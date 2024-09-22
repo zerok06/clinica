@@ -30,9 +30,7 @@ const formSchema = z.object({
   username: z.string().min(2, {
     message: 'Se requiere como mínimo 2 caracteres',
   }),
-  password: z.string().min(6, {
-    message: 'Se requiere como mínimo 6 caracteres',
-  }),
+  password: z.string().optional(),
   nombres: z.string().min(2, {
     message: 'Se requiere como mínimo 2 caracteres',
   }),
@@ -106,7 +104,7 @@ const FormUpdateUser: React.FC<FormUpdateUserProps> = ({
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input placeholder="john-doe" {...field} />
+                  <Input placeholder="john-doe" autoComplete="off" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -119,7 +117,12 @@ const FormUpdateUser: React.FC<FormUpdateUserProps> = ({
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="******" type="password" {...field} />
+                  <Input
+                    placeholder="password"
+                    autoComplete="off"
+                    type="password"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

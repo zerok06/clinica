@@ -54,8 +54,8 @@ const FormUpdateCategoryTratamiento: React.FC<
       ...values,
     }).then(res =>
       toast({
-        title: 'Uh oh! Something went wrong.',
-        description: JSON.stringify(res),
+        title: res.msg.title || '',
+        description: res.msg.desc || '',
       })
     )
     closeAlert()

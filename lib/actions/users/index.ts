@@ -80,11 +80,13 @@ const createNewUser = async (user: CreateUser) => {
 interface UpdateUserParams
   extends Omit<usuario, 'id' | 'createAt' | 'updateAt' | 'credencialesId'> {
   username: string
-  password: string
+  password?: string
 }
 
 export const updateUser = async (id: string, params: UpdateUserParams) => {
   try {
+    console.log(params.password !== '')
+
     await prisma.usuario.update({
       where: { id },
       data: {

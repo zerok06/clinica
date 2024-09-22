@@ -121,9 +121,21 @@ export const updateCategoryTreatment = async (
       data: props,
     })
     revalidatePath('/dashboard/treatments')
-    return { success: true }
+    return {
+      success: true,
+      msg: {
+        title: 'Actualizacion correcta!',
+        desc: '',
+      },
+    }
   } catch (error) {
-    return { success: false }
+    return {
+      success: false,
+      msg: {
+        title: 'Error en actualizacion',
+        desc: '',
+      },
+    }
   }
 }
 

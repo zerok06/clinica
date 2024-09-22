@@ -41,12 +41,19 @@ const FormSignin = () => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     authentication(values).then(res => {
-      toast({
-        title: 'Uh oh! Something went wrong.',
-        description: JSON.stringify(res),
-      })
       if (res.success) {
+        toast({
+          title: 'Inicio de sesión exitoso',
+          description:
+            'Bienvenido de nuevo, ¡has iniciado sesión correctamente!',
+        })
         router.push('/dashboard')
+      } else {
+        toast({
+          title: 'Error en el inicio de sesión',
+          description:
+            'Usuario o contraseña incorrectos. Inténtalo nuevamente.',
+        })
       }
     })
   }
