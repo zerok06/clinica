@@ -19,7 +19,7 @@ const Page = async () => {
           <p className="text-black/70 text-sm">{messages.desc}</p>
         </div>
         <div>
-          <ButtonNewMenssage />
+          {process.env.NODE_ENV == 'development' && <ButtonNewMenssage />}
         </div>
       </div>
       <Separator className="my-3" />
