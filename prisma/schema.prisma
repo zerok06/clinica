@@ -86,13 +86,13 @@ model diagnostico {
 }
 
 model detalleDiagnosticoTratamiento {
-  id            String      @id @default(uuid())
-  diagnostico   diagnostico @relation(fields: [diagnosticoId], references: [id])
-  diagnosticoId String
-  tratamiento   tratamiento @relation(fields: [tratamientoId], references: [id])
-  tratamientoId String
-  createAt      DateTime    @default(now())
-  updateAt      DateTime    @updatedAt
+  id            String       @id @default(uuid())
+  diagnostico   diagnostico? @relation(fields: [diagnosticoId], references: [id], onUpdate: Cascade, onDelete: SetNull)
+  diagnosticoId String?
+  tratamiento   tratamiento? @relation(fields: [tratamientoId], references: [id], onUpdate: Cascade, onDelete: SetNull)
+  tratamientoId String?
+  createAt      DateTime     @default(now())
+  updateAt      DateTime     @updatedAt
 }
 
 model cita {
@@ -104,54 +104,54 @@ model cita {
   end             DateTime
   createAt        DateTime       @default(now())
   updateAt        DateTime       @updatedAt
-  doctor          doctor         @relation(fields: [doctorId], references: [id])
+  doctor          doctor?        @relation(fields: [doctorId], references: [id], onUpdate: Cascade, onDelete: SetNull)
   procedimiento   procedimiento? @relation(fields: [procedimientoId], references: [id])
   procedimientoId String?
-  paciente        paciente?      @relation(fields: [pacienteId], references: [id])
+  paciente        paciente?      @relation(fields: [pacienteId], references: [id], onUpdate: Cascade, onDelete: SetNull)
   pacienteId      String?
-  doctorId        String
+  doctorId        String?
 }
 
 model file {
-  id         String   @id @default(uuid())
+  id         String    @id @default(uuid())
   name       String
   type       String
   path       String
   size       String
-  category   String   @default("Otros")
-  createAt   DateTime @default(now())
-  paciente   paciente @relation(fields: [pacienteId], references: [id])
-  pacienteId String
-  updateAt   DateTime @updatedAt
+  category   String    @default("Otros")
+  createAt   DateTime  @default(now())
+  paciente   paciente? @relation(fields: [pacienteId], references: [id], onUpdate: Cascade, onDelete: SetNull)
+  pacienteId String?
+  updateAt   DateTime  @updatedAt
 }
 
 model procedimiento {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   start       DateTime
   end         DateTime
   monto_total Float
-  recaudado   Float    @default(0.00)
-  estado      String   @default("pendiente")
+  recaudado   Float     @default(0.00)
+  estado      String    @default("pendiente")
   title       String
   desc        String
-  paciente    paciente @relation(fields: [pacienteId], references: [id])
-  pacienteId  String
+  paciente    paciente? @relation(fields: [pacienteId], references: [id], onUpdate: Cascade, onDelete: SetNull)
+  pacienteId  String?
   pagos       pagos[]
   cita        cita[]
-  createAt    DateTime @default(now())
-  updateAt    DateTime @updatedAt
+  createAt    DateTime  @default(now())
+  updateAt    DateTime  @updatedAt
 }
 
 model pagos {
-  id              String        @id @default(uuid())
+  id              String         @id @default(uuid())
   title           String
-  fecha           DateTime      @default(now())
+  fecha           DateTime       @default(now())
   desc            String
   monto           Float
-  procedimiento   procedimiento @relation(fields: [procedimientoId], references: [id])
-  procedimientoId String
-  createAt        DateTime      @default(now())
-  updateAt        DateTime      @updatedAt
+  procedimiento   procedimiento? @relation(fields: [procedimientoId], references: [id], onUpdate: Cascade, onDelete: SetNull)
+  procedimientoId String?
+  createAt        DateTime       @default(now())
+  updateAt        DateTime       @updatedAt
 }
 
 model insumo {
