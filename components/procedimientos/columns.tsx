@@ -59,7 +59,7 @@ export const columns: ColumnDef<procedimiento>[] = [
       return (
         <div className="flex justify-end flex-row gap-2">
           <Button asChild size={'icon'} variant={'outline'}>
-            <Link href={generatorUrl(original.pacienteId, original.id)}>
+            <Link href={generatorUrl(original.pacienteId || '', original.id)}>
               <Configuration01Icon />
             </Link>
           </Button>

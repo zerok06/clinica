@@ -85,7 +85,7 @@ export const updatePago = async (id: string, params: UpdatePagoParams) => {
 
     await prisma.procedimiento.update({
       where: {
-        id: pago?.procedimientoId,
+        id: pago?.procedimientoId || '',
       },
       data: {
         recaudado: {
@@ -112,7 +112,7 @@ export const DeletePagos = async (id: string) => {
 
     await prisma.procedimiento.update({
       where: {
-        id: pago?.procedimientoId,
+        id: pago?.procedimientoId || '',
       },
       data: {
         recaudado: {

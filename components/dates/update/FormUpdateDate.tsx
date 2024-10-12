@@ -58,7 +58,7 @@ const FormUpdateDate: React.FC<FormUpdateDateProps> = ({
     defaultValues: {
       title: cita.title,
       description: cita.description,
-      doctorId: cita.doctorId,
+      doctorId: cita.doctorId || '',
       start: cita.start,
       end: cita.end,
     },
